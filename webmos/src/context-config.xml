@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<context-config default="initialContext">
+	<!-- <context name="rms">
+		<init-context-factory >weblogic.jndi.WLInitialContextFactory</init-context-factory>
+		<provider-url>t3://133.96.29.52:8621</provider-url>
+		<security-principal>rmuser</security-principal>
+		<security-credentials>rmuser</security-credentials>
+		</context> -->
+	<context name="SPS_local">
+		<init-context-factory >weblogic.jndi.WLInitialContextFactory</init-context-factory>
+		<provider-url>t3://10.21.3.16:7001/web_mos</provider-url>
+		<security-principal>weblogic</security-principal>
+		<security-credentials>weblogic</security-credentials>
+	</context>
+	<context name="SPS_8621">
+		<init-context-factory>
+			weblogic.jndi.WLInitialContextFactory
+		</init-context-factory>
+		<provider-url>t3://133.96.29.51:8621</provider-url>
+		<security-principal>rmuser</security-principal>
+		<security-credentials>12345678</security-credentials>
+	</context>
+	<context name="SPS_8631">
+		<init-context-factory>
+			weblogic.jndi.WLInitialContextFactory
+		</init-context-factory>
+		<provider-url>t3://133.96.29.54:8631</provider-url>
+		<security-principal>rmuser</security-principal>
+		<security-credentials>12345678</security-credentials>
+	</context>
+	<context name="SPS_8622">
+		<init-context-factory>
+			weblogic.jndi.WLInitialContextFactory
+		</init-context-factory>
+		<provider-url>t3://133.96.29.51:8622</provider-url>
+		<security-principal>rmuser</security-principal>
+		<security-credentials>12345678</security-credentials>
+	</context>
+	<context name="SPS_8632">
+		<init-context-factory>
+			weblogic.jndi.WLInitialContextFactory
+		</init-context-factory>
+		<provider-url>t3://133.96.29.54:8632</provider-url>
+		<security-principal>rmuser</security-principal>
+		<security-credentials>12345678</security-credentials>
+	</context>
+	<context name="SPS_8623">
+		<init-context-factory>
+			weblogic.jndi.WLInitialContextFactory
+		</init-context-factory>
+		<provider-url>t3://133.96.29.51:8623</provider-url>
+		<security-principal>rmuser</security-principal>
+		<security-credentials>12345678</security-credentials>
+	</context>
+	<context name="SPS_8633">
+		<init-context-factory>
+			weblogic.jndi.WLInitialContextFactory
+		</init-context-factory>
+		<provider-url>t3://133.96.29.54:8633</provider-url>
+		<security-principal>rmuser</security-principal>
+		<security-credentials>12345678</security-credentials>
+	</context>
+	<context name="SPS_8624">
+		<init-context-factory>
+			weblogic.jndi.WLInitialContextFactory
+		</init-context-factory>
+		<provider-url>t3://133.96.29.51:8624</provider-url>
+		<security-principal>rmuser</security-principal>
+		<security-credentials>12345678</security-credentials>
+	</context>
+	<context name="SPS_8634">
+		<init-context-factory>
+			weblogic.jndi.WLInitialContextFactory
+		</init-context-factory>
+		<provider-url>t3://133.96.29.54:8634</provider-url>
+		<security-principal>rmuser</security-principal>
+		<security-credentials>12345678</security-credentials>
+	</context>
+	<context name="rms">
+		<init-context-factory>
+			weblogic.jndi.WLInitialContextFactory
+		</init-context-factory>
+		<provider-url>
+			t3://133.96.29.52:8621,133.96.29.52:8622,133.96.29.52:8623,133.96.29.55:8631,133.96.29.55:8632,133.96.29.55:8633
+		</provider-url>
+		<security-principal>rmuser</security-principal>
+		<security-credentials>rmsweblogic</security-credentials>
+	</context>
+	<context name="crm">
+		<init-context-factory>
+			weblogic.jndi.WLInitialContextFactory
+		</init-context-factory>
+		<provider-url>
+			t3://133.96.29.50:8621,133.96.29.50:8622,133.96.29.50:8623,133.96.29.53:8631,133.96.29.53:8632,133.96.29.53:8633,133.96.29.67:8641,133.96.29.68:8642
+		</provider-url>
+		<security-principal>rmuser</security-principal>
+		<security-credentials>12345678</security-credentials>
+	</context>
+	<context name="wts">
+		<init-context-factory>
+			weblogic.jndi.WLInitialContextFactory
+		</init-context-factory>
+		<provider-url>
+			t3://192.168.100.222:8861
+		</provider-url>
+		<security-principal>weblogic</security-principal>
+		<security-credentials>weblogic</security-credentials>
+	</context>
+
+	<context name="initialContext" initialContext="true"></context>
+</context-config>

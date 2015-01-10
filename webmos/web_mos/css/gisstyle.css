@@ -1,0 +1,163 @@
+/*---------------------System Style------------------------*/	
+
+a:link {color:#2f2f2f;text-decoration:none;}
+a:visited {color:#2f2f2f;text-decoration:none;}
+a:active {color:#2952A1;text-decoration:none;}
+a:hover {color:#2952A1;text-decoration:none;}
+/*-----------------------------------------------------*/
+BODY {
+    /* Page Margin Style */
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	font-size: 12px; 
+	font-family: "song", "MS Shell Dlg"; 
+	text-align: center;
+	/* Scrollbar Style */
+	scrollbar-face-color: #dadada; 
+	scrollbar-highlight-color:#ffffff;
+	overflow: auto; 
+	scrollbar-shadow-color:#737373; 
+	scrollbar-3dlight-color:#737373; 
+	scrollbar-arrow-color:#737373; 
+	scrollbar-track-color:#cdcdcd; 
+	scrollbar-darkshadow-color:#cdcdcd;
+}
+body, input, select, td, textarea
+    {
+	font-family:"song", "MS Shell Dlg"; 
+	font-size: 12px;
+	}
+TD {
+	font-size: 12px; 
+	color: #404548; 
+	font-family: "Song", "MS Shell Dlg";
+	}	
+img{
+    border:none;
+	}
+form{margin:0;}
+.headDiv {
+	background-color: #CCDFFF;	
+	padding-top: 12px;	
+	padding-bottom:15px;	
+	text-align: left;
+	font-family: "宋体";
+	font-size: 12px;
+}
+.displayText {
+    height: 8px;
+	text-align:left;	
+	padding-bottom:8px;	
+	background-color: #deedf7;	
+	
+}
+#displayText {
+    height: 8px;
+	text-align:left;	
+	padding-bottom:8px;	
+	background-color: #deedf7;	
+	
+}
+.taskDiv {
+	background-color:#E5E8EC;	
+	text-align: left;
+	font-family: "宋体";
+	font-size: 12px;
+	
+}
+.textDiv1 {
+	background-color: #deedf7;	
+	padding-top:8px;	
+	padding-bottom: 8px;	
+	
+}
+.textDiv2 {
+	background-color: #E5E8EC;
+	padding-top:3px;	
+	padding-bottom: 3px;	
+	
+}
+.textDiv3 {
+	background-color: #E5E8EC;
+	padding-top:8px;	
+	padding-bottom: 8px;	
+	
+}
+
+.taskText {
+	text-align:left;	
+	padding-top:5px;	
+	padding-bottom: 5px;	
+	font-family: "宋体";
+	font-size: 12px;
+	background-color: #deedf7;	
+	
+}
+#hrText {
+border: dotted;
+color: #cccccc;
+}
+.button2 {
+	font-family: "??";
+	font-size: 12px;
+	background-image: url(../images/but_bg1.gif);
+	vertical-align: bottom;
+	height: 19px;
+	width: 65px;
+	border: 0px none;
+	cursor: hand;
+	padding-top: 3px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+}
+
+#textDiv1 {
+	width: 100%;
+	font-size: 12px;
+	font-family: "宋体";
+	text-align: right;
+}
+
+#textDiv2 {
+	width: 100%;
+	font-size: 12px;
+	font-family: "宋体";
+	text-align: left;
+	padding-top: 3px;
+	padding-bottom: 1px;
+	border-bottom-width: 2px;
+	border-bottom-style: dashed;
+	border-bottom-color: #deedf7;
+}
+
+#button3 {
+	font-family: "宋体";
+	font-size: 12px;
+	background-image: url(../images/but_bg1.gif);
+	vertical-align: bottom;
+	height: 19px;
+	width: 65px;
+	border: 0px none;
+	cursor: hand;
+	padding-top: 3px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+}
+
+#buttonDiv {
+	background-color: #CCDFFF;
+	float: right;
+	text-align: right;
+	font-family: "宋体";
+	font-size: 12px;
+	width: 100%;
+	height: 20px;
+	margin: 0px auto;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	BORDER-BOTTOM: #0088FF 1px solid;
+}

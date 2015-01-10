@@ -1,0 +1,70 @@
+BODY {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	SCROLLBAR-FACE-COLOR: #d5d5d5;
+	SCROLLBAR-HIGHLIGHT-COLOR: #ffffff;
+	SCROLLBAR-SHADOW-COLOR: #ffffff;
+	SCROLLBAR-3DLIGHT-COLOR: #ffffff;
+	SCROLLBAR-ARROW-COLOR: #336699;
+	SCROLLBAR-TRACK-COLOR: #ffffff;
+	SCROLLBAR-DARKSHADOW-COLOR: #ffffff;
+	CURSOR: url('/images/blue.ani');
+	background-color: #F7F8F9;
+}
+.bOver {
+  font-family: Verdana;
+  font-size: 10px;
+  font-weight: bold;
+  color: white;
+
+  padding-top: 3px;
+  padding-left: 5px;
+  padding-bottom: 3px;
+  padding-right: 5px;
+
+  background-color: #99ccff;
+
+  cursor: hand;
+}
+
+.bOut {
+  font-family: Verdana;
+  font-size: 10px;
+  font-weight: bold;
+  color: white;
+  
+  padding-top: 3px;
+  padding-left: 5px;
+  padding-bottom: 3px;
+  padding-right: 5px;
+  
+  cursor: hand;
+}
+a:link {
+	border: 1px solid #FFFFFF;
+	color: #000000;
+	background-color: #FFFFFF;
+	text-decoration: none;
+
+
+}a:visited {
+	border: 1px solid #FFFFFF;
+	color: #000000;
+	background-color: #FFFFFF;
+	text-decoration: none;
+
+
+}
+a:hover {
+	color: #0000FF;
+	border: 1px solid #9933FF;
+	text-decoration: none;
+
+}a:active {
+	color: #0000FF;
+	border: 1px solid #9933FF;
+	text-decoration: none;
+
+}

@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='utf-8'?><wsdl:definitions name="IMos2RmsService" targetNamespace="http://mos.rms.cattsoft.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://mos.rms.cattsoft.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://mos.rms.cattsoft.com/" xmlns:tns="http://mos.rms.cattsoft.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:element name="mos2rms" type="tns:mos2rms"></xsd:element>
+    <xsd:complexType name="mos2rms">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="funCode" type="xsd:string"></xsd:element>
+            <xsd:element minOccurs="0" name="xmlHeader" type="xsd:string"></xsd:element>
+            <xsd:element minOccurs="0" name="xmlString" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="mos2rmsResponse" type="tns:mos2rmsResponse"></xsd:element>
+    <xsd:complexType name="mos2rmsResponse">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="return" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="mos2rmsResponse">
+    <wsdl:part element="tns:mos2rmsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="mos2rms">
+    <wsdl:part element="tns:mos2rms" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="IMos2Rms">
+    <wsdl:operation name="mos2rms">
+      <wsdl:input message="tns:mos2rms" name="mos2rms">
+    </wsdl:input>
+      <wsdl:output message="tns:mos2rmsResponse" name="mos2rmsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="IMos2RmsServiceSoapBinding" type="tns:IMos2Rms">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"></soap:binding>
+    <wsdl:operation name="mos2rms">
+      <soap:operation soapAction="" style="document"></soap:operation>
+      <wsdl:input name="mos2rms">
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="mos2rmsResponse">
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="IMos2RmsService">
+    <wsdl:port binding="tns:IMos2RmsServiceSoapBinding" name="IMos2RmsPort">
+      <soap:address location="http://192.168.100.39:9009/trms/services/Mos2RmsService"></soap:address>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

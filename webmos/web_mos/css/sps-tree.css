@@ -1,0 +1,540 @@
+@import url("cssbtn.css");
+/* Development Note
+===========================================
+ 97WEB系统新版
+ 系统CSS样式表文件
+ Copyright @ CATTSoft All rights reserved.
+ 编写: 孟华, hua.m@263.net
+ 开始编写时间：2004-08-23
+ 最后修改时间：2004-09-14
+ 版本号：P1.0
+-------------------------------------------*/
+
+/*---------------------System Style------------------------*/
+
+a:link {color:#0D2F40;text-decoration:none;}
+a:visited {color:#295266;text-decoration:none;}
+a:active {color:#295266;text-decoration:none;}
+a:hover {color:#295266;text-decoration:none;}
+/*-----------------------------------------------------*/
+BODY {
+    /* Page Margin Style */
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	font-size: 12px;
+	font-family: "song", "MS Shell Dlg";
+	text-align: center;
+	/* Scrollbar Style */
+	scrollbar-face-color: #dadada;
+	scrollbar-highlight-color:#ffffff;
+	overflow: auto;
+	scrollbar-shadow-color:#737373;
+	scrollbar-3dlight-color:#737373;
+	scrollbar-arrow-color:#737373;
+	scrollbar-track-color:#cdcdcd;
+	scrollbar-darkshadow-color:#cdcdcd;
+}
+body, input, select, td, textarea
+    {
+	font-family:"song", "MS Shell Dlg";
+	font-size: 12px;
+	}
+TD {
+	font-size: 12px;
+	color: #0D2F40;
+	font-family: "Song", "MS Shell Dlg";
+	}
+img{
+    border:none;
+	}
+form{margin:0;}
+/*---------------------------------------------*/
+input{
+	margin: 1px;
+	padding: 1px;
+	height: 19px;
+	border: 1px solid #9FAAB5;
+	border-top: 1px solid #7D8B99;
+	border-left: 1px solid #7D8B99;
+	border-right: 1px solid #D6DADE;
+	border-bottom: 1px solid #D6DADE;
+	font-size: 12px;
+	background-color: #ffffff;
+}
+input.text {
+	margin: 1px;
+	padding: 1px;
+	height: 19px;
+	border: 1px solid #9FAAB5;
+	border-top: 1px solid #7D8B99;
+	border-left: 1px solid #7D8B99;
+	border-right: 1px solid #D6DADE;
+	border-bottom: 1px solid #D6DADE;
+	font-size: 12px;
+	background-color: #ffffff;
+}
+input.textdisable {
+	margin: 1px;
+	padding: 1px;
+	height: 19px;
+	border: 1px solid #9FAAB5;
+	border-top: 1px solid #7D8B99;
+	border-left: 1px solid #7D8B99;
+	border-right: 1px solid #ffffff;
+	border-bottom: 1px solid #ffffff;
+	font-size: 12px;
+	background-color: #f0f0f0;
+}
+
+input.submit
+    {
+	margin: 1px;
+	padding: 1px;
+	border: 1px solid #9FAAB5;
+	border-top: 1px solid #ffffff;
+	border-left: 1px solid #ffffff;
+	border-right: 1px solid #7D8B99;
+	border-bottom: 1px solid #7D8B99;
+	font-size: 12px;
+	background-color: #BDC6CE;
+	height: 25px;
+	width: 50px;
+
+	}
+/*---------------------------*/
+select
+    {
+	border: 1px solid #9FAAB5;
+	background-color: #F6F6F6;
+	}
+
+/*---------------------User Class Style------------------------*/
+.title_text
+    {
+	font-size:14px;
+	font-weight:bolder;
+	font-family: "song", "MS Shell Dlg";
+	}
+.TC_table
+    {
+	font-size:12px;
+	line-height:18px;
+	background-color: #DDE1E6;
+	/*filter:progid:DXImageTransform.Microsoft.Shadow(Color=#9FAAB5,Direction=120,strength=2);*/
+	border: 1px solid #9FAAB5;
+	TableCellSpacing:expression(this.cellSpacing=0);
+	}
+.TC_table tr
+    {
+	onMouseOverLighe:expression(onmouseover=function(){bgColor="#f0f0f0"},onmouseout=function(){bgColor=""});
+    /*alternateColor:expression(bgColor=rowIndex%2==0?'#DDE1E6':'#EbEbEb'); 表格隔行变色的控制*/
+	border-spacing: 0px;
+	}
+.TC_table td
+    {
+	border: 1px solid #9FAAB5;
+	border-top: 1px solid #ffffff;
+	border-left: 1px solid #ffffff;
+	border-right: 1px solid #9FAAB5;
+	border-bottom: 1px solid #9FAAB5;
+	}
+
+/*---------------------------*/
+.TC_table2
+    {
+	font-size:12px;
+	background-color: #E5E8EC;
+	border: 1px solid #9FAAB5;
+	TableCellSpacing:expression(this.cellSpacing=0);
+	}
+.TC_table2 tr
+    {
+	/*onMouseOverLighe:expression(onmouseover=function(){bgColor="#DDE1E6"},onmouseout=function(){bgColor=""});
+    alternateColor:expression(bgColor=rowIndex%2==0?'#DDE1E6':'#EbEbEb'); 表格隔行变色的控制*/
+	border-spacing: 0px;
+	}
+.TC_table2 td
+    {
+	border: 1px solid #9FAAB5;
+	border-top: 1px solid #ffffff;
+	border-left: 1px solid #ffffff;
+	border-right: 1px solid #9FAAB5;
+	border-bottom: 1px solid #9FAAB5;
+	}
+/*------------------------Menu Class Style----------------------*/
+#menulayer0Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
+}
+#iconlayer0Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 22px; layer-background-color: #ffffff
+}
+#barlayer0Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 32px 0px); HEIGHT: 32px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
+}
+#uplayer0Div {
+	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 26px; WIDTH: 16px; layer-background-color: #cccccc
+}
+#downlayer0Div {
+	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 42px; WIDTH: 16px; layer-background-color: #cccccc
+}
+#menulayer1Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
+}
+#iconlayer1Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 22px; layer-background-color: #ffffff
+}
+#barlayer1Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 32px 0px); HEIGHT: 32px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
+}
+#uplayer1Div {
+	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 26px; WIDTH: 16px; layer-background-color: #cccccc
+}
+#downlayer1Div {
+	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 42px; WIDTH: 16px; layer-background-color: #cccccc
+}
+#menulayer2Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
+}
+#iconlayer2Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 22px; layer-background-color: #ffffff
+}
+#barlayer2Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 32px 0px); HEIGHT: 32px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
+}
+#uplayer2Div {
+	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 26px; WIDTH: 16px; layer-background-color: #cccccc
+}
+#downlayer2Div {
+	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 42px; WIDTH: 16px; layer-background-color: #cccccc
+}
+#menulayer3Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
+}
+#iconlayer3Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 22px; layer-background-color: #ffffff
+}
+#barlayer3Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 32px 0px); HEIGHT: 32px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
+}
+#uplayer3Div {
+	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 26px; WIDTH: 16px; layer-background-color: #cccccc
+}
+#downlayer3Div {
+	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 42px; WIDTH: 16px; layer-background-color: #cccccc
+}
+#menulayer4Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
+}
+#iconlayer4Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 22px; layer-background-color: #ffffff
+}
+#barlayer4Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 32px 0px); HEIGHT: 32px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
+}
+#uplayer4Div {
+	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 26px; WIDTH: 16px; layer-background-color: #cccccc
+}
+#downlayer4Div {
+	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 42px; WIDTH: 16px; layer-background-color: #cccccc
+}
+#menulayer5Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
+}
+#iconlayer5Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 22px; layer-background-color: #ffffff;
+}
+#barlayer5Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 32px 0px); HEIGHT: 32px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
+}
+#uplayer5Div {
+	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 26px; WIDTH: 16px; layer-background-color: #cccccc
+}
+#downlayer5Div {
+	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 42px; WIDTH: 16px; layer-background-color: #cccccc
+}
+#menulayer6Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
+}
+#iconlayer6Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 22px; layer-background-color: #ffffff
+}
+#barlayer6Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 32px 0px); HEIGHT: 32px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
+}
+#uplayer6Div {
+	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 26px; WIDTH: 16px; layer-background-color: #cccccc
+}
+#downlayer6Div {
+	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 42px; WIDTH: 16px; layer-background-color: #cccccc
+}
+/*------------TBODY---------------------*/
+.sec1 {
+    background-image:   url(../image/2.jpg);
+	background-color:#F3F4F6;
+    cursor: hand;
+    color: #000000;
+    border-left: 1px solid #F4F5F7;
+    /*border-top: 1px solid #FFFFFF;
+    border-right: 1px solid gray;*/
+    border-bottom: 1px solid #FFFFFF
+    }
+.sec2 {
+    background-image:   url(../image/1.jpg);
+	background-color:#F3F4F6;
+    cursor: hand;
+    color: #000000;
+    border-left: 1px solid #F4F5F7;
+    /*border-top: 1px solid #FFFFFF;
+   border-right: 1px solid gray;*/
+    border-bottom: 1px solid #DDE1E6;
+    font-weight: bold;
+    }
+.main_tab {
+    background-color: #DDE1E6;
+    color: #000000;
+    border-left:1px solid #FFFFFF;
+    border-right: 1px solid gray;
+    border-bottom: 1px solid gray;
+    }
+.datefont {
+	font-size: 12px;
+	font-style: normal;
+	line-height: normal;
+	font-weight: bold;
+	color: #333333;
+	text-decoration: none;
+	text-align: center;
+	vertical-align: middle;
+	white-space: normal;
+	font-variant: normal;
+}
+
+.busy_table {//时间漏斗的样式
+ border-top: 2px solid #CCCCCC;
+ border-right: 2px solid #999999;
+ border-bottom: 2px solid #999999;
+ border-left: 2px solid #CCCCCC;
+ background-color: #E7E7E7; 
+}
+.bulletin_t {
+	font-size: 12px;
+	font-family: "song", "MS Shell Dlg";
+	font-size: 12px;	
+	color: #003366;
+	font-weight: bold;
+}
+.menu-f {
+	font-size: 14px;
+	color: #295266;
+	text-decoration: none;
+	font-style: normal;
+	font-weight: bold;
+	text-align: center;
+	text-transform: none;
+	vertical-align: text-bottom;
+}
+
+.style2 {
+	font-size: 14px;
+	color: ##0D2F40;
+	font-family: "song", "MS Shell Dlg";
+}
+/*------------table_style---------------------*/
+.table_yellow {
+	border: 1px solid #9FAAB5;
+	FONT: normal 12px "song", "MS Shell Dlg";
+	COLOR: #0D2F40;
+	background-image: none;
+	background-color: #E9EBE6;	
+}
+
+
+.table_gray {
+	border: 1px solid #9FAAB5;
+	FONT: normal 12px "song", "MS Shell Dlg";
+	COLOR: #0D2F40;
+	background-image: none;
+	background-color: #EFF0F2;	
+}
+.table_yellow1
+{
+	FONT: normal 12px "song", "MS Shell Dlg";
+	color:#A14545;
+	text-decoration: none;
+	background-image: url(../image/table-bg-yellow02.gif);
+	background-repeat: repeat-x;
+	}
+.table_gray1
+{
+	FONT: bold 12px "song", "MS Shell Dlg";
+	COLOR: #0D2F40;
+	text-decoration: none;
+	background-image: url(../image/table-bg-gray02.gif);
+	background-repeat: repeat-x;
+	}
+/*----button style----*/
+.button1{
+	FONT: normal 12px "song", "MS Shell Dlg";
+	COLOR: #0D2F40;
+	text-align: center;
+	vertical-align: bottom;
+	height: 19px;
+	width: 79px;
+	border: 0px none;
+	cursor: hand;
+	padding-top: 2px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 1px;
+	background-image:url(../image/button_bg1.gif);
+	}
+
+.button2{
+	FONT: normal 12px "song", "MS Shell Dlg";
+	COLOR:#000000;
+	text-align: center;
+	vertical-align: bottom;
+	height: 19px;
+	width: 49px;
+	border: 0px none;
+	cursor: hand;
+	padding-top: 2px;
+	padding-right: 0px;
+	padding-bottom: 1px;
+	padding-left: 1px;
+	background-image:url(../image/button_but_bg1.gif);
+	}
+
+.button3{
+	FONT: normal 12px "song", "MS Shell Dlg";
+	COLOR:#000000;
+	text-align: center;
+	vertical-align: bottom;
+	height: 19px;
+	width: 65px;
+	border: 0px none;
+	cursor: hand;
+	padding-top: 2px;
+	padding-right: 0px;
+	padding-bottom: 1px;
+	padding-left: 1px;
+	background-image:url(../image/button_but_bg2.gif);
+	}
+
+.button4{
+	FONT: normal 12px "song", "MS Shell Dlg";
+	COLOR:#000000;
+	text-align: center;
+	vertical-align: bottom;
+	height: 19px;
+	width: 34px;
+	border: 0px none;
+	cursor: hand;
+	padding-top: 3px;
+	padding-right: 1px;
+	padding-bottom: 0px;
+	padding-left: 2px;
+	background-image:url(../image/button_but_bg3.gif);
+	}
+
+.button5{
+	FONT: normal 12px "song", "MS Shell Dlg";
+	COLOR:#0D2F40;
+	text-align: center;
+	vertical-align: bottom;
+	height: 22px;
+	width: 40px;
+	border: 0px none;
+	cursor: hand;
+	padding-top: 2px;
+	padding-right: 0px;
+	padding-bottom: 1px;
+	padding-left: 1px;
+	background-image:url(../image/button_bg2.gif);	
+	}
+.button6{
+	FONT: normal 12px "song", "MS Shell Dlg";
+	COLOR:#0D2F40;
+	text-align: center;
+	vertical-align: bottom;
+	height: 19spx;
+	width: 135px;
+	border: 0px none;
+	cursor: hand;
+	padding-top: 2px;
+	padding-right: 0px;
+	padding-bottom: 1px;
+	padding-left: 1px;
+	background-image:url(../image/button_bg3.gif);	
+	}
+.button7{
+	FONT: normal 12px "song", "MS Shell Dlg";
+	COLOR:#000000;
+	text-align: center;
+	vertical-align: bottom;
+	height: 19px;
+	width: 92px;
+	border: 0px none;
+	cursor: hand;
+	padding-top: 3px;
+	padding-right: 1px;
+	padding-bottom: 0px;
+	padding-left: 2px;
+	background-image:url(../image/button_but_bg4.gif);
+	}
+.button8{
+	FONT:  normal 14px "song", "MS Shell Dlg";
+	font-weight:bolder;
+	COLOR:#0D2F40;
+	text-align: center;
+	vertical-align: bottom;
+	height:28px;
+	width: 111px;
+	border: 0px none;
+	cursor: hand;
+	padding-top: 5px;
+	padding-right: 1px;
+	padding-bottom: 0px;
+	padding-left: 2px;
+	background-image:url(../image/button_bg4.gif);	
+	
+	}
+.button9{
+	FONT:  normal 14px "song", "MS Shell Dlg";
+	font-weight:bolder;
+	COLOR:#5F606E;
+	text-align: center;
+	vertical-align: bottom;
+	height:19px;
+	width: 13px;
+	border: 0px none;
+	cursor: hand;
+	padding-top: 2px;
+	padding-right: 1px;
+	padding-bottom: 0px;
+	padding-left: 2px;
+	background-image:url(../image/button_but_bg5.gif);	
+}
+.button10{
+	FONT:  normal 14px "song", "MS Shell Dlg";
+	font-weight:bolder;
+	COLOR:#5F606E;
+	text-align: center;
+	vertical-align: bottom;
+	height:19px;
+	width: 28px;
+	border: 0px none;
+	cursor: hand;
+	padding-top: 2px;
+	padding-right: 1px;
+	padding-bottom: 0px;
+	padding-left: 2px;
+	background-image:url(../image/button_but_bg6.gif);	
+	
+	}
+	
+	
+	
+	

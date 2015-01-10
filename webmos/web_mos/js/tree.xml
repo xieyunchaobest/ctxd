@@ -1,0 +1,609 @@
+<?xml version='1.0' encoding='gb2312'?>
+<tree>
+
+ <entity id='../sm/system_message.htm'>
+            <leaf>true</leaf>
+            <description>系统管理</description>
+            <image>../images/catalog.gif</image>
+        <imageOpen>../images/nodeOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+<!--
+  <entity id='SM'>
+    
+	<description>系统管理</description>
+    <image>../images/catalog.gif</image>
+        <imageOpen>../images/catalogOpen.gif</imageOpen>
+	<contents> 
+   
+    </contents>     
+    </entity>
+
+-->
+
+ <entity id='../pm/prod_message.htm'>
+            <leaf>true</leaf>
+            <description>产品管理</description>
+            <image>../images/catalog.gif</image>
+        <imageOpen>../images/nodeOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+<!--
+   <entity id='PM'>
+    
+    <description>产品管理</description>
+    <image>images/link.gif</image>
+    <imageOpen>images/linkOpen.gif</imageOpen>
+    <contents>
+  
+    </contents>
+    </entity>
+-->
+
+
+<entity id='../wm/work_message.htm'>
+            <leaf>true</leaf>
+            <description>流程管理</description>
+            <image>../images/catalog.gif</image>
+        <imageOpen>../images/nodeOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+<!--
+   <entity id='WM'>
+    <description>流程管理</description>
+    <image>images/link.gif</image>
+    <imageOpen>images/linkOpen.gif</imageOpen>
+    <contents>
+  
+    </contents>
+    </entity>
+
+-->
+<entity id='SP'>
+    <description>服务开通</description>
+    <image>../images/catalog.gif</image>
+        <imageOpen>../images/nodeOpen.gif</imageOpen>
+    <contents>
+
+        <entity id='SP00'>
+        <description>开通配置</description>
+        <image>../images/catalog.gif</image>
+        <imageOpen>../images/nodeOpen.gif</imageOpen>
+         <contents> 
+		 <entity id='../sp/ChkRuleAction.do?method=init'>
+            <leaf>true</leaf>
+            <description>校验规则配置</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+		   <entity id='../sp/SoTemplateAction.do?method=init'>
+            <leaf>true</leaf>
+            <description>定单模板配置</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+		  <entity id='../sp/SoTemplateMatchAndProess.jsp'>
+            <leaf>true</leaf>
+            <description>定单模版管理</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+		  <!--  
+		  <entity id='../sp/SPExch.htm'>
+            <leaf>true</leaf>
+            <description>局向管理</description>
+            <image>../images/catalog.gif</image>
+        <imageOpen>../images/catalogOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>  -->
+		  <entity id='../sp/WorkTypeAction.do?method=init'>
+            <leaf>true</leaf>
+            <description>工区类型配置</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+<!-- 
+		  <entity id='../sp/SPWorkArea.htm'>
+            <leaf>true</leaf>
+            <description>工区维护</description>
+            <image>../images/catalog.gif</image>
+        <imageOpen>../images/catalogOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+            -->
+          <entity id='../sp/StepAction.do?method=init'>
+            <leaf>true</leaf>
+            <description>施工环节配置</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+          <entity id='../sp/InterCallConfigAction.do?method=init'>
+            <leaf>true</leaf>
+            <description>自动接口配置</description>
+           <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+          <entity id='../sp/CollaborateRuleAction.do?method=init'>
+            <leaf>true</leaf>
+            <description>协同规则管理</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+          <entity id='../sp/CollabRuleBusiAction.do?method=init'>
+            <leaf>true</leaf>
+            <description>协同规则业务</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+		  <entity id='../sp/ProcessCollabRule.jsp'>
+            <leaf>true</leaf>
+            <description>流程协同规则</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+          <entity id='../sp/FailReasonAction.do?method=init'>
+            <leaf>true</leaf>
+            <description>异常原因配置</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+		   <entity id='../sp/StepCollabRule.jsp'>
+            <leaf>true</leaf>
+            <description>环节异常原因</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+         
+        </contents>
+        </entity>
+
+		<entity id='SP01'>
+        <description>定单管理</description>
+        <image>../images/catalog.gif</image>
+        <imageOpen>../images/nodeOpen.gif</imageOpen>
+      <contents> 
+          
+          <entity id='../sp/SoAction.do?method=init'>
+            <leaf>true</leaf>
+            <description>定单查询</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+          
+          <entity id='../sp/InterServiceOrderAction.do?method=init'>
+            <leaf>true</leaf>
+            <description>定单导入</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+          
+            <entity id='../sp/ManCompleteAction.do?method=init'>
+            <leaf>true</leaf>
+            <description>人工竣工</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+           </entity>  
+            <entity id='../sp/SoReturnCallAction.do?method=init'>
+            <leaf>true</leaf>
+            <description>定单回访</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+         
+         </contents>
+        </entity>
+		 <entity id='SP02'>
+        <description>服务设计</description>
+        <image>../images/catalog.gif</image>
+        <imageOpen>../images/nodeOpen.gif</imageOpen>
+      <contents> 
+          <entity id='../sp/SoAction.do?method=initSoAndProc'>
+            <leaf>true</leaf>
+            <description>选择流程</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+       </contents>
+     </entity>
+
+
+ </contents>
+ </entity>
+ <entity id='TM'>
+    <description>施工调度</description>
+    <image>../images/catalog.gif</image>
+        <imageOpen>../images/nodeOpen.gif</imageOpen>
+    <contents>
+  
+      <entity id='TM01'>
+        <description>施工配置</description>
+        <image>../images/catalog.gif</image>
+        <imageOpen>../images/nodeOpen.gif</imageOpen>
+      <contents> 
+         <!-- <entity id='../tm/TMWorkTimeMag.htm'>
+            <leaf>true</leaf>
+            <description>工作时间片管理</description>
+            <image>../images/catalog.gif</image>
+        <imageOpen>../images/catalogOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>   -->
+          <entity id='../tm/WoHandleCustomAction.do?method=init'>
+            <leaf>true</leaf>
+            <description>施工处理界面定制</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+		   <entity id='../tm/WoDisplayCustom.jsp'>
+            <leaf>true</leaf>
+            <description>工单展现界面定制</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+         
+          <entity id='../tm/WoPrintVisCustom.jsp'>
+            <leaf>true</leaf>
+            <description>工单打印可视化定制</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+          </contents>
+        </entity>
+
+
+		<entity id='TM02'>
+        <description>施工管理</description>
+        <image>../images/catalog.gif</image>
+        <imageOpen>../images/nodeOpen.gif</imageOpen>
+      <contents> 
+          <entity id='../tm/WoHandleAction.do?method=initHandle'>
+            <leaf>true</leaf>
+            <description>施工处理</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+           <entity id='../tm/WoReprintAction.do?method=initReprint'>
+            <leaf>true</leaf>
+            <description>工单重打</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+          <entity id='../tm/WoSurveyAction.do?method=init'>
+            <leaf>true</leaf>
+            <description>外勘处理</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+          <entity id='../tm/WoPressDispatchAction.do?method=initWoPressDisp'>
+            <leaf>true</leaf>
+            <description>催单派发</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+         
+		<!-- <entity id='../tm/TMWaitOut.htm'>
+            <leaf>true</leaf>
+            <description>待装转出</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>-->
+		   
+		  <!-- <entity id='../tm/TMResPatch.htm'>
+            <leaf>true</leaf>
+            <description>后补资源</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+		  -->
+          </contents>
+        </entity>   
+
+        <entity id='TM03'>
+        <description>工单管理</description>
+        <image>../images/catalog.gif</image>
+        <imageOpen>../images/nodeOpen.gif</imageOpen>
+         <contents> 
+          <entity id='../tm/WoQueryAction.do?method=init'>
+            <leaf>true</leaf>
+            <description>工单查询</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+
+		  <entity id='../tm/WoCancelCheckAction.do?method=init'>
+            <leaf>true</leaf>
+            <description>退单审核</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+       </contents>
+     </entity>
+    
+</contents>
+   </entity>
+	 
+<entity id='BM'>
+    <description>开通监管</description>
+    <image>../images/catalog.gif</image>
+        <imageOpen>../images/nodeOpen.gif</imageOpen>
+    <contents>
+      <entity id='BM01'>
+        <description>定单监控</description>
+        <image>../images/catalog.gif</image>
+        <imageOpen>../images/nodeOpen.gif</imageOpen>
+      <contents> 
+          <entity id='../bm/SoStsProdMonitor.do?method=init'>
+            <leaf>true</leaf>
+            <description>定单状态按产品目录监控</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+          <entity id='../bm/SoStsChgServMonitor.do?method=init'>
+            <leaf>true</leaf>
+            <description>定单状态按客户服务监控</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+          <entity id='../bm/SoStsStepMonitor.do?method=init'>
+            <leaf>true</leaf>
+            <description>定单状态按当前环节监控</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+          <entity id='../bm/SoStsWorkAreaMonitor.do?method=init'>
+            <leaf>true</leaf>
+            <description>定单状态按滞留工区监控</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+          <entity id='../bm/SoStsWorkTypeMonitor.do?method=init'>
+            <leaf>true</leaf>
+            <description>定单状态按工区类型监控</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+          <entity id='../bm/SoOverTimeProdMonitor.do?method=init'>
+            <leaf>true</leaf>
+            <description>超期定单按产品目录监控</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+          <entity id='../bm/SoOverTimeChgServMonitor.do?method=init'>
+            <leaf>true</leaf>
+            <description>超期定单按客户服务监控</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+          <entity id='../bm/SoOverTimeStepMonitor.do?method=init'>
+            <leaf>true</leaf>
+            <description>超期定单按当前环节监控</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+          <entity id='../bm/SoOverTimeWorkAreaMonitorAction.do?method=init'>
+            <leaf>true</leaf>
+            <description>超期定单按滞留工区监控</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+          <entity id='../bm/SoOverTimeWorkTypeMonitorAction.do?method=init'>
+            <leaf>true</leaf>
+            <description>超期定单按工区类型监控</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+      </contents>
+     </entity>
+
+       <entity id='BM02'>
+        <description>工单监控</description>
+        <image>../images/catalog.gif</image>
+        <imageOpen>../images/nodeOpen.gif</imageOpen>
+      <contents> 
+          <entity id='../bm/WoStsProdMonitor.do?method=init'>
+            <leaf>true</leaf>
+            <description>工单状态按产品目录监控</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+          <entity id='../bm/WoStsChgServMonitor.do?method=init'>
+            <leaf>true</leaf>
+            <description>工单状态按客户服务监控</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+          <entity id='../bm/WoStsStepMonitor.do?method=init'>
+            <leaf>true</leaf>
+            <description>工单状态按当前环节监控</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+          <entity id='../bm/WoStsWorkAreaMonitor.do?method=init'>
+            <leaf>true</leaf>
+            <description>工单状态按滞留工区监控</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+          <entity id='../bm/WoStsWorkTypeMonitor.do?method=init'>
+            <leaf>true</leaf>
+            <description>工单状态按工区类型监控</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+          <entity id='../bm/WoOverTimeProdMonitor.do?method=init'>
+            <leaf>true</leaf>
+            <description>超期工单按产品目录监控</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+          <entity id='../bm/WoOverTimeChgServMonitor.do?method=init'>
+            <leaf>true</leaf>
+            <description>超期工单按客户服务监控</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+          <entity id='../bm/WoOverTimeStepMonitor.do?method=init'>
+            <leaf>true</leaf>
+            <description>超期工单按当前环节监控</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+          <entity id='../bm/WoOverTimeWorkAreaMonitor.do?method=init'>
+            <leaf>true</leaf>
+            <description>超期工单按滞留工区监控</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+          <entity id='../bm/WoOverTimeWorkTypeMonitor.do?method=init'>
+            <leaf>true</leaf>
+            <description>超期工单按工区类型监控</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+      </contents>
+     </entity>
+
+        <entity id='BM03'>
+        <description>异常监控</description>
+        <image>../images/catalog.gif</image>
+        <imageOpen>../images/nodeOpen.gif</imageOpen>
+      <contents> 
+          <entity id='../bm/ExceWorkflowMonitor.htm'>
+            <leaf>true</leaf>
+            <description>异常流程监控</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+          <entity id='../bm/ExceCRMInterMonitor.htm'>
+            <leaf>true</leaf>
+            <description>CRM接口数据异常监控</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+       </contents>
+     </entity>
+
+        <entity id='BM04'>
+        <description>接口监控</description>
+        <image>../images/catalog.gif</image>
+        <imageOpen>../images/nodeOpen.gif</imageOpen>
+      <contents> 
+          <entity id='../bm/CRMInterMonitor.htm'>
+            <leaf>true</leaf>
+            <description>CRM接口监控</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+          <entity id='../bm/NetActInterMonitor.htm'>
+            <leaf>true</leaf>
+            <description>网络激活接口监控</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+           <entity id='../bm/ResInterMonitor.htm'>
+            <leaf>true</leaf>
+            <description>资源管理接口监控</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+          <entity id='../bm/WorkflowInterMonitor.htm'>
+            <leaf>true</leaf>
+            <description>工作流接口监控</description>
+            <image>../images/link.gif</image>
+            <imageOpen>../images/linkOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+         
+       </contents>
+     </entity>
+     </contents>
+    </entity>
+
+	<entity id='../im/interface_message.htm'>
+            <leaf>true</leaf>
+            <description>接口管理</description>
+            <image>../images/catalog.gif</image>
+        <imageOpen>../images/nodeOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+<!--
+    <entity id='IM'>
+    <description>接口管理</description>
+    <image>../images/catalog.gif</image>
+    <imageOpen>../images/catalogOpen.gif</imageOpen>
+    <contents>
+  
+    </contents>
+    </entity>
+-->
+
+<entity id='../qr/qr_message.htm'>
+            <leaf>true</leaf>
+            <description>统计报表</description>
+            <image>../images/catalog.gif</image>
+            <imageOpen>../images/nodeOpen.gif</imageOpen>
+            <contents></contents>
+          </entity>
+		  <!--
+    <entity id='QR'>
+    <description>统计报表</description>
+    <image>images/link.gif</image>
+            <imageOpen>images/linkOpen.gif</imageOpen>
+    <contents>
+	
+     </contents>
+    </entity>
+-->
+  
+</tree>

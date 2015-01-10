@@ -1,0 +1,38 @@
+A:link {
+	text-decoration:	underline;
+	color:	#006699;
+}
+
+A:visited {	
+	text-decoration:	underline;
+	color:	#006699;
+}
+
+A:active {
+	color:	#006699;
+	text-decoration: none;
+}
+
+A:hover {
+	color:	#FFFFFF;
+	text-decoration: none;
+	background-color: #006666;
+}
+
+body {
+	font-family: "Tahoma", "ËÎÌו", "MS Sans Serif";
+	font-size: 9pt;
+	color: #000000;
+	background-color: #FFFFFF;
+}
+
+table {
+	font-family: "Tahoma", "ËÎÌו", "MS Sans Serif";
+	font-size: 9pt;
+}
+
+input {
+	border: 1px solid #000000;
+	background-color: #FFFFFF;
+	font-size: 9pt;
+}

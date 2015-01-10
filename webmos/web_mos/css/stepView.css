@@ -1,0 +1,151 @@
+ /* Development Note
+===========================================
+ 环节权重可视化配置功能点css样式表
+ Copyright @ CATTSoft All rights reserved.
+ 编写: 刘凯, liukai@cattsoft.com
+ 开始编写时间：2009-3-10
+ 版本号：P1.0
+-------------------------------------------*/  
+
+   .DragContainer {
+	 MARGIN: 0px;
+	 FLOAT: left; 
+     WIDTH: 105px;
+   }
+   .MapDragContainer {
+	 MARGIN: 0px;
+	 FLOAT: left; 
+     WIDTH: 114px; 
+     BORDER: #FFFFCC 1px solid;
+   }
+  .DragBox {
+      BORDER-BOTTOM:1px dotted #8B8B89;
+      padding:0px,2px,0px,20px;
+	  FONT-SIZE: 11px; 
+	  MARGIN-TOP:2px;
+	  MARGIN-BOTTOM:2px; 
+	  WIDTH: 99px; 
+	  text-overflow:ellipsis; 
+      white-space:nowrap;
+	  overflow:hidden; 
+	  CURSOR: pointer; 
+	  FONT-FAMILY: verdana, tahoma, arial; 
+	  BACKGROUND-COLOR: #eee;   
+	  background:url(../images/tree/stepball.gif) no-repeat
+	}
+	.OverDragBox {
+	 text-overflow:ellipsis; 
+     white-space:nowrap; 
+	 border:#000 1px solid; 
+	 padding:0px,2px,0px,20px;
+	 FONT-SIZE: 12px; 
+	 MARGIN-BOTTOM: 0px; 
+	 WIDTH: 94px; 
+	 CURSOR: pointer; 
+	 FONT-FAMILY: verdana, tahoma, arial; 
+	 BACKGROUND-COLOR: #eee;
+	 background:url(../images/tree/stepball.gif) no-repeat
+	}
+	.DragDragBox {
+	 padding-left:3px;
+	 BORDER: #000 1px solid;
+	 FONT-SIZE: 10px; 
+	 MARGIN-BOTTOM: 2px; 
+     WIDTH: 94px; 
+	 CURSOR: pointer; 
+     FONT-FAMILY: verdana, tahoma, arial; 
+	 BACKGROUND-COLOR: #eee;
+	 background:url(../images/tree/stepball.gif) no-repeat
+	}
+	.DragDragBox {
+	 BACKGROUND-COLOR: #ffff99
+	}
+	.DragDragBox {
+	 FILTER: alpha(opacity=50);
+	 BACKGROUND-COLOR:#CCCCCC
+	}
+	fieldSet{
+	   margin:5px,5px,5px,5px;
+	}
+	LEGEND {
+	  FONT-SIZE: 12px; COLOR: #000; FONT-FAMILY: verdana, tahoma, arial
+	}
+	#treeDIV .treeTypeTd{
+	  height:20px;
+	  width:100px;
+	  padding-left:20px;
+	  font-size:11px;
+	  text-align:left;
+	  padding-top:7px;
+	  font-weight:bold;
+	  color:#535353;
+	  background:url(../images/tree/stepTreeTd.gif) no-repeat;
+	 }
+	 #treeDIV td{
+	  font-size:13px;
+	  text-align:left;
+	 padding:0px,0px,2px,0px;
+	 }
+	#viewTable{
+		FONT-FAMILY: verdana, tahoma, arial;
+		FONT-SIZE:12px;
+		border-collapse: collapse; 
+		background-color: #F7FBFE;
+	}
+	#viewTable td{
+	    padding:1px,1px,1px,1px;
+		margin:0px,2px,0px,0px;
+		width:100px;
+		text-align:center;
+		background-color: #FFFFFF;
+		border-collapse: collapse; 
+		background-color: #F7FBFE;
+		border: 1px solid #93C3E3;
+	}
+  #viewTable .powertd{
+       padding:0px,0px,0px,0px;
+	   FONT-SIZE:16px;
+	   font-weight:bold;
+	   text-align:center;
+	}
+ .viewbtn{
+	  text-align:right;
+	  height:30px;
+	  padding-right:8px;
+	  margin-bottom:0px;
+	 }
+    .button2 {
+	 font-size: 12px;
+	 background-image:url(../images/but_bg1.gif);
+	 vertical-align: top;
+	 height: 19px;
+	 width: 65px;
+	 border: 0px none;
+	 cursor: hand;
+	 padding: 3px 0px 0px 0px;
+  }
+  .view{
+    margin-bottom:0px;
+    padding:0px;
+  }
+  div.RoundedCorner{
+    background: #9BD1FA;
+    width:115px;
+ }
+  b.rtop, b.rbottom{
+    display:block;
+    background: #FFF
+    }
+  b.rtop b, b.rbottom b{
+   display:block;
+   height: 1px;
+   overflow: hidden; 
+   background: #9BD1FA;
+  }
+  b.r1{margin: 0 5px}
+  b.r2{margin: 0 3px}
+  b.r3{margin: 0 2px}
+  b.rtop b.r4, b.rbottom b.r4{
+    margin: 0 1px;
+    height: 2px
+  }

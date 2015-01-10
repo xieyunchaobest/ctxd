@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="webmos"
+  id="myeclipse.1365676883699"
+  context-root="/ctxd"
+  j2ee-spec="5.0"
+  archive="webmos.war">
+  <attributes>
+    <attribute name="webrootdir" value="web_mos" />
+  </attributes>
+</project-module>
+

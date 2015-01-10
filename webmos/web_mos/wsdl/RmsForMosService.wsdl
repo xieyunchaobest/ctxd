@@ -1,0 +1,388 @@
+<?xml version='1.0' encoding='utf-8'?><wsdl:definitions name="RmsServiceForMos" targetNamespace="http://mos.rms.cattsoft.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://mos.rms.cattsoft.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://mos.rms.cattsoft.com/" xmlns:tns="http://mos.rms.cattsoft.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:element name="woListInit" type="tns:woListInit"></xsd:element>
+    <xsd:complexType name="woListInit">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="arg0" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="woListInitResponse" type="tns:woListInitResponse"></xsd:element>
+    <xsd:complexType name="woListInitResponse">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="return" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="resQuery" type="tns:resQuery"></xsd:element>
+    <xsd:complexType name="resQuery">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="arg0" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="resQueryResponse" type="tns:resQueryResponse"></xsd:element>
+    <xsd:complexType name="resQueryResponse">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="return" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="resChange" type="tns:resChange"></xsd:element>
+    <xsd:complexType name="resChange">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="arg0" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="resChangeResponse" type="tns:resChangeResponse"></xsd:element>
+    <xsd:complexType name="resChangeResponse">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="return" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="systemStatus" type="tns:systemStatus"></xsd:element>
+    <xsd:complexType name="systemStatus">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="arg0" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="systemStatusResponse" type="tns:systemStatusResponse"></xsd:element>
+    <xsd:complexType name="systemStatusResponse">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="return" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="portAndConnQuery" type="tns:portAndConnQuery"></xsd:element>
+    <xsd:complexType name="portAndConnQuery">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="arg0" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="portAndConnQueryResponse" type="tns:portAndConnQueryResponse"></xsd:element>
+    <xsd:complexType name="portAndConnQueryResponse">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="return" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="workBook" type="tns:workBook"></xsd:element>
+    <xsd:complexType name="workBook">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="arg0" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="workBookResponse" type="tns:workBookResponse"></xsd:element>
+    <xsd:complexType name="workBookResponse">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="return" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="rmsQuery" type="tns:rmsQuery"></xsd:element>
+    <xsd:complexType name="rmsQuery">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="arg0" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="rmsQueryResponse" type="tns:rmsQueryResponse"></xsd:element>
+    <xsd:complexType name="rmsQueryResponse">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="return" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="woOperate" type="tns:woOperate"></xsd:element>
+    <xsd:complexType name="woOperate">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="arg0" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="woOperateResponse" type="tns:woOperateResponse"></xsd:element>
+    <xsd:complexType name="woOperateResponse">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="return" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="realPosition" type="tns:realPosition"></xsd:element>
+    <xsd:complexType name="realPosition">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="arg0" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="realPositionResponse" type="tns:realPositionResponse"></xsd:element>
+    <xsd:complexType name="realPositionResponse">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="return" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="login" type="tns:login"></xsd:element>
+    <xsd:complexType name="login">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="arg0" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="loginResponse" type="tns:loginResponse"></xsd:element>
+    <xsd:complexType name="loginResponse">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="return" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="failReasonQuery" type="tns:failReasonQuery"></xsd:element>
+    <xsd:complexType name="failReasonQuery">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="arg0" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="failReasonQueryResponse" type="tns:failReasonQueryResponse"></xsd:element>
+    <xsd:complexType name="failReasonQueryResponse">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="return" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="deviceQuery" type="tns:deviceQuery"></xsd:element>
+    <xsd:complexType name="deviceQuery">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="arg0" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="deviceQueryResponse" type="tns:deviceQueryResponse"></xsd:element>
+    <xsd:complexType name="deviceQueryResponse">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="return" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="woListInitResponse">
+    <wsdl:part element="tns:woListInitResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="systemStatus">
+    <wsdl:part element="tns:systemStatus" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="realPosition">
+    <wsdl:part element="tns:realPosition" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="resQueryResponse">
+    <wsdl:part element="tns:resQueryResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="failReasonQueryResponse">
+    <wsdl:part element="tns:failReasonQueryResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="woListInit">
+    <wsdl:part element="tns:woListInit" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="portAndConnQuery">
+    <wsdl:part element="tns:portAndConnQuery" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="failReasonQuery">
+    <wsdl:part element="tns:failReasonQuery" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="loginResponse">
+    <wsdl:part element="tns:loginResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="rmsQuery">
+    <wsdl:part element="tns:rmsQuery" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="workBook">
+    <wsdl:part element="tns:workBook" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="resChange">
+    <wsdl:part element="tns:resChange" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="login">
+    <wsdl:part element="tns:login" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="resChangeResponse">
+    <wsdl:part element="tns:resChangeResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="resQuery">
+    <wsdl:part element="tns:resQuery" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="systemStatusResponse">
+    <wsdl:part element="tns:systemStatusResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="workBookResponse">
+    <wsdl:part element="tns:workBookResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="woOperateResponse">
+    <wsdl:part element="tns:woOperateResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="realPositionResponse">
+    <wsdl:part element="tns:realPositionResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deviceQuery">
+    <wsdl:part element="tns:deviceQuery" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="woOperate">
+    <wsdl:part element="tns:woOperate" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deviceQueryResponse">
+    <wsdl:part element="tns:deviceQueryResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="rmsQueryResponse">
+    <wsdl:part element="tns:rmsQueryResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="portAndConnQueryResponse">
+    <wsdl:part element="tns:portAndConnQueryResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="RmsServiceForMosDelegate">
+    <wsdl:operation name="woListInit">
+      <wsdl:input message="tns:woListInit" name="woListInit"></wsdl:input>
+      <wsdl:output message="tns:woListInitResponse" name="woListInitResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="resQuery">
+      <wsdl:input message="tns:resQuery" name="resQuery"></wsdl:input>
+      <wsdl:output message="tns:resQueryResponse" name="resQueryResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="resChange">
+      <wsdl:input message="tns:resChange" name="resChange"></wsdl:input>
+      <wsdl:output message="tns:resChangeResponse" name="resChangeResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="systemStatus">
+      <wsdl:input message="tns:systemStatus" name="systemStatus"></wsdl:input>
+      <wsdl:output message="tns:systemStatusResponse" name="systemStatusResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="portAndConnQuery">
+      <wsdl:input message="tns:portAndConnQuery" name="portAndConnQuery"></wsdl:input>
+      <wsdl:output message="tns:portAndConnQueryResponse" name="portAndConnQueryResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="workBook">
+      <wsdl:input message="tns:workBook" name="workBook"></wsdl:input>
+      <wsdl:output message="tns:workBookResponse" name="workBookResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="rmsQuery">
+      <wsdl:input message="tns:rmsQuery" name="rmsQuery"></wsdl:input>
+      <wsdl:output message="tns:rmsQueryResponse" name="rmsQueryResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="woOperate">
+      <wsdl:input message="tns:woOperate" name="woOperate"></wsdl:input>
+      <wsdl:output message="tns:woOperateResponse" name="woOperateResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="realPosition">
+      <wsdl:input message="tns:realPosition" name="realPosition"></wsdl:input>
+      <wsdl:output message="tns:realPositionResponse" name="realPositionResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="login">
+      <wsdl:input message="tns:login" name="login"></wsdl:input>
+      <wsdl:output message="tns:loginResponse" name="loginResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="failReasonQuery">
+      <wsdl:input message="tns:failReasonQuery" name="failReasonQuery"></wsdl:input>
+      <wsdl:output message="tns:failReasonQueryResponse" name="failReasonQueryResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deviceQuery">
+      <wsdl:input message="tns:deviceQuery" name="deviceQuery"></wsdl:input>
+      <wsdl:output message="tns:deviceQueryResponse" name="deviceQueryResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="RmsServiceForMosPortBinding" type="tns:RmsServiceForMosDelegate">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"></soap:binding>
+    <wsdl:operation name="woListInit">
+      <soap:operation soapAction="" style="document"></soap:operation>
+      <wsdl:input name="woListInit">
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="woListInitResponse">
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="resQuery">
+      <soap:operation soapAction="" style="document"></soap:operation>
+      <wsdl:input name="resQuery">
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="resQueryResponse">
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="resChange">
+      <soap:operation soapAction="" style="document"></soap:operation>
+      <wsdl:input name="resChange">
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="resChangeResponse">
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="systemStatus">
+      <soap:operation soapAction="" style="document"></soap:operation>
+      <wsdl:input name="systemStatus">
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="systemStatusResponse">
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="portAndConnQuery">
+      <soap:operation soapAction="" style="document"></soap:operation>
+      <wsdl:input name="portAndConnQuery">
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="portAndConnQueryResponse">
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="rmsQuery">
+      <soap:operation soapAction="" style="document"></soap:operation>
+      <wsdl:input name="rmsQuery">
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="rmsQueryResponse">
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="workBook">
+      <soap:operation soapAction="" style="document"></soap:operation>
+      <wsdl:input name="workBook">
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="workBookResponse">
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="realPosition">
+      <soap:operation soapAction="" style="document"></soap:operation>
+      <wsdl:input name="realPosition">
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="realPositionResponse">
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="woOperate">
+      <soap:operation soapAction="" style="document"></soap:operation>
+      <wsdl:input name="woOperate">
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="woOperateResponse">
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="login">
+      <soap:operation soapAction="" style="document"></soap:operation>
+      <wsdl:input name="login">
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="loginResponse">
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deviceQuery">
+      <soap:operation soapAction="" style="document"></soap:operation>
+      <wsdl:input name="deviceQuery">
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="deviceQueryResponse">
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="failReasonQuery">
+      <soap:operation soapAction="" style="document"></soap:operation>
+      <wsdl:input name="failReasonQuery">
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="failReasonQueryResponse">
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="RmsServiceForMos">
+    <wsdl:port binding="tns:RmsServiceForMosPortBinding" name="RmsServiceForMosPort">
+      <soap:address location="http://192.168.100.233:3991/trms/services/RmsServiceForMosPort"></soap:address>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,3 @@
+*.class
+webmos/web_mos/WEB-INF/classes/
+.metadata/

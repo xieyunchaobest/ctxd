@@ -1,0 +1,344 @@
+BODY
+{
+	FONT-SIZE: 9pt;
+	FONT-FAMILY: "宋体";
+	background-color: #E1F4FD;
+	margin-left:2;
+	margin-top:2;
+	margin-right:0;
+	margin-bottom:0;
+}
+
+BODY
+{
+	SCROLLBAR-FACE-COLOR: #6371d6;
+	SCROLLBAR-SHADOW-COLOR: #ffffff;
+	SCROLLBAR-3DLIGHT-COLOR: #6371d6;
+	SCROLLBAR-ARROW-COLOR: #ffffff;
+	SCROLLBAR-TRACK-COLOR: #f9ece3;
+	SCROLLBAR-DARKSHADOW-COLOR: #6371d6;
+}
+
+A
+{
+	font-family: "宋体";
+	font-size: 9pt;
+
+}
+
+A:link
+{
+	COLOR: blue; TEXT-DECORATION: none
+}
+A:visited
+{
+	COLOR: #793DE9; TEXT-DECORATION: none
+}
+A:active
+{
+	COLOR: #6699ff; TEXT-DECORATION: none
+}
+A:hover
+{
+	COLOR: red; TEXT-DECORATION: underline
+}
+
+.OutLineColor
+{
+	background-color:#000000;
+}
+.TextBGColor
+{
+	background-color:#E4E8FA;
+}
+
+.MessageTitle
+{
+	background-color:#E4E8FA;
+	color:#286168;
+	font-family: "宋体";
+	font-size: 12pt;
+	text-align: center;
+	font-weight: bold;
+}
+.MessageBodyText
+{
+	background-color:#E4E8FA;
+	color:#000000;
+	font-family: "宋体";
+	font-size: 9pt;
+	text-align: left;
+}
+
+.TableName     {
+	color:#ffffff;
+	background: #0080FF;
+	font-family: "宋体";
+	font-size: 9pt;
+	text-align: left;
+	font-weight: bold;
+}
+
+.TableNameCenter     {
+	color:#ffffff;
+	background: #0080FF;
+	font-family: "宋体";
+	font-size: 12pt;
+	text-align: center;
+	font-weight: bold;
+}
+.TableAttrName
+{
+	background: #F1F1F1;
+	font-family: "宋体";
+	font-size: 9pt;
+	text-align: right;
+	height:20;
+}
+.TableAttrValue
+{
+	background: #F7F7F7;
+	font-family: "宋体";
+	font-size: 9pt;
+	text-align: left;
+	height:20;
+}
+.TableAttrValueCenter
+{
+	background: #F7F7F7;
+	font-family: "宋体";
+	font-size: 9pt;
+	text-align: center;
+	height:20;
+}
+.TableTitle
+{
+	background-color:#E4E8FA;
+	color:#000000;
+	font-family: "宋体";
+	font-size: 9pt;
+	text-align: left;
+	font-weight: bold;
+	height:20;
+}
+.TableTitleCenter
+{
+	background-color:#E4E8FA;
+	color:#000000;
+	font-family: "宋体";
+	font-size: 9pt;
+	text-align: center;
+	font-weight: bold;
+	height:20;
+}
+.TableRowOdd
+{
+	background: #F7F7F7;
+	font-family: "宋体";
+	font-size: 9pt;
+	text-align: left;
+	height:20;
+}
+
+.TableRowRight
+{
+	background: #F7F7F7;
+	font-family: "宋体";
+	font-size: 9pt;
+	text-align: right;
+	height:20;
+}
+.TableRowEven
+{
+	background: #F1F1F1;
+	font-family: "宋体";
+	font-size: 9pt;
+	text-align: left;
+	height:20;
+}
+
+.NoticeRowOdd
+{
+	background: #FFCC99;
+	font-family: "宋体";
+	font-size: 9pt;
+	text-align: left;
+	height:20;
+}
+
+.TableRowMemo
+{
+	background: #F1F1F1;
+	font-family: "宋体";
+	font-size: 9pt;
+	text-align: left;
+}
+
+.SubmitStyle
+{
+	font-size: 9pt;
+	font-family: "宋体"
+}
+
+HR
+{
+	height:2;
+}
+.ShowHandCurr
+{
+	cursor:hand;
+	TEXT-DECORATION: underline;
+	font-size: 9pt;
+}
+.rptTableName     {
+	color:#ffffff;
+	background: #E1F4FD;
+	font-family: "宋体";
+	font-size: 9pt;
+	text-align: center;
+	font-weight: bold;
+}
+
+.TableRowRed
+{
+	color:#000000;
+	background: #00FF00;
+	font-family: "宋体";
+	font-size: 9pt;
+	text-align: left;
+	font-weight: bold;
+}
+
+.TableRowBlue
+{
+	color:#000000;
+	background: #FF0000;
+	font-family: "宋体";
+	font-size: 9pt;
+	text-align: left;
+	font-weight: bold;
+
+}
+.TableTitleCenter_0
+{
+	background-color:#FEFFDF;
+	BORDER-RIGHT: 1px solid #E1E1E1;
+	PADDING-RIGHT: 3px;
+	PADDING-LEFT: 3px;
+	PADDING-BOTTOM: 3px;
+	FONT: 12px "宋体";
+	PADDING-TOP: 3px;
+	TEXT-DECORATION: none;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #E1E1E1;
+}
+.TableTitleCenter_1
+{
+	background-color:#E6FFDF;
+	BORDER-RIGHT: 1px solid #E1E1E1;
+	PADDING-RIGHT: 3px;
+	PADDING-LEFT: 3px;
+	PADDING-BOTTOM: 3px;
+	FONT: 12px "宋体";
+	PADDING-TOP: 3px;
+	TEXT-DECORATION: none;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #E1E1E1;
+}
+.TableTitleCenter_2
+{
+	background-color:#DFFFFF;
+	BORDER-RIGHT: 1px solid #E1E1E1;
+	PADDING-RIGHT: 3px;
+	PADDING-LEFT: 3px;
+	PADDING-BOTTOM: 3px;
+	FONT: 12px "宋体";
+	PADDING-TOP: 3px;
+	TEXT-DECORATION: none;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #E1E1E1;
+}
+.TableTitleCenter_3
+{
+	background-color:#FFD8B0;
+	BORDER-RIGHT: 1px solid #E1E1E1;
+	PADDING-RIGHT: 3px;
+	PADDING-LEFT: 3px;
+	PADDING-BOTTOM: 3px;
+	FONT: 12px "宋体";
+	PADDING-TOP: 3px;
+	TEXT-DECORATION: none;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #E1E1E1;
+}
+.TableTitleCenter_4
+{
+	background-color:#FFDFFE;
+	BORDER-RIGHT: 1px solid #E1E1E1;
+	PADDING-RIGHT: 3px;
+	PADDING-LEFT: 3px;
+	PADDING-BOTTOM: 3px;
+	FONT: 12px "宋体";
+	PADDING-TOP: 3px;
+	TEXT-DECORATION: none;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #E1E1E1;
+}
+.TableTitleCenter_5
+{
+	background-color:#DFFFE1;
+	BORDER-RIGHT: 1px solid #E1E1E1;
+	PADDING-RIGHT: 3px;
+	PADDING-LEFT: 3px;
+	PADDING-BOTTOM: 3px;
+	FONT: 12px "宋体";
+	PADDING-TOP: 3px;
+	TEXT-DECORATION: none;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #E1E1E1;
+}
+.TableRowOdd_0
+{
+	background: #FFDAC8;
+	font-family: "宋体";
+	font-size: 9pt;
+	text-align: left;
+	height:20;
+}
+
+.TableRowCenter
+{
+	background: #F1F1F1;
+	font-family: "宋体";
+	font-size: 9pt;
+	text-align: center;
+	height:20;
+}
+
+.TableRowEvenAd
+{
+	background: #F1F1F1;
+	font-family: "宋体";
+	font-size: 12pt;
+	text-align: left;
+	height:20;
+}
+
+.TableColB{
+	BORDER-RIGHT: 1px solid #E1E1E1;
+	PADDING-RIGHT: 3px;
+	PADDING-LEFT: 3px;
+	PADDING-BOTTOM: 3px;
+	FONT: 12px "宋体";
+	PADDING-TOP: 3px;
+	TEXT-DECORATION: none;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #E1E1E1;
+}	

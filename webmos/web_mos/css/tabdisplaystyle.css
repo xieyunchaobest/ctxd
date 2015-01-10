@@ -1,0 +1,364 @@
+
+
+/*---------------------System Style------------------------*/	
+
+a:link {color:#2f2f2f;text-decoration:none;}
+a:visited {color:#2f2f2f;text-decoration:none;}
+a:active {color:#2952A1;text-decoration:none;}
+a:hover {color:#2952A1;text-decoration:none;}
+/*-----------------------------------------------------*/
+BODY {
+    /* Page Margin Style */
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	font-size: 12px; 
+	font-family: "song", "MS Shell Dlg"; 
+	text-align: center;
+	/* Scrollbar Style */
+	scrollbar-face-color: #dadada; 
+	scrollbar-highlight-color:#ffffff;
+	overflow: auto; 
+	scrollbar-shadow-color:#737373; 
+	scrollbar-3dlight-color:#737373; 
+	scrollbar-arrow-color:#737373; 
+	scrollbar-track-color:#cdcdcd; 
+	scrollbar-darkshadow-color:#cdcdcd;
+}
+body, input, select, td, textarea
+    {
+	font-family:"song", "MS Shell Dlg"; 
+	font-size: 12px;
+	}
+TD {
+	font-size: 12px; 
+	color: #404548; 
+	font-family: "Song", "MS Shell Dlg";
+	}	
+img{
+    border:none;
+	}
+form{margin:0;}
+/*---------------------------------------------*/	
+A:link {COLOR: #000000; }
+A:visited {COLOR: #000000; }
+A:active {COLOR: #000000; }
+A:hover {COLOR: #ff0000; }
+A.fresh:link {COLOR: #0000ff; }
+A.fresh:visited {COLOR: #800080; }
+A.fresh:active {COLOR: #0000ff; }
+A.fresh:hover {COLOR: #ff0000; }
+
+input.text {
+	margin: 1px;
+	padding: 1px;
+	height: 19px;
+	border: 1px solid #9FAAB5;
+	border-top: 1px solid #7D8B99;
+	border-left: 1px solid #7D8B99;
+	border-right: 1px solid #ffffff;
+	border-bottom: 1px solid #ffffff;
+	font-size: 12px;
+	background-color: #ffffff;
+}
+.input {
+	margin: 1px;
+	padding: 1px;
+	height: 19px;
+	border: 1px solid #f2f2f2;
+	border-top: 1px solid #808080;
+	border-left: 1px solid #808080;
+	border-right: 1px solid #D4D0C8;
+	border-bottom: 1px solid #D4D0C8;
+	font-size: 12px;
+	background-color: #ffffff;
+}
+input.textdisable {
+	margin: 1px;
+	padding: 1px;
+	height: 19px;
+	border: 1px solid #9FAAB5;
+	border-top: 1px solid #7D8B99;
+	border-left: 1px solid #7D8B99;
+	border-right: 1px solid #ffffff;
+	border-bottom: 1px solid #ffffff;
+	font-size: 12px;
+	background-color: #f0f0f0;
+}
+
+input.submit
+    {
+	margin: 1px;
+	padding: 1px;
+	border: 1px solid #9FAAB5;
+	border-top: 1px solid #ffffff;
+	border-left: 1px solid #ffffff;
+	border-right: 1px solid #7D8B99;
+	border-bottom: 1px solid #7D8B99;
+	font-size: 12px;
+	background-color: #BDC6CE;
+	height: 25px;
+	width: 50px;
+
+	}
+
+
+/*---------------------------*/
+select
+    {
+	border: 1px solid #9FAAB5;
+	background-color: #F6F6F6;
+	}
+	
+/*---------------------User Class Style------------------------*/	
+.title_text
+    {
+	font-size:14px;
+	font-weight:bolder;
+	font-family: "song", "MS Shell Dlg"; 
+	}
+.TC_table
+    {
+	font-size:12px;
+	line-height:18px;
+	background-color: #DDE1E6;
+	/*filter:progid:DXImageTransform.Microsoft.Shadow(Color=#9FAAB5,Direction=120,strength=2);*/
+	border: 1px solid #9FAAB5;
+	TableCellSpacing:expression(this.cellSpacing=0);
+	}
+.TC_table tr
+    {
+	onMouseOverLighe:expression(onmouseover=function(){bgColor="#f0f0f0"},onmouseout=function(){bgColor=""});
+    /*alternateColor:expression(bgColor=rowIndex%2==0?'#DDE1E6':'#EbEbEb'); 表格隔行变色的控制*/
+	border-spacing: 0px;
+	}
+.TC_table td
+    {
+	border: 1px solid #9FAAB5;
+	border-top: 1px solid #ffffff;
+	border-left: 1px solid #ffffff;
+	border-right: 1px solid #9FAAB5;
+	border-bottom: 1px solid #9FAAB5;
+	}
+	
+/*---------------------------*/
+.TC_table2
+    {
+	font-size:12px;
+	background-color: #E5E8EC;
+	border: 1px solid #9FAAB5;
+	TableCellSpacing:expression(this.cellSpacing=0);
+	}
+.TC_table2 tr
+    {
+	/*onMouseOverLighe:expression(onmouseover=function(){bgColor="#DDE1E6"},onmouseout=function(){bgColor=""});
+    alternateColor:expression(bgColor=rowIndex%2==0?'#DDE1E6':'#EbEbEb'); 表格隔行变色的控制*/
+	border-spacing: 0px;
+	}
+.TC_table2 td
+    {
+	border: 1px solid #9FAAB5;
+	border-top: 1px solid #ffffff;
+	border-left: 1px solid #ffffff;
+	border-right: 1px solid #9FAAB5;
+	border-bottom: 1px solid #9FAAB5;
+	}
+/*------------------------Menu Class Style----------------------*/
+#menulayer0Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
+}
+#iconlayer0Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 22px; layer-background-color: #ffffff
+}
+#barlayer0Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 32px 0px); HEIGHT: 32px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
+}
+#uplayer0Div {
+	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 26px; WIDTH: 16px; layer-background-color: #cccccc
+}
+#downlayer0Div {
+	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 42px; WIDTH: 16px; layer-background-color: #cccccc
+}
+#menulayer1Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
+}
+#iconlayer1Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 22px; layer-background-color: #ffffff
+}
+#barlayer1Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 32px 0px); HEIGHT: 32px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
+}
+#uplayer1Div {
+	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 26px; WIDTH: 16px; layer-background-color: #cccccc
+}
+#downlayer1Div {
+	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 42px; WIDTH: 16px; layer-background-color: #cccccc
+}
+#menulayer2Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
+}
+#iconlayer2Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 22px; layer-background-color: #ffffff
+}
+#barlayer2Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 32px 0px); HEIGHT: 32px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
+}
+#uplayer2Div {
+	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 26px; WIDTH: 16px; layer-background-color: #cccccc
+}
+#downlayer2Div {
+	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 42px; WIDTH: 16px; layer-background-color: #cccccc
+}
+#menulayer3Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
+}
+#iconlayer3Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 22px; layer-background-color: #ffffff
+}
+#barlayer3Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 32px 0px); HEIGHT: 32px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
+}
+#uplayer3Div {
+	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 26px; WIDTH: 16px; layer-background-color: #cccccc
+}
+#downlayer3Div {
+	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 42px; WIDTH: 16px; layer-background-color: #cccccc
+}
+#menulayer4Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
+}
+#iconlayer4Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 22px; layer-background-color: #ffffff
+}
+#barlayer4Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 32px 0px); HEIGHT: 32px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
+}
+#uplayer4Div {
+	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 26px; WIDTH: 16px; layer-background-color: #cccccc
+}
+#downlayer4Div {
+	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 42px; WIDTH: 16px; layer-background-color: #cccccc
+}
+#menulayer5Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
+}
+#iconlayer5Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 22px; layer-background-color: #ffffff;
+}
+#barlayer5Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 32px 0px); HEIGHT: 32px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
+}
+#uplayer5Div {
+	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 26px; WIDTH: 16px; layer-background-color: #cccccc
+}
+#downlayer5Div {
+	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 42px; WIDTH: 16px; layer-background-color: #cccccc
+}
+#menulayer6Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
+}
+#iconlayer6Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 22px; layer-background-color: #ffffff
+}
+#barlayer6Div {
+	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 32px 0px); HEIGHT: 32px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
+}
+#uplayer6Div {
+	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 26px; WIDTH: 16px; layer-background-color: #cccccc
+}
+#downlayer6Div {
+	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 42px; WIDTH: 16px; layer-background-color: #cccccc
+}
+/*------------TBODY---------------------*/
+.sec1 { 
+    background-image: url(../images/2.jpg);
+	background-color:#F3F4F6;
+    cursor: hand;
+    color: #000000;
+    border-left: 1px solid #F4F5F7;
+    /*border-top: 1px solid #FFFFFF;
+    border-right: 1px solid gray;*/
+    border-bottom: 1px solid #FFFFFF
+    }
+.sec2 { 
+    background-image: url(../images/1.jpg);
+	background-color:#F3F4F6;
+    cursor: hand;
+    color: #000000;
+    border-left: 1px solid #F4F5F7; 
+    /*border-top: 1px solid #FFFFFF; 
+   border-right: 1px solid gray;*/
+    border-bottom: 1px solid #DDE1E6;
+    font-weight: bold; 
+    }
+.main_tab {
+    background-color: #ECEFF8;
+    color: #000000;
+    border-left:1px solid #FFFFFF;
+    border-right: 1px solid #FFFFFF;
+    border-bottom: 1px solid #FFFFFF; 
+    }
+
+
+.button2 {
+	font-family: "??";
+	font-size: 12px;
+	background-image:url(../images/but_bg1.jpg);
+	vertical-align: bottom;
+	height: 19px;
+	width: 74px;
+	border: 0px none;
+	cursor: hand;
+	padding-top: 3px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+}
+.button3 {
+	font-family: "??";
+	font-size: 12px;
+	background-image:url(../images/but_bg2.gif);
+	vertical-align: bottom;
+	height: 19px;
+	width: 85px;
+	border: 0px none;
+	cursor: hand;
+	padding-top: 3px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+}
+.button4 { 
+	font-family: "??";
+	font-size: 12px;
+	background-image:url(../images/but_bg2.gif);
+	vertical-align: bottom;
+	height: 19px;
+	width: 90px;
+	border: 0px none;
+	cursor: hand;
+	padding-top: 3px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+}
+
+.fixedHeaderTr     
+  {  
+  font-size:14px;
+  font-weight:bolder;
+  font-family: "song", "MS Shell Dlg"; 
+  position:relative;     
+  top:expression(this.offsetParent.scrollTop);   
+  background-image:url(../images/3.jpg);
+  };  
+    .fixedHeaderTrdown     
+  {  
+  font-size:14px;
+  font-weight:bolder;
+  font-family: "song", "MS Shell Dlg"; 
+  position:relative;     
+  top:expression(this.offsetParent.scrollTop);  
+
+  };  

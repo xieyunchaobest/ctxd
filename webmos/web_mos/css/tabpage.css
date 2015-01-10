@@ -1,0 +1,44 @@
+.middle1 {
+    background-image:  url(../images/1.jpg);
+	cursor: hand;
+    color: #000000;
+	height:20px;
+	padding-top:3px;
+	padding-right:5px;
+	padding-left:5px;
+	text-align:center;
+    }
+    
+.middle2 {
+    background-image:  url(../images/2.jpg);
+	height:20px;
+    cursor: hand;
+    color: #636262;
+	padding-top:3px;
+	padding-right:5px;
+	padding-left:5px;
+	text-align:center;
+	}
+	
+.left1{
+	width:6px;
+	background-image: url(../images/1-left.gif);
+}
+
+.left2{
+	width:6px;
+	background-image: url(../images/2-left.gif);
+}
+
+.right1{
+	width:6px;
+	background-image: url(../images/1-right.gif);
+}
+
+.right2{
+	width:6px;
+	background-image: url(../images/2-right.gif);
+}
+
+	
+	
