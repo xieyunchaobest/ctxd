@@ -22,6 +22,7 @@ import com.cattsoft.pub.exception.AppException;
 import com.cattsoft.pub.exception.SysException;
 import com.cattsoft.pub.util.StringUtil;
 import com.cattsoft.pub.util.SysConfigData;
+import com.cattsoft.sm.vo.SysUserSVO;
 import com.cattsoft.tm.component.domain.CtxdDOM;
 
 
@@ -149,7 +150,64 @@ public class CtxdDelegate {
 			}
 		}
 		return returnValue;
+	}
 	
+	public List getFuncNodeListByUser(SysUserSVO user) throws AppException,SysException{
+		Connection conn = null;
+		List returnValue = null;
+		try {
+			conn = ConnectionFactory.createConnection();
+			conn.setAutoCommit(false);
+			CtxdDOM dom=new CtxdDOM();
+			returnValue =dom.getFuncNodeListByUser(user);
+			ConnectionFactory.commit();
+		} catch (Exception e) { 
+			e.printStackTrace();
+			log.error("[IOM系统接口svcCallIOMByMosNative异常]" + e);
+			try {
+				ConnectionFactory.rollback();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+				log.error("[IOM系统接口svcCallIOMByMosNative事务回滚异常]" + e1);
+			}
+		} finally {
+			try {
+				ConnectionFactory.closeConnection();
+			} catch (Exception e) {
+				e.printStackTrace();
+				log.error("[IOM系统接口svcCallIOMByMosNative数据库连接关闭异常]" + e);
+			}
+		}
+		return returnValue;
+	}
+	
+	public String login(SysUserSVO user) throws AppException,SysException{
+		Connection conn = null;
+		String returnValue = null;
+		try {
+			conn = ConnectionFactory.createConnection();
+			conn.setAutoCommit(false);
+			CtxdDOM dom=new CtxdDOM();
+			returnValue =dom.login(user);
+			ConnectionFactory.commit();
+		} catch (Exception e) { 
+			e.printStackTrace();
+			log.error("[IOM系统接口svcCallIOMByMosNative异常]" + e);
+			try {
+				ConnectionFactory.rollback();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+				log.error("[IOM系统接口svcCallIOMByMosNative事务回滚异常]" + e1);
+			}
+		} finally {
+			try {
+				ConnectionFactory.closeConnection();
+			} catch (Exception e) {
+				e.printStackTrace();
+				log.error("[IOM系统接口svcCallIOMByMosNative数据库连接关闭异常]" + e);
+			}
+		}
+		return returnValue;
 	}
 	
 }

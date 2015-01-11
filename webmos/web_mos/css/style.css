@@ -1,469 +1,87 @@
-
-
-/*---------------------System Style------------------------*/	
-
-a:link {color:#2f2f2f;text-decoration:none;}
-a:visited {color:#2f2f2f;text-decoration:none;}
-a:active {color:#2952A1;text-decoration:none;}
-a:hover {color:#2952A1;text-decoration:none;}
-/*-----------------------------------------------------*/
-BODY {
-    /* Page Margin Style */
-	margin-left: 0px;
-	margin-top: 0px;
-	margin-right: 0px;
-	margin-bottom: 0px;
-	font-size: 12px; 
-	font-family: "song", "MS Shell Dlg"; 
-	text-align: center;
-	/* Scrollbar Style */
-	scrollbar-face-color: #dadada; 
-	scrollbar-highlight-color:#ffffff;
-	overflow: auto; 
-	scrollbar-shadow-color:#737373; 
-	scrollbar-3dlight-color:#737373; 
-	scrollbar-arrow-color:#737373; 
-	scrollbar-track-color:#cdcdcd; 
-	scrollbar-darkshadow-color:#cdcdcd;
+/*@import "menu.css";*/
+/** Çå³ýÄÚÍâ±ß¾à  */
+body, h1, h2, h3, h4, h5, h6, hr, p,
+blockquote, /* structural elements ½á¹¹ÔªËØ */
+dl, dt, dd, ul, ol, li, /* list elements ÁÐ±íÔªËØ */
+pre, /* text formatting elements ÎÄ±¾¸ñÊ½ÔªËØ */
+form, fieldset, legend, button, input, textarea, /* form elements ±íµ¥ÔªËØ */
+th, td, /* table elements ±í¸ñÔªËØ */
+img/* img elements Í¼Æ¬ÔªËØ */{
+border:medium none;
+margin: 0;
+padding: 0;
 }
-body, input, select, td, textarea
-    {
-	font-family:"song", "MS Shell Dlg"; 
-	font-size: 12px;
+/** ÉèÖÃÄ¬ÈÏ×ÖÌå **/
+body,button, input, select, textarea {
+font: 12px/1.5 'ËÎÌå',tahoma, Srial, helvetica, sans-serif; }
+h1, h2, h3, h4, h5, h6 { font-size: 100%; }
+em{font-style:normal;}
+/** ÖØÖÃÁÐ±íÔªËØ **/
+ul, ol { list-style: none; }
+/** ÖØÖÃ³¬Á´½ÓÔªËØ **/
+a { text-decoration: none; color:#000;}
+a:hover { text-decoration: underline; color:#3363a7; }
+/** ÖØÖÃÍ¼Æ¬ÔªËØ **/
+img{ border:0px;}
+/** ÖØÖÃ±í¸ñÔªËØ **/
+table { border-collapse: collapse; border-spacing: 0; }
+
+/*Çå³ý¸¡¶¯*/
+.clear{
+	height:0px;
+	line-height:0px;
+	font-size:0px;
+	clear:both;
 	}
-TD {
-	font-size: 12px; 
-	color: #404548; 
-	font-family: "Song", "MS Shell Dlg";
-	}	
-img{
-    border:none;
-	}
-form{margin:0;}
-/*---------------------------------------------*/	
+.fleft{ float:left}
+.fright{ float:right}
+#wrap{ width:100%;}
+#header{ height:78px; background:url(../images/index-header-bg.gif) repeat-x;}
+.logo{ width:362px; height:51px; background:url(../images/index-logo.gif);}
+.logout{ width:23px; height:24px; background:url(../images/index-logout.png); margin-top:14px;}
+.nav ul{ height:51px; overflow:hidden; color:#effaff}
+.nav li{ float:left; padding-top:27px; width:93px; height:51px; background:url(../images/index-nav-bg.png); text-align:center;}
+.nav li:hover{ background-position:0 -52px;}
+.nav .first{ background:url(../images/index-nav-firstbg.png);}
+.nav .first:hover{ background-position:0 -52px;}
 
-input.text {
-	margin: 1px;
-	padding: 1px;
-	height: 19px;
-	border: 1px solid #9FAAB5;
-	border-top: 1px solid #7D8B99;
-	border-left: 1px solid #7D8B99;
-	border-right: 1px solid #ffffff;
-	border-bottom: 1px solid #ffffff;
-	font-size: 12px;
-	background-color: #ffffff;
-}
-.input {
-	margin: 1px;
-	padding: 1px;
-	height: 19px;
-	border: 1px solid #f2f2f2;
-	border-top: 1px solid #808080;
-	border-left: 1px solid #808080;
-	border-right: 1px solid #D4D0C8;
-	border-bottom: 1px solid #D4D0C8;
-	font-size: 12px;
-	background-color: #ffffff;
-}
-input.textdisable {
-	margin: 1px;
-	padding: 1px;
-	height: 19px;
-	border: 1px solid #9FAAB5;
-	border-top: 1px solid #7D8B99;
-	border-left: 1px solid #7D8B99;
-	border-right: 1px solid #ffffff;
-	border-bottom: 1px solid #ffffff;
-	font-size: 12px;
-	background-color: #f0f0f0;
-}
-
-input.submit
-    {
-	margin: 1px;
-	padding: 1px;
-	border: 1px solid #9FAAB5;
-	border-top: 1px solid #ffffff;
-	border-left: 1px solid #ffffff;
-	border-right: 1px solid #7D8B99;
-	border-bottom: 1px solid #7D8B99;
-	font-size: 12px;
-	background-color: #BDC6CE;
-	height: 25px;
-	width: 50px;
-
-	}
-/*---------------------------*/
-select
-    {
-	border: 1px solid #9FAAB5;
-	background-color: #F6F6F6;
-	}
-	
-/*---------------------User Class Style------------------------*/	
-.title_text
-    {
-	font-size:14px;
-	font-weight:bolder;
-	font-family: "song", "MS Shell Dlg"; 
-	}
-.TC_table
-    {
-	font-size:12px;
-	line-height:18px;
-	background-color: #DDE1E6;
-	/*filter:progid:DXImageTransform.Microsoft.Shadow(Color=#9FAAB5,Direction=120,strength=2);*/
-	border: 1px solid #9FAAB5;
-	TableCellSpacing:expression(this.cellSpacing=0);
-	}
-.TC_table tr
-    {
-	onMouseOverLighe:expression(onmouseover=function(){bgColor="#f0f0f0"},onmouseout=function(){bgColor=""});
-    /*alternateColor:expression(bgColor=rowIndex%2==0?'#DDE1E6':'#EbEbEb'); ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½É«ï¿½Ä¿ï¿½ï¿½ï¿½*/
-	border-spacing: 0px;
-	}
-.TC_table td
-    {
-	border: 1px solid #9FAAB5;
-	border-top: 1px solid #ffffff;
-	border-left: 1px solid #ffffff;
-	border-right: 1px solid #9FAAB5;
-	border-bottom: 1px solid #9FAAB5;
-	}
-	
-/*---------------------------*/
-.TC_table2
-    {
-	font-size:12px;
-	background-color: #E5E8EC;
-	border: 1px solid #9FAAB5;
-	TableCellSpacing:expression(this.cellSpacing=0);
-	}
-.TC_table2 tr
-    {
-	/*onMouseOverLighe:expression(onmouseover=function(){bgColor="#DDE1E6"},onmouseout=function(){bgColor=""});
-    alternateColor:expression(bgColor=rowIndex%2==0?'#DDE1E6':'#EbEbEb'); ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½É«ï¿½Ä¿ï¿½ï¿½ï¿½*/
-	border-spacing: 0px;
-	}
-.TC_table2 td
-    {
-	border: 1px solid #9FAAB5;
-	border-top: 1px solid #ffffff;
-	border-left: 1px solid #ffffff;
-	border-right: 1px solid #9FAAB5;
-	border-bottom: 1px solid #9FAAB5;
-	}
-/*------------------------Menu Class Style----------------------*/
-#menulayer0Div {
-	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
-}
-#iconlayer0Div {
-	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 22px; layer-background-color: #ffffff
-}
-#barlayer0Div {
-	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 32px 0px); HEIGHT: 32px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
-}
-#uplayer0Div {
-	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 26px; WIDTH: 16px; layer-background-color: #cccccc
-}
-#downlayer0Div {
-	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 42px; WIDTH: 16px; layer-background-color: #cccccc
-}
-#menulayer1Div {
-	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
-}
-#iconlayer1Div {
-	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 22px; layer-background-color: #ffffff
-}
-#barlayer1Div {
-	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 32px 0px); HEIGHT: 32px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
-}
-#uplayer1Div {
-	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 26px; WIDTH: 16px; layer-background-color: #cccccc
-}
-#downlayer1Div {
-	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 42px; WIDTH: 16px; layer-background-color: #cccccc
-}
-#menulayer2Div {
-	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
-}
-#iconlayer2Div {
-	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 22px; layer-background-color: #ffffff
-}
-#barlayer2Div {
-	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 32px 0px); HEIGHT: 32px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
-}
-#uplayer2Div {
-	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 26px; WIDTH: 16px; layer-background-color: #cccccc
-}
-#downlayer2Div {
-	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 42px; WIDTH: 16px; layer-background-color: #cccccc
-}
-#menulayer3Div {
-	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
-}
-#iconlayer3Div {
-	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 22px; layer-background-color: #ffffff
-}
-#barlayer3Div {
-	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 32px 0px); HEIGHT: 32px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
-}
-#uplayer3Div {
-	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 26px; WIDTH: 16px; layer-background-color: #cccccc
-}
-#downlayer3Div {
-	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 42px; WIDTH: 16px; layer-background-color: #cccccc
-}
-#menulayer4Div {
-	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
-}
-#iconlayer4Div {
-	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 22px; layer-background-color: #ffffff
-}
-#barlayer4Div {
-	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 32px 0px); HEIGHT: 32px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
-}
-#uplayer4Div {
-	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 26px; WIDTH: 16px; layer-background-color: #cccccc
-}
-#downlayer4Div {
-	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 42px; WIDTH: 16px; layer-background-color: #cccccc
-}
-#menulayer5Div {
-	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
-}
-#iconlayer5Div {
-	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 22px; layer-background-color: #ffffff;
-}
-#barlayer5Div {
-	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 32px 0px); HEIGHT: 32px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
-}
-#uplayer5Div {
-	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 26px; WIDTH: 16px; layer-background-color: #cccccc
-}
-#downlayer5Div {
-	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 42px; WIDTH: 16px; layer-background-color: #cccccc
-}
-#menulayer6Div {
-	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
-}
-#iconlayer6Div {
-	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 3000px 0px); HEIGHT: 3000px; LEFT: 0px; POSITION: absolute; TOP: 22px; layer-background-color: #ffffff
-}
-#barlayer6Div {
-	BACKGROUND-COLOR: #ffffff; CLIP: rect(0px 4000px 32px 0px); HEIGHT: 32px; LEFT: 0px; POSITION: absolute; TOP: 0px; layer-background-color: #ffffff
-}
-#uplayer6Div {
-	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 26px; WIDTH: 16px; layer-background-color: #cccccc
-}
-#downlayer6Div {
-	BACKGROUND-COLOR: #cccccc; CLIP: rect(0px 16px 16px 0px); HEIGHT: 16px; LEFT: -20px; POSITION: absolute; TOP: 42px; WIDTH: 16px; layer-background-color: #cccccc
-}
-/*------------TBODY---------------------*/
-.sec1 { 
-    background-image: url(../images/2.jpg);
-	background-color:#F3F4F6;
-    cursor: hand;
-    color: #000000;
-    border-left: 1px solid #F4F5F7;
-    /*border-top: 1px solid #FFFFFF;
-    border-right: 1px solid gray;*/
-    border-bottom: 1px solid #FFFFFF
-    }
-.sec2 { 
-    background-image: url(../images/1.jpg);
-	background-color:#F3F4F6;
-    cursor: hand;
-    color: #000000;
-    border-left: 1px solid #F4F5F7; 
-    /*border-top: 1px solid #FFFFFF; 
-   border-right: 1px solid gray;*/
-    border-bottom: 1px solid #DDE1E6;
-    font-weight: bold; 
-    }
-.main_tab {
-    background-color: #ECEFF8;
-    color: #000000;
-    border-left:1px solid #FFFFFF;
-    border-right: 1px solid #FFFFFF;
-    border-bottom: 1px solid #FFFFFF; 
-    }
+.nav-left{ width:34px; height:51px; background:url(../images/index-nav-left.png);}
+.nav-right{ width:34px; height:51px; background:url(../images/index-nav-right.png);}
+.subnav{ height:27px; background:url(../images/index-subnav-bg.gif)}
+.subnav .subnavLeft{ width:17px; height:27px; background:url(../images/index-subnav-left.gif)}
+.subnav .subnavRight{ width:17px; height:27px; background:url(../images/index-subnav-right.gif)}
+.menu{ width:168px; height:495px; background:#e6f4fa; color:#075587; margin-left:5px;}
+.menu ul{ width:168px;}
+.menu ul li{ width:168px; background:url(../images/index-menu-bg.gif) no-repeat; text-align:center}
+.menu ul li a{ height:26px; line-height:26px; color:#075587}
+.menu ul li a:hover{ height:26px; line-height:26px; color:#075587; text-decoration:none; margin-left:10px;}
+.menu .subMenuTitle{ background:url(../images/index-menu-title.gif); text-align:center; height:27px; line-height:26px; color:#fff}
+.menu ul li ul{ width:168px;}
+.menu ul li ul li{ background:url(../images/index-submenu-bg.gif);}
 
 
-.button2 {
-	font-family: "??";
-	font-size: 12px;
-	background-image:url(../images/but_bg1.gif);
-	vertical-align: bottom;
-	height: 19px;
-	width: 65px;
-	border: 0px none;
-	cursor: hand;
-	padding-top: 3px;
-	padding-right: 0px;
-	padding-bottom: 0px;
-	padding-left: 0px;
-}
 
-/*------------kongjian---------------------*/
-
-.ta_table{
-  	border: 1px solid #CCCCCC;
-  	TableCellSpacing:expression(this.cellSpacing=0);
-  	TEXT-ALIGN: left;
-  	WIDTH:98%;
-  	HEIGHT:100%;
-	}
-.ta_tr{
-	background-image:url(../images/panel_bg.gif);
-  	background-repeat:repeat;
-  	TEXT-VALIGN:middle;
-  	HEIGHT:22px;
-}
-.ta_font{
-	
-	FONT-WEIGHT:bold;
-	FONT-SIZE:12px;
-	PADDING-TOP:4;
-	PADDING-LEFT:8px;
-	COLOR:#1A3E72
-}
+.sidebar{ width:5px; height:500px;}
+.sidebar .btn{ width:5px; height:39px; background:url(../images/sidebar-on.gif); margin-top:200px;}
+.sidebar .btn:hover{ background-position:0 -39px;}
+.page{ width:100%; height:500px; background:#198bc9}
+.page iframe{ margin:0 auto;}
+#content .space{ height:5px; font-size:0px; background:#198bc9}
+#footer{ width:100%; height:26px; line-height:26px; background:url(../images/index-footer-bg.gif);}
 
 
-/*------------kongjian---------------------*/
+.pageTitle{ height:27px; line-height:27px; color:#075587; background:url(../images/page-pageTitle-bg.gif); }
+.pageTitle span{ margin-left:10px;}
+.pageButton{ height:50px;}
 
-.edline {
-	BACKGROUND-COLOR: ffffff; BORDER-BOTTOM:medium none; BORDER-LEFT: #707071 1px solid; BORDER-RIGHT: medium none; BORDER-TOP: #707071 1px solid; COLOR: #4d4d4d; FONT-SIZE: 12px
-}
-.StyleBorderOnly {
-	border: 1px solid #869FDE;
-}
 
-.StylePopped11 {
-	PADDING-LEFT: 0px;
-	FONT: 12px "ï¿½ï¿½ï¿½ï¿½";
-	BACKGROUND-COLOR: #C9D8EF;
-	border-top: 1px solid #E1E1E1;
-	border-right: 1px solid #81AFD1;
-	border-bottom: 1px solid #81AFD1;
-	border-left: 1px solid #E1E1E1;
-}
-
-.StylePopped12 {
-	PADDING-LEFT: 5px;
-	FONT: bold 12px "ï¿½ï¿½ï¿½ï¿½";
-	BACKGROUND-COLOR: #C9D8EF;
-	border-top: 1px solid #E1E1E1;
-	border-right: 1px solid #81AFD1;
-	border-bottom: 1px solid #81AFD1;
-	border-left: 1px solid #E1E1E1;
-}
-.StylePopped22 {
-	
-	FONT: bold 12px "ï¿½ï¿½ï¿½ï¿½";
-	BACKGROUND-COLOR: #C9D8EF;
-	
-}
-.StylePopped21 {
-	PADDING-LEFT: 5px;
-	FONT: bold 12px "ï¿½ï¿½ï¿½ï¿½";
-	BACKGROUND-COLOR: #C9D8EF;
-	border-top: 1px solid #E1E1E1;
-	border-right: 1px solid #81AFD1;
-	border-bottom: 1px solid #81AFD1;
-	
-}
-.TableColZ {
-	BORDER-RIGHT: 1px solid #9FAAB5;
-	PADDING-RIGHT: 3px;
-	PADDING-LEFT: 3px;
-	PADDING-BOTTOM: 3px;
-	FONT: 12px "ï¿½ï¿½ï¿½ï¿½";
-	PADDING-TOP: 3px;
-	TEXT-DECORATION: none;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-	border-bottom-color: #9FAAB5;
-} 
-.TableColA {
-	BORDER-RIGHT: 1px solid #E1E1E1;
-	PADDING-RIGHT: 3px;
-	PADDING-LEFT: 3px;
-	PADDING-BOTTOM: 3px;
-	FONT: 12px "ï¿½ï¿½ï¿½ï¿½";
-	PADDING-TOP: 3px;
-	TEXT-DECORATION: none;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-	border-bottom-color: #E1E1E1;
-}
-.TableColB {
-	BORDER-RIGHT: 1px solid #E1E1E1;
-	PADDING: 1px;
-	FONT: 12px "ï¿½ï¿½ï¿½ï¿½";
-	TEXT-DECORATION: none;
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-	border-bottom-color: #E1E1E1;
-}
-
-/*-------------add by liukai@cattsoft.com ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½CSS-------------------*/
-.required{
-	background:url(../images/star.gif) no-repeat;
-	width:11px;
-	height:19px;
-}
-
-/*----------ï¿½ï¿½Ý²ï¿½Ñ¯cssï¿½ï¿½Ê½begin(yanxin 2009.7.15)------------*/
-.quickQueryDiv {
-	position: absolute;
-	z-index: 1px;
-	font-size: 8px;
-	overflow: visible;
-	background-color: #ffffff;
-}
-
-.quickQueryDiv TABLE {
-	border: 1px solid #336699;
-	border-bottom: 0px;
-}
-
-.quickQueryDiv TR {
-	height:19px;
-}
-
-.quickQueryDiv TD {
-	width:120px;
-	border-bottom: 1px solid #336699;
-}
-
-.quickQueryDiv SPAN {
-	color: blue;
-}
-
-.quickQueryDiv1 {
-	position: absolute;
-	z-index: 1px;
-	font-size: 15px;
-	overflow: visible;
-	background-color: #ffffff;
-}
-.quickQueryDiv1 TABLE {
-	border: 1px solid #336699;
-	border-bottom: 0px;
-}
-
-.quickQueryDiv1 TR {
-	height:19px;
-}
-
-.quickQueryDiv1 TD {
-	width:150px;
-	border-bottom: 1px solid #336699;
-}
-
-.quickQueryDiv1 SPAN {
-	color: blue;
-}
-/*----------ï¿½ï¿½Ý²ï¿½Ñ¯cssï¿½ï¿½Ê½end------------*/
+.pageColumn{ background:url(../images/page-bg.gif) repeat-x; padding:5px;}
+.pageColumn table{ width:100%}
+.pageColumn thead{ border:1px solid #bfd8e0; color:#075587; background:url(../images/page-thead-bg.gif);}
+.pageColumn thead th{ border-left:1px solid #c5dbe2; text-align:center; height:28px;}
+.ctd{ border-left:1px solid #c5dbe2; text-align:center; height:28px;}
+.pageColumn tbody tr{ border:1px solid #bfd8e0; height:28px;}
+.pageColumn tbody .trLight{ background:#f9fcfd}
+.pageColumn tbody .checkBox{ background:#f1f7f9; border:1px solid #bfd8e0; text-align:center}
+.pageColumn tbody td{ text-align:center;}
+/* .pageColumn */

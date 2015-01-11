@@ -18,11 +18,14 @@ import com.cattsoft.pub.exception.SysException;
 import com.cattsoft.pub.util.JdbcUtil;
 import com.cattsoft.pub.util.StringUtil;
 import com.cattsoft.pub.vo.GenericVO;
+import com.cattsoft.sm.vo.SysUserSVO;
 import com.cattsoft.tm.component.dao.ICtxdMDAO;
 import com.cattsoft.tm.component.dao.IDColumnDescSDAO;
 import com.cattsoft.tm.component.dao.IDTableDescSDAO;
+import com.cattsoft.tm.struts.Tools;
 import com.cattsoft.tm.vo.DColumnDescSVO;
 import com.cattsoft.tm.vo.DTableDescSVO;
+import com.cattsoft.tm.vo.FuncNodeSVO;
 
 public class CtxdMDAOImpl implements ICtxdMDAO{
 
@@ -88,7 +91,12 @@ public class CtxdMDAOImpl implements ICtxdMDAO{
 			String dataType=(String)m.get("dataType");
 			String value=(String)m.get("value");
 			if(!StringUtil.isBlank(value)) {
+				if(Tools.isDateType(dataType) || Tools.isVarchar(dataType)) {
 					sql.setString(columnName, value);
+				}else {
+					sql.setInteger(columnName, value);
+				}
+					
 			}
 		}
 		System.out.println("ssssssss="+sql.getSql());
@@ -342,6 +350,59 @@ public class CtxdMDAOImpl implements ICtxdMDAO{
 			return null;
 		}
 
+
+		public List getFuncNodeListByUser(SysUserSVO vo) throws AppException,
+				SysException {
+			if (vo == null) {
+				throw new AppException("100001", "缺少DAO操作对象！");
+			}
+			List res = new ArrayList();
+			Connection conn = null;
+			PreparedStatement ps = null;
+			ResultSet rs = null;
+			Sql sql = new Sql(
+					"SELECT a.DESCRIPTION,a.FILE_NAME,a.FUNC_NODE_CODE,a.FUNC_NODE_ID,a.FUNC_NODE_NAME,a.FUNC_NODE_TYPE,a.HTML,NODE_TREE_ID,a.SECURITY_LEVEL,a.SHORT_CUT_IMAGE,a.STS,a.STS_DATE,a.SUB_SYSTEM_NAME,a.VERSION "
+							+ "FROM func_node a ,   sys_user_alloc b WHERE a.func_node_id=b.func_node_id AND b.sys_user_id   =:sysUserId  and  a.sts='A' AND B.STS='A'   order by a.security_level ,a.func_node_id ");
+			try {
+				sql.setString("sysUserId", vo.getSysUserId());
+
+				conn = ConnectionFactory.getConnection();
+				ps = conn.prepareStatement(sql.getSql());
+				ps = sql.fillParams(ps);
+				sql.log(this.getClass());
+				rs = ps.executeQuery();
+
+				while (rs.next()) {
+					FuncNodeSVO funcNode = new FuncNodeSVO();
+					funcNode.setDescription(rs.getString("DESCRIPTION"));
+					funcNode.setFileName(rs.getString("FILE_NAME"));
+					funcNode.setFuncNodeCode(rs.getString("FUNC_NODE_CODE"));
+					funcNode.setFuncNodeId(rs.getString("FUNC_NODE_ID"));
+					funcNode.setFuncNodeName(rs.getString("FUNC_NODE_NAME"));
+					funcNode.setFuncNodeType(rs.getString("FUNC_NODE_TYPE"));
+					funcNode.setHtml(rs.getString("HTML"));
+					funcNode.setNodeTreeId(rs.getString("NODE_TREE_ID"));
+					funcNode.setSecurityLevel(rs.getString("SECURITY_LEVEL"));
+					funcNode.setShortCutImage(rs.getString("SHORT_CUT_IMAGE"));
+					funcNode.setSts(rs.getString("STS"));
+					funcNode.setStsDate(rs.getTimestamp("STS_DATE"));
+					funcNode.setSubSystemName(rs.getString("SUB_SYSTEM_NAME"));
+					funcNode.setVersion(rs.getString("VERSION"));
+					res.add(funcNode);
+
+				}
+
+			} catch (SQLException se) {
+				throw new SysException("100003", "JDBC操作异常！", se);
+			} finally {
+				JdbcUtil.close(rs, ps);
+			}
+
+			if (0 == res.size())
+				res = null;
+			return res;
+
+		}
 		
 		
 		

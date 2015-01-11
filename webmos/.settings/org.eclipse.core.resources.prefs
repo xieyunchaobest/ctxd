@@ -1,5 +1,9 @@
-#Thu Jan 08 23:29:56 CST 2015
+#Sun Jan 11 18:57:59 CST 2015
 eclipse.preferences.version=1
 encoding//src/com/cattsoft/pub/SysConstants.java=GBK
 encoding//src/sys_config.properties=UTF-8
+encoding//web_mos/css/login.css=GBK
+encoding//web_mos/page/index.jsp=GBK
+encoding//web_mos/page/login.jsp=GBK
+encoding//web_mos/page/queryResult.jsp=GBK
 encoding/<project>=GBK

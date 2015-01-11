@@ -17,7 +17,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
+import com.cattsoft.sm.vo.SysUserSVO;
 import com.cattsoft.tm.delegate.CtxdDelegate;
+import com.cattsoft.webpub.util.ReqUtil;
 
 /**
  * @author Xieyunchao
@@ -75,4 +77,47 @@ public class CtxdAction extends DispatchAction{
 		return mapping.findForward("queryPages");
 	}
 
+	/**
+	 * Ö÷Ò³
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public ActionForward showMain(ActionMapping mapping,ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		SysUserSVO u =new SysUserSVO();
+		u.setSysUserId("12");
+		List funcNodeList = CtxdDelegate.getDelegate().getFuncNodeListByUser(u);
+		request.setAttribute("treeList", funcNodeList);
+		return mapping.findForward("main");
+		
+	}
+	
+
+	/**
+	 * µÇÂ¼
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public ActionForward login(ActionMapping mapping,ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception{
+		String  userName=request.getParameter("userName");
+		String password=request.getParameter("password");
+		SysUserSVO user=new SysUserSVO();
+		user.setSysUserName(userName);
+		user.setPassword(password);
+		String res=CtxdDelegate.getDelegate().login(user);
+		ReqUtil.write(response, res);
+		return null;
+		
+	}
+	
+	
 }

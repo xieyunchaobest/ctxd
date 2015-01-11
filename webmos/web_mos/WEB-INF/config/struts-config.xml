@@ -52,6 +52,7 @@
 		<action path="/tm/ctxdAction" parameter="method"
 			type="com.cattsoft.tm.struts.CtxdAction" scope="request">
 			<forward name="queryPages"   module="/page"  path="/queryResult.jsp" />
+			<forward name="main"   module="/page"  path="/index.jsp" />
 		</action>
 		
 	</action-mappings>

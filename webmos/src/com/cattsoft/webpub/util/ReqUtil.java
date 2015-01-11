@@ -561,20 +561,20 @@ public class ReqUtil {
 			if(!StringUtil.isBlank(str)){
 				byte[] jsonBytes;
 				String strEncrypted = "N";
-					if ("Y".equals(SysConfigData.getSysConfigCurValue(
-							SysConstants.ENCRYPT_USABLE, null, null, null, null, null))) {
-						// 数据加密
-						strEncrypted = EncryptUtil.encryptThreeDESECB(str);
-					} else {
-						strEncrypted = str;
-					}
+//					if ("Y".equals(SysConfigData.getSysConfigCurValue(
+//							SysConstants.ENCRYPT_USABLE, null, null, null, null, null))) {
+//						// 数据加密
+//						strEncrypted = EncryptUtil.encryptThreeDESECB(str);
+//					} else {
+//						strEncrypted = str;
+//					}
 					// 数据压缩
 					log.debug("IOM返回数据为： " + strEncrypted);
-					jsonBytes = compress(strEncrypted);
+					//jsonBytes = compress(strEncrypted);
 					// 下面一行代码试验：有和没有都行
 					response.setCharacterEncoding("GBK");
-					response.setContentLength(jsonBytes.length);
-					response.getOutputStream().write(jsonBytes);
+					response.setContentLength(str.length());
+					response.getOutputStream().write(str.getBytes());
 					response.getOutputStream().flush();
 					response.getOutputStream().close();
 	

@@ -190,6 +190,7 @@ public class ConnectionFactory {
 				Object obj = instance.dataSourceMap.get(name);
 				if (obj == null)
 					throw new AppException("", "系统未找到默认数据源！");
+				log.debug("已获取数据源配置 ...");
 				DataSource ds = (DataSource) obj;
 				conn = ds.getConnection();
 				log.debug("成功创建连接:" + conn);
