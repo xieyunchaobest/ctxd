@@ -13,6 +13,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>简单漂亮的后台管理界面模板 - 源码之家</title>
 <link href="../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js"></script>
 <style type="text/css">
 body {
 	background: #FFF
@@ -49,8 +50,8 @@ body {
 <body>
 	<form id="queryForm" action="../tm/ctxdAction.do?method=queryResult"
 		method="post">
+		<span style="display:none"><input type="hidden" value='<%=request.getAttribute("tableId")%>' name="tableId"/></span>
 		<div id="contentWrap">
-
 			<div class="pageTitle"></div>
 			<div class="pageColumn">
 				<div class="qryCondition">
@@ -89,7 +90,7 @@ body {
 								} else {
 										if (Tools.isDateType(dataType)) {
 							%>
-							<td width='100px'><input type='text' class='shottext'
+							<td width='100px'><input type='text' class='shottext'  onClick="WdatePicker()" readonly="true"
 								value="<%=value%>" name="QRY_<%=columnName%>" />
 							</td>
 							<%
@@ -103,7 +104,7 @@ body {
 									}
 								}
 							%>
-							<td><input type="button" class="btn" style="width:100px;height:28px"
+							<td><input type="submit" class="btn" style="width:100px;height:28px"
 								value="查 询" />
 							</td>
 						</tr>
@@ -119,6 +120,7 @@ body {
 					<tbody>
 						<%
 							List resList = (List) request.getAttribute("resList");
+							if(resList!=null &&resList.size()>0){
 							for (int i = 0; i < resList.size(); i++) {
 						%>
 						<tr>
@@ -135,7 +137,7 @@ body {
 									}
 							%>
 						</tr>
-						<%
+						<%}
 							}
 						%>
 					</tbody>

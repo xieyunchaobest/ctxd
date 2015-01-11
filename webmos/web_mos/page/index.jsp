@@ -80,36 +80,19 @@ $(function(){
     				<ul>
     					 <logic:notEmpty name="tree" property="userFuncNodeList">
     						<logic:iterate id="node" name="tree" property="userFuncNodeList">
-    							<li><a href="#"><bean:write name="node" property="funcNodeName" /></a></li>
+    							<li><a href="<bean:write name='node' property='html' />"><bean:write name="node" property="funcNodeName" /></a></li>
     						</logic:iterate>
     					</logic:notEmpty>
     				</ul>
     				</li>
     			</logic:iterate>
     		</logic:notEmpty>
-    		
-        	
-           <!--<li class="subMenu"><a href="#">标题标题标题</a>
-            	<ul>
-                	<li><a href="#">11</a></li>
-                    <li><a href="#">11</a></li>
-                    <li><a href="#">11</a></li>
-                </ul>
-            </li>
-            
-            <li class="subMenu"><a href="main.html" target="right">标题标题标题</a></li>
-            <li class="subMenu"><a href="#" target="right">标题标题标题</a></li>
-            <li class="subMenu"><a href="#" target="right">标题标题标题</a></li>
-            <li class="subMenu"><a href="#" target="right">标题标题标题</a></li>
-            <li class="subMenu"><a href="#" target="right">标题标题标题</a></li>
-            <li class="subMenu"><a href="#" target="right">标题标题标题</a></li> -->
-            
         </ul>
     </div>
     <div class="sidebar fleft"><div class="btn"></div></div>
     <div class="page">
     <iframe width="100%" scrolling="auto" height="100%" frameborder="false" 
-    	allowtransparency="true" style="border: medium none;" src="../tm/ctxdAction.do?method=initQueryPage&&tableId=100000" id="rightMain" name="right"></iframe>
+    	allowtransparency="true" style="border: medium none;" src="../tm/ctxdAction.do?method=initQueryPage&&tableId=100002" id="rightMain" name="right"></iframe>
     </div>
     </div><!--#content -->
     <div class="clear"></div>

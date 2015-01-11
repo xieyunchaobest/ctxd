@@ -107,6 +107,7 @@ public class CtxdMDAOImpl implements ICtxdMDAO{
 			 IDTableDescSDAO tableSDAO = (IDTableDescSDAO) DAOFactory.getDAO(
 					 IDTableDescSDAO.class);
 			 DTableDescSVO t=new DTableDescSVO();
+			 t.setTableId(tableId);
 			 return (DTableDescSVO)tableSDAO.findByPK(t);
 		}
 		

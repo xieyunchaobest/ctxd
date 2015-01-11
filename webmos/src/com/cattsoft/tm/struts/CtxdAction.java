@@ -32,8 +32,8 @@ public class CtxdAction extends DispatchAction{
 		String tableId=request.getParameter("tableId");
 		List queryConditionList = CtxdDelegate.getDelegate().getQueryConditionList(tableId,null);
 		List queryColumnList = CtxdDelegate.getDelegate().getQueryColumnList(tableId);
-		List resList = CtxdDelegate.getDelegate().queryResult(tableId,null);
-		request.setAttribute("resList", resList);
+		//List resList = CtxdDelegate.getDelegate().queryResult(tableId,null);
+		//request.setAttribute("resList", resList);
 		request.setAttribute("conditionList", queryConditionList);
 		request.setAttribute("queryColumnList", queryColumnList);
 		request.setAttribute("tableId", tableId);
