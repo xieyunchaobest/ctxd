@@ -5,11 +5,13 @@ import java.util.List;
 import com.cattsoft.pub.dao.ISDAO;
 import com.cattsoft.pub.exception.AppException;
 import com.cattsoft.pub.exception.SysException;
+import com.cattsoft.pub.util.PagInfo;
+import com.cattsoft.pub.util.PagView;
 import com.cattsoft.sm.vo.SysUserSVO;
 
 public interface ICtxdMDAO extends ISDAO{
 	
-	List queryResult(String tableId,List conditionListFromPage) throws AppException,SysException;
+	PagView queryResult(String tableId,List conditionListFromPage,PagInfo pg) throws AppException,SysException;
 	
 	/**
 	 * 获取查询条件列表

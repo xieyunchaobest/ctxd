@@ -12,6 +12,7 @@ import com.cattsoft.pub.exception.AppException;
 import com.cattsoft.pub.exception.SysException;
 import com.cattsoft.pub.util.DateUtil;
 import com.cattsoft.pub.util.MaxId;
+import com.cattsoft.pub.util.PagView;
 import com.cattsoft.pub.util.PasswordUtil;
 import com.cattsoft.sm.component.dao.ISysUserSDAO;
 import com.cattsoft.sm.vo.SysUserSVO;
@@ -20,12 +21,12 @@ import com.cattsoft.tm.component.dao.ILoginLogSDAO;
 import com.cattsoft.tm.vo.FuncNodeSVO;
 import com.cattsoft.tm.vo.FuncNodeTreeSVO;
 import com.cattsoft.tm.vo.LoginLogSVO;
-
+import com.cattsoft.pub.util.PagInfo;
 public class CtxdDOM {
-	public List queryResult(String tableId, List conditionListFromPage)
+	public PagView queryResult(String tableId, List conditionListFromPage,PagInfo pg)
 			throws AppException, SysException {
 		ICtxdMDAO ctxddao = (ICtxdMDAO) DAOFactory.getDAO(ICtxdMDAO.class);
-		List res = ctxddao.queryResult(tableId, conditionListFromPage);
+		PagView res = ctxddao.queryResult(tableId, conditionListFromPage,pg);
 		return res;
 	}
 

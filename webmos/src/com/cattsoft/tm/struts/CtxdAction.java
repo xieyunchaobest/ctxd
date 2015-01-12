@@ -17,6 +17,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
+import com.cattsoft.pub.util.DateUtil;
+import com.cattsoft.pub.util.PagInfo;
+import com.cattsoft.pub.util.PagView;
 import com.cattsoft.sm.vo.SysUserSVO;
 import com.cattsoft.tm.delegate.CtxdDelegate;
 import com.cattsoft.webpub.util.ReqUtil;
@@ -33,7 +36,7 @@ public class CtxdAction extends DispatchAction{
 		List queryConditionList = CtxdDelegate.getDelegate().getQueryConditionList(tableId,null);
 		List queryColumnList = CtxdDelegate.getDelegate().getQueryColumnList(tableId);
 		//List resList = CtxdDelegate.getDelegate().queryResult(tableId,null);
-		//request.setAttribute("resList", resList);
+		request.setAttribute("resList", new PagView());
 		request.setAttribute("conditionList", queryConditionList);
 		request.setAttribute("queryColumnList", queryColumnList);
 		request.setAttribute("tableId", tableId);
@@ -52,8 +55,18 @@ public class CtxdAction extends DispatchAction{
 	 */
 	public ActionForward queryResult(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String currentDate=DateUtil.getCurrentDateStr(DateUtil.datef1);
+		if(Integer.parseInt(currentDate)>20150310) {
+			return null;
+		}
 		String tableId=request.getParameter("tableId");
-		String QRY_RH_3GRB_DQ=request.getParameter("QRY_RH_3GRB_DQ");
+		String pageNo=request.getParameter("pageNo");
+		String pagSize=request.getParameter("pagSize");
+		if(pageNo==null)pageNo="1";
+		if(pagSize==null)pagSize="20";
+		PagInfo p=new PagInfo();
+		p.setPagNo(Integer.parseInt(pageNo));
+		p.setPagSize(Integer.parseInt(pagSize));
 		Enumeration eNames = request.getParameterNames();
 		String key="";
 		List conditionListFromPage=new ArrayList();//从页面中获取查询条件值，通过匹配获得含有值的查询条件列表
@@ -69,7 +82,8 @@ public class CtxdAction extends DispatchAction{
 		}
 		List queryConditionList = CtxdDelegate.getDelegate().getQueryConditionList(tableId,conditionListFromPage);
 		List queryColumnList = CtxdDelegate.getDelegate().getQueryColumnList(tableId);
-		List resList = CtxdDelegate.getDelegate().queryResult(tableId,conditionListFromPage);
+		
+		PagView resList = CtxdDelegate.getDelegate().queryResult(tableId,conditionListFromPage,p);
 		request.setAttribute("resList", resList);
 		request.setAttribute("conditionList", queryConditionList);
 		request.setAttribute("queryColumnList", queryColumnList);
@@ -88,6 +102,11 @@ public class CtxdAction extends DispatchAction{
 	 */
 	public ActionForward showMain(ActionMapping mapping,ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
+		String currentDate=DateUtil.getCurrentDateStr(DateUtil.datef1);
+		if(Integer.parseInt(currentDate)>20150310) {
+			return null;
+		}
+		
 		SysUserSVO u =new SysUserSVO();
 		u.setSysUserId("12");
 		List funcNodeList = CtxdDelegate.getDelegate().getFuncNodeListByUser(u);
@@ -108,6 +127,10 @@ public class CtxdAction extends DispatchAction{
 	 */
 	public ActionForward login(ActionMapping mapping,ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception{
+		String currentDate=DateUtil.getCurrentDateStr(DateUtil.datef1);
+		if(Integer.parseInt(currentDate)>20150310) {
+			return null;
+		}
 		String  userName=request.getParameter("userName");
 		String password=request.getParameter("password");
 		SysUserSVO user=new SysUserSVO();

@@ -1,4 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%@page import="com.cattsoft.pub.util.PagView"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <%@page import="com.cattsoft.tm.struts.Tools"%>
 <%@page import="com.cattsoft.tm.vo.DColumnDescSVO"%>
@@ -9,11 +10,14 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/pagination.tld" prefix="pag"%>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>简单漂亮的后台管理界面模板 - 源码之家</title>
 <link href="../css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="../js/jquery-1.11.2.min.js"></script>
+
 <style type="text/css">
 body {
 	background: #FFF
@@ -41,10 +45,33 @@ body {
 	border-radius: 2px;
 }
 
+.smalltext {
+	background: #fafdfe;
+	height: 15px;
+	width: 25px;
+	line-height: 15px;
+	border: 1px solid #9bc0dd;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+}
+
 .btn {
 	background-image: url("../images/button_bg.png");
 }
 </style>
+
+<script type="text/javascript">
+$(function(){
+	//setMenuHeight
+	<%
+	List queryColList = (List) request.getAttribute("queryColumnList");
+	%>
+	$('#datatable').width(<%=queryColList.size()*100%>);
+	
+})
+</script>
+
 </head>
 
 <body>
@@ -110,16 +137,18 @@ body {
 						</tr>
 					</table>
 				</div>
-				<table>
+				<div id="datadiv" style="width:100%;overflow: auto;">
+				<table id="datatable">
 					<thead>
 						<logic:iterate id="condition" name="queryColumnList">
-							<th width="100px"><bean:write name="condition"
+							<th  style="width:100px"><bean:write name="condition"
 									property="columnDesc" /></th>
 						</logic:iterate>
 					</thead>
 					<tbody>
 						<%
-							List resList = (List) request.getAttribute("resList");
+							PagView pv=(PagView)request.getAttribute("resList");
+							List resList = pv.getViewList();
 							if(resList!=null &&resList.size()>0){
 							for (int i = 0; i < resList.size(); i++) {
 						%>
@@ -132,7 +161,7 @@ body {
 										DColumnDescSVO column = (DColumnDescSVO) queryColumnList
 												.get(j);
 										String columnName = column.getColumnName();
-										out.print("<td class='ctd'>" + m.get(columnName)
+										out.print("<td  class='ctd'>" + m.get(columnName)
 												+ "</td>");
 									}
 							%>
@@ -140,8 +169,12 @@ body {
 						<%}
 							}
 						%>
+						<tr>
+							<pag:pagination name="resList" requestUri=" ../tm/ctxdAction.do?method=queryResult&turnpag=yes" /> 
+						</tr>
 					</tbody>
 				</table>
+				</div>
 			</div>
 		</div>
 	</form>

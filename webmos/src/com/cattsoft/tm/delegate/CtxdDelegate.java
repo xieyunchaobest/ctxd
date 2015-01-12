@@ -20,6 +20,8 @@ import com.cattsoft.pub.SysConstants;
 import com.cattsoft.pub.connection.ConnectionFactory;
 import com.cattsoft.pub.exception.AppException;
 import com.cattsoft.pub.exception.SysException;
+import com.cattsoft.pub.util.PagInfo;
+import com.cattsoft.pub.util.PagView;
 import com.cattsoft.pub.util.StringUtil;
 import com.cattsoft.pub.util.SysConfigData;
 import com.cattsoft.sm.vo.SysUserSVO;
@@ -57,14 +59,14 @@ public class CtxdDelegate {
 	/**
 	 * 获取查询结果集
 	 */
-	public List queryResult(String tableId,List conditionListFromPage) throws AppException, SysException {
+	public PagView queryResult(String tableId,List conditionListFromPage,PagInfo pageInfo) throws AppException, SysException {
 		Connection conn = null;
-		List returnValue = null;
+		PagView returnValue = null;
 		try {
 			conn = ConnectionFactory.createConnection();
 			conn.setAutoCommit(false);
 			CtxdDOM dom=new CtxdDOM();
-			returnValue =dom.queryResult(tableId,conditionListFromPage);
+			returnValue =dom.queryResult(tableId,conditionListFromPage,pageInfo);
 			ConnectionFactory.commit();
 		} catch (Exception e) { 
 			e.printStackTrace();
