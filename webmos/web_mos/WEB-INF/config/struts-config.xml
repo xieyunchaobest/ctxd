@@ -53,6 +53,7 @@
 			type="com.cattsoft.tm.struts.CtxdAction" scope="request">
 			<forward name="queryPages"   module="/page"  path="/queryResult.jsp" />
 			<forward name="main"   module="/page"  path="/index.jsp" />
+			<forward name="settingTable"   module="/page"  path="/settingTable.jsp" />
 		</action>
 		
 	</action-mappings>

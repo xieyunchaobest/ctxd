@@ -51,7 +51,7 @@ public class CtxdAction extends DispatchAction{
 	 * @param response
 	 * @return
 	 * @throws Exception
-	 * @author maxun
+	 * @author xieyunchao
 	 */
 	public ActionForward queryResult(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -141,6 +141,22 @@ public class CtxdAction extends DispatchAction{
 		return null;
 		
 	}
+	
+	/**
+	 * ≈‰÷√±Ì∏Ò
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public ActionForward settingTable(ActionMapping mapping,ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception{
+		return  mapping.findForward("settingTable");
+		
+	}
+	
 	
 	
 }

@@ -80,7 +80,7 @@ $(function(){
     				<ul>
     					 <logic:notEmpty name="tree" property="userFuncNodeList">
     						<logic:iterate id="node" name="tree" property="userFuncNodeList">
-    							<li><a href="<bean:write name='node' property='html' />"><bean:write name="node" property="funcNodeName" /></a></li>
+    							<li><a href="<bean:write name='node' property='html' />" target="right"><bean:write name="node" property="funcNodeName" /></a></li>
     						</logic:iterate>
     					</logic:notEmpty>
     				</ul>
