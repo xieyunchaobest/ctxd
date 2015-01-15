@@ -8,6 +8,7 @@ import com.cattsoft.pub.exception.SysException;
 import com.cattsoft.pub.util.PagInfo;
 import com.cattsoft.pub.util.PagView;
 import com.cattsoft.sm.vo.SysUserSVO;
+import com.cattsoft.tm.vo.DTableDescSVO;
 
 public interface ICtxdMDAO extends ISDAO{
 	
@@ -42,5 +43,24 @@ public interface ICtxdMDAO extends ISDAO{
 	
 	public List getFuncNodeListByUser(SysUserSVO vo) throws AppException,
 	SysException ;
+	
+	/**
+	 * 获取当前数据库用户的表
+	 * @return
+	 * @throws AppException
+	 * @throws SysException
+	 */
+	public List getDBTables()throws AppException, SysException;
+	
+	public DTableDescSVO getConfigTableInfo(String tableId)throws AppException, SysException;
+	
+	/**
+	 * 获取列的说明信息，如果没有，则取数据字典的说明
+	 * @param svo
+	 * @return
+	 * @throws AppException
+	 * @throws SysException
+	 */
+	public List getColumnDescList(String tableName)throws AppException, SysException;
 
 }

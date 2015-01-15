@@ -30,7 +30,7 @@ public interface ISDAO extends IDAO{
 	 * 
 	 * @param vos
 	 */
-	//public void addBat(List vos)throws AppException,SysException;
+	public void addBat(List vos)throws AppException,SysException;
 	
 	
 	/**

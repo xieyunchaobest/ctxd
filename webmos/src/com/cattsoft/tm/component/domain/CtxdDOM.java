@@ -10,6 +10,7 @@ import com.cattsoft.pub.SysConstants;
 import com.cattsoft.pub.dao.DAOFactory;
 import com.cattsoft.pub.exception.AppException;
 import com.cattsoft.pub.exception.SysException;
+import com.cattsoft.pub.util.Constant;
 import com.cattsoft.pub.util.DateUtil;
 import com.cattsoft.pub.util.MaxId;
 import com.cattsoft.pub.util.PagView;
@@ -17,7 +18,13 @@ import com.cattsoft.pub.util.PasswordUtil;
 import com.cattsoft.sm.component.dao.ISysUserSDAO;
 import com.cattsoft.sm.vo.SysUserSVO;
 import com.cattsoft.tm.component.dao.ICtxdMDAO;
+import com.cattsoft.tm.component.dao.IDColumnDescSDAO;
+import com.cattsoft.tm.component.dao.IDQueryConditionSDAO;
+import com.cattsoft.tm.component.dao.IDTableDescSDAO;
 import com.cattsoft.tm.component.dao.ILoginLogSDAO;
+import com.cattsoft.tm.vo.DColumnDescSVO;
+import com.cattsoft.tm.vo.DQueryConditionSVO;
+import com.cattsoft.tm.vo.DTableDescSVO;
 import com.cattsoft.tm.vo.FuncNodeSVO;
 import com.cattsoft.tm.vo.FuncNodeTreeSVO;
 import com.cattsoft.tm.vo.LoginLogSVO;
@@ -137,5 +144,60 @@ public class CtxdDOM {
 		return treeList;
 	}
 
+	/**
+	 * 获取当前数据库用户的表
+	 * @return
+	 * @throws AppException
+	 * @throws SysException
+	 */
+	public List getDBTables()throws AppException, SysException{
+		ICtxdMDAO mdao= (ICtxdMDAO) DAOFactory.getDAO(ICtxdMDAO.class);
+		return mdao.getDBTables();
+	}
 
+	
+	public DTableDescSVO getConfigTableInfo(String tableId)throws AppException, SysException{
+		ICtxdMDAO mdao= (ICtxdMDAO) DAOFactory.getDAO(ICtxdMDAO.class);
+		return mdao.getConfigTableInfo(tableId);
+	}
+	
+	/**
+	 * 获取列的说明信息，如果没有，则取数据字典的说明
+	 * @param svo
+	 * @return
+	 * @throws AppException
+	 * @throws SysException
+	 */
+	public List getColumnDescList(String tableName)throws AppException, SysException{
+		ICtxdMDAO mdao= (ICtxdMDAO) DAOFactory.getDAO(ICtxdMDAO.class);
+		return mdao.getColumnDescList(tableName);
+	}
+	
+	public void saveTableConfig(DTableDescSVO table,List columns,List queryConditionList) throws AppException, SysException{
+		IDTableDescSDAO tableDAO= (IDTableDescSDAO) DAOFactory.getDAO(IDTableDescSDAO.class);
+		IDColumnDescSDAO columnDAO= (IDColumnDescSDAO) DAOFactory.getDAO(IDColumnDescSDAO.class);
+		
+		IDQueryConditionSDAO conditionDAO= (IDQueryConditionSDAO) DAOFactory.getDAO(IDQueryConditionSDAO.class);
+		//先删除，再添加
+		tableDAO.delete(table);
+		DColumnDescSVO cvo=new DColumnDescSVO();
+		cvo.setTableName(table.getTableName());
+		columnDAO.delete(cvo);
+		DQueryConditionSVO condition=new DQueryConditionSVO();
+		condition.setTableName(table.getTableName());
+		conditionDAO.delete(condition);
+		
+		table.setTableId(MaxId.getSequenceNextVal(Constant.D_TABLE_DESC));
+		tableDAO.add(table);
+		columnDAO.addBat(columns);
+		conditionDAO.addBat(queryConditionList);
+		
+	}
+	
+	public List getConfigTabList() throws AppException, SysException {
+		IDTableDescSDAO tableDAO= (IDTableDescSDAO) DAOFactory.getDAO(IDTableDescSDAO.class);
+		DTableDescSVO svo=new DTableDescSVO();
+		List tableList=tableDAO.findByVO(svo);
+		return tableList;
+	}
 }

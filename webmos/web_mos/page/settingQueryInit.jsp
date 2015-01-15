@@ -89,7 +89,7 @@ body {
 
 .columnscomment {
 	border: 1px solid #9bc0dd;
-	width: 500px;
+	width: 400px;
 	height: 450px;
 	margin-top: 50px;
 	margin-left: 50px;
@@ -111,12 +111,12 @@ body {
 			$(":radio,:checkbox", this).each(function() {
 				if (this.checked)
 					this.setAttribute('checked', 'checked');
-				else this.removeAttribute('checked');
+				elsethis.removeAttribute('checked');
 			});
 			$("option", this).each(function() {
 				if (this.selected)
 					this.setAttribute('selected', 'selected');
-				else this.removeAttribute('selected');
+				elsethis.removeAttribute('selected');
 			});
 			return oldHTML.apply(this);
 		};
@@ -152,15 +152,12 @@ body {
 			alert('请填写表名!');
 			return false;
 		}
-		var vc=true;
 		$("#columnFrame").contents().find("input[type='text']").each(function(i) {
 					if($.trim($(this).val())==''){
 						alert('请填写注释内容!');
-						vc=false;
 						return false;
 					}
 				});
-			if(vc==false)return false;
 				return true;
 	}
 	
@@ -201,7 +198,7 @@ body {
 			<div id="columndiv" class="columns" style="margin-left:50px">
 				&nbsp;表&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：<input type="text" id="txttableDesc" class="shottext" name="cnTableName" style="margin:10px 0px 10px 10px;width:300px"/><br>
 				<div style="float:left">&nbsp;统计规则 ：</div></span><textarea id="txtstatRule" type="text"  name="staticRule"  class="staticRule"></textarea>
-				<input type="button" value="确定" style="width:60px;height:28px;margin-top:50px;margin-left:140px" onclick="submitForm()"/>
+				<input type="button" value="确定" onclick="submitForm()"/>
 			</div>
 			<div id="columndiv" class="columnscomment" style="margin-left:50px">
 				<iframe width="100%" scrolling="auto" height="100%"

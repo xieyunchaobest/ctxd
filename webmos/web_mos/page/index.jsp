@@ -50,15 +50,15 @@ $(function(){
     <div class="logo fleft"></div>
     <div class="nav fleft">
     	<ul>
-        	<div class="nav-left fleft"></div>
-            <li class="first">我的面板</li>
+        	<!-- <div class="nav-left fleft"></div> -->
+            <!-- <li class="first">我的面板</li>
         	<li>设置</li>
             <li>模块</li>
             <li>内容</li>
             <li>用户</li>
             <li>扩展</li>
-            <li>应用</li>
-            <div class="nav-right fleft"></div>
+            <li>应用</li> -->
+            <!-- <div class="nav-right fleft"></div> -->
         </ul>
     </div>
     <a class="logout fright" href="login.html"> </a>
@@ -92,7 +92,7 @@ $(function(){
     <div class="sidebar fleft"><div class="btn"></div></div>
     <div class="page">
     <iframe width="100%" scrolling="auto" height="100%" frameborder="false" 
-    	allowtransparency="true" style="border: medium none;" src="../tm/ctxdAction.do?method=initQueryPage&&tableId=100002" id="rightMain" name="right"></iframe>
+    	allowtransparency="true" style="border: medium none;" src="../tm/ctxdAction.do?method=initQueryPage&&tableName=T_RPT_ZDYWRTB_TB" id="rightMain" name="right"></iframe>
     </div>
     </div><!--#content -->
     <div class="clear"></div>

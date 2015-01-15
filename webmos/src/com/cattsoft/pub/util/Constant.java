@@ -76,7 +76,6 @@ public final class Constant {
 
     public static final String SEQ_CUST_ID = "CUST_ID"; // 客户表
 
-    public static final String SEQ_PARTY_ROLE = "PARTY_ROLE"; // 客户与参与人关系表
 
     public static final String SEQ_CUST_EVENT_ID = "CUST_EVENT_ID";// 客户重大事件表
 
@@ -409,21 +408,6 @@ public final class Constant {
 
     public static final String SO_FORM_TO_VO_PAGE = "soFormToVo";
 
-    /** session */
-    /** 受理中保存在session的soallvo */
-    public static final String SESSION_SO_ALL_VO = "soAllVo";
-
-    /** 受理前生成的保存在session的csoNbr */
-    public static final String SESSION_CSO_NBR = "CSO_NBR";
-
-    /** 新装或者变更 */
-    public static final String SESSION_ITEM_TYPE = "ITEM_TYPE";
-
-    /** 受理动作 */
-    public static final String SESSION_ORDER_ACTION = "ORDER_ACTION";
-
-    /** 系统登陆保存在session的信息 */
-    public static final String SESSION_SYS_USER_EXTEND = "SYS_USER_EXTEND";
     
     /** 前一张客户订单编号 */
     public static final String SESSION_BFOR_CO_NBR = "beforeCoNbr";
@@ -515,6 +499,12 @@ public final class Constant {
 	 public static final String SEQ_NET_NODE_ID = "NET_NODE_ID";//网络节点序列
 	 public static final String SEQ_NET_ROUTER_ID = "NET_ROUTER_ID";//网络线路序列
 	 public static final String SEQ_NET_ROUTER_NODE_ID = "NET_ROUTER_NODE_ID";//线路组成序列
+	 
+	 
+	 public static final String D_TABLE_DESC="D_TABLE_DESC";
+	 public static final String D_COLUMN_DESC="D_COLUMN_DESC";
+	 public static final String D_QUERY_CONDITION="D_QUERY_CONDITION";
+	 
 	 
 
 }

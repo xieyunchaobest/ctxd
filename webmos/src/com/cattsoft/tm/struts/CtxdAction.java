@@ -4,6 +4,7 @@
 package com.cattsoft.tm.struts;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -17,11 +18,17 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
+import com.cattsoft.pub.exception.AppException;
+import com.cattsoft.pub.exception.SysException;
 import com.cattsoft.pub.util.DateUtil;
 import com.cattsoft.pub.util.PagInfo;
 import com.cattsoft.pub.util.PagView;
+import com.cattsoft.pub.util.StringUtil;
 import com.cattsoft.sm.vo.SysUserSVO;
 import com.cattsoft.tm.delegate.CtxdDelegate;
+import com.cattsoft.tm.vo.DColumnDescSVO;
+import com.cattsoft.tm.vo.DQueryConditionSVO;
+import com.cattsoft.tm.vo.DTableDescSVO;
 import com.cattsoft.webpub.util.ReqUtil;
 
 /**
@@ -32,14 +39,14 @@ public class CtxdAction extends DispatchAction{
 	
 	public ActionForward initQueryPage(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
-		String tableId=request.getParameter("tableId");
-		List queryConditionList = CtxdDelegate.getDelegate().getQueryConditionList(tableId,null);
-		List queryColumnList = CtxdDelegate.getDelegate().getQueryColumnList(tableId);
+		String tableName=request.getParameter("tableName");
+		List queryConditionList = CtxdDelegate.getDelegate().getQueryConditionList(tableName,null);
+		List queryColumnList = CtxdDelegate.getDelegate().getQueryColumnList(tableName);
 		//List resList = CtxdDelegate.getDelegate().queryResult(tableId,null);
 		request.setAttribute("resList", new PagView());
 		request.setAttribute("conditionList", queryConditionList);
 		request.setAttribute("queryColumnList", queryColumnList);
-		request.setAttribute("tableId", tableId);
+		request.setAttribute("tableName", tableName);
 		return mapping.findForward("queryPages");
 	}
 
@@ -59,7 +66,7 @@ public class CtxdAction extends DispatchAction{
 		if(Integer.parseInt(currentDate)>20150310) {
 			return null;
 		}
-		String tableId=request.getParameter("tableId");
+		String tableName=request.getParameter("tableName");
 		String pageNo=request.getParameter("pageNo");
 		String pagSize=request.getParameter("pagSize");
 		if(pageNo==null)pageNo="1";
@@ -80,14 +87,14 @@ public class CtxdAction extends DispatchAction{
 				conditionListFromPage.add(m);
 			}
 		}
-		List queryConditionList = CtxdDelegate.getDelegate().getQueryConditionList(tableId,conditionListFromPage);
-		List queryColumnList = CtxdDelegate.getDelegate().getQueryColumnList(tableId);
+		List queryConditionList = CtxdDelegate.getDelegate().getQueryConditionList(tableName,conditionListFromPage);
+		List queryColumnList = CtxdDelegate.getDelegate().getQueryColumnList(tableName);
 		
-		PagView resList = CtxdDelegate.getDelegate().queryResult(tableId,conditionListFromPage,p);
+		PagView resList = CtxdDelegate.getDelegate().queryResult(tableName,conditionListFromPage,p);
 		request.setAttribute("resList", resList);
 		request.setAttribute("conditionList", queryConditionList);
 		request.setAttribute("queryColumnList", queryColumnList);
-		request.setAttribute("tableId", tableId);
+		request.setAttribute("tableName", tableName);
 		return mapping.findForward("queryPages");
 	}
 
@@ -151,12 +158,101 @@ public class CtxdAction extends DispatchAction{
 	 * @return
 	 * @throws Exception
 	 */
-	public ActionForward settingTable(ActionMapping mapping,ActionForm form, HttpServletRequest request,
+	public ActionForward settingTableInit(ActionMapping mapping,ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception{
+		List dbTableList=CtxdDelegate.getDelegate().getDBTables();
+		request.setAttribute("dbTableList", dbTableList);
 		return  mapping.findForward("settingTable");
-		
+	}
+	
+	/**
+	 * 获取列的说明信息，如果没有，则取数据字典的说明
+	 * @param svo
+	 * @return
+	 * @throws AppException
+	 * @throws SysException
+	 */
+	public ActionForward showColumnComments(ActionMapping mapping,ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception{
+		String tableName=request.getParameter("tableName");
+		List columnDescList=new ArrayList();
+		if(!StringUtil.isBlank(tableName)) {
+			columnDescList=CtxdDelegate.getDelegate().getColumnDescList(tableName);
+		}
+		request.setAttribute("columnDescList", columnDescList);
+		return mapping.findForward("showColumnComments");
 	}
 	
 	
+	/**
+	 * 
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception 
+	 */
+	public ActionForward settingTable(ActionMapping mapping,ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String columnCount=request.getParameter("columnCount");
+		int icolumnCount=Integer.parseInt(columnCount);
+		String tableName=request.getParameter("dbTableList");
+		String tableDesc=request.getParameter("cnTableName");
+		String staticRule=request.getParameter("staticRule");
+		
+		
+		
+		DTableDescSVO table=new DTableDescSVO();
+		table.setTableName(tableName);
+		table.setTableDesc(tableDesc);
+		table.setStatisticsComments(staticRule);
+		
+		List columnList=new ArrayList();
+		List queryConditionList=new ArrayList();
+		
+		for(int i=1;i<=icolumnCount;i++) {
+			DColumnDescSVO column=new DColumnDescSVO();
+			String columnName=request.getParameter("columnName"+i).trim();
+			String columnDesc=request.getParameter("columnDesc"+i).trim();
+			String dataType=request.getParameter("dataType"+i).trim();
+			String isShow=request.getParameter("isShow"+i);
+			String isQueryCondition=request.getParameter("isQueryCondition"+i);
+			String conditionType=request.getParameter("conditionType"+i);
+			if(StringUtil.isBlank(conditionType)) {
+				conditionType="S";
+			}
+			if("Y".equals(isQueryCondition)) {
+				DQueryConditionSVO condition=new DQueryConditionSVO();
+				condition.setCreateTime(new Date());
+				condition.setColumnName(columnName);
+				condition.setTableName(tableName);
+				condition.setConditionType(conditionType);
+				queryConditionList.add(condition);
+			}
+			column.setColumnName(columnName);
+			column.setColumnDesc(columnDesc);
+			column.setDataType(dataType);
+			column.setCreateTime(new Date());
+			column.setTableName(tableName);
+			column.setIsShow(isShow);
+			column.setIsQueryCondition(isQueryCondition);
+			columnList.add(column);
+		}
+		CtxdDelegate.getDelegate().saveTableConfig(table,columnList,queryConditionList);
+		//ReqUtil.write(response, "1");
+		request.setAttribute("flag", "1");
+		return settingTableInit(mapping,form,request,response);
+	}
+	
+	
+	
+	public ActionForward settingQueryInit(ActionMapping mapping,ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		List configTableList=CtxdDelegate.getDelegate().getConfigTabList();
+		request.setAttribute("configTableList", configTableList);
+		
+		return mapping.findForward("settingQueryInit");
+	}
 	
 }

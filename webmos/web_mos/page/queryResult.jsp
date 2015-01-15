@@ -66,8 +66,11 @@ $(function(){
 	//setMenuHeight
 	<%
 	List queryColList = (List) request.getAttribute("queryColumnList");
+	if(queryColList.size()>10){
+		out.println( "$('#datatable').width("+queryColList.size()+"*100)");
+	}
 	%>
-	$('#datatable').width(<%=queryColList.size()*100%>);
+	
 	
 })
 </script>
@@ -77,7 +80,7 @@ $(function(){
 <body>
 	<form id="queryForm" action="../tm/ctxdAction.do?method=queryResult"
 		method="post">
-		<span style="display:none"><input type="hidden" value='<%=request.getAttribute("tableId")%>' name="tableId"/></span>
+		<span style="display:none"><input type="hidden" value='<%=request.getAttribute("tableName")%>' name="tableName"/></span>
 		<div id="contentWrap">
 			<div class="pageTitle"></div>
 			<div class="pageColumn">
