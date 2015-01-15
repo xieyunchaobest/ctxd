@@ -135,7 +135,7 @@ public class CtxdMDAOImpl implements ICtxdMDAO {
 		IDColumnDescSDAO columnSDAO = (IDColumnDescSDAO) DAOFactory
 				.getDAO(IDColumnDescSDAO.class);
 		DColumnDescSVO column = new DColumnDescSVO();
-		column.setTableId(tableId);
+		column.setTableName(tableId);
 		List columns = columnSDAO.findByVO(column);
 		return columns;
 	}
@@ -423,4 +423,155 @@ public class CtxdMDAOImpl implements ICtxdMDAO {
 
 	}
 
+	/**
+	 * 获取当前数据库用户的表
+	 * @return
+	 * @throws AppException
+	 * @throws SysException
+	 */
+	public List getDBTables()throws AppException, SysException {
+		List res = new ArrayList();
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Sql sql = new Sql("select t1.table_name,t2.table_desc,t2.table_id,t2.statistics_comments "+
+  " from user_tables t1,d_table_desc  t2 "+
+  " where t1.table_name=t2.table_name(+)  ");
+		try {
+			conn = ConnectionFactory.getConnection();
+			ps = conn.prepareStatement(sql.getSql());
+			ps = sql.fillParams(ps);
+			sql.log(this.getClass());
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				DTableDescSVO table=new DTableDescSVO();
+				table.setTableName(rs.getString("table_name"));
+				table.setTableDesc(rs.getString("table_desc"));
+				table.setTableId(rs.getString("table_id"));
+				table.setStatisticsComments(rs.getString("statistics_comments"));
+				res.add(table);
+			}
+
+		} catch (SQLException se) {
+			throw new SysException("100003", "JDBC操作异常！", se);
+		} finally {
+			JdbcUtil.close(rs, ps);
+		}
+
+		if (0 == res.size())
+			res = null;
+		return res;
+	}
+	
+	/**
+	 * 获得配置表格的相关信息
+	 * @param tableId
+	 * @return
+	 * @throws AppException
+	 * @throws SysException
+	 */
+	public DTableDescSVO getConfigTableInfo(String tableId)throws AppException, SysException {
+		if(StringUtil.isBlank(tableId)) {
+			throw new AppException("100001", "缺少DAO操作对象！");
+		}
+		List res = new ArrayList();
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Sql sql = new Sql("select t2.table_id, "+
+				 " t2.table_name,"+
+				 " (case when t2.table_desc is null then "+
+				 " t1.comments "+
+				 " else  "+
+				 " t2.table_desc "+
+				 " end  "+
+				 " ) as tabledesc," +
+				 " t2.statistics_comments "+
+				 " from user_tab_comments  t1,d_table_desc t2 "+
+				"+where t1.table_name=t2.table_name and t2.table_id=:tableId");
+		DTableDescSVO table=null;
+		try {
+			conn = ConnectionFactory.getConnection();
+			ps = conn.prepareStatement(sql.getSql());
+			sql.setString("tableId", tableId);
+			ps = sql.fillParams(ps);
+			sql.log(this.getClass());
+			rs = ps.executeQuery();
+		
+			while (rs.next()) {
+				table=new DTableDescSVO();
+				table.setTableName(rs.getString("table_name"));
+				table.setTableId(rs.getString("table_id"));
+				table.setTableDesc(rs.getString("tabledesc"));
+				table.setTableDesc(rs.getString("statistics_comments"));
+			}
+
+		} catch (SQLException se) {
+			throw new SysException("100003", "JDBC操作异常！", se);
+		} finally {
+			JdbcUtil.close(rs, ps);
+		}
+		return table;
+	}
+	
+	/**
+	 * 获取列的说明信息，如果没有，则取数据字典的说明
+	 * @param svo
+	 * @return
+	 * @throws AppException
+	 * @throws SysException
+	 */
+	public List getColumnDescList(String tableName)throws AppException, SysException {
+		if(tableName==null) {
+			throw new AppException("100001", "缺少DAO操作对象！");
+		}
+		List res = new ArrayList();
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Sql sql = new Sql("SELECT t1.column_desc_id, "+
+				 " t2.column_name, "+
+				 " t1.table_name,"+
+				 " ( "+
+				 " CASE "+
+				 " WHEN t1.column_desc IS NULL "+
+				 " THEN t2.comments "+
+				 " ELSE t1.column_desc "+
+				 " END ) AS column_desc, "+
+				 " t1.is_show "+
+				 " FROM d_column_desc t1, "+
+				 " user_col_comments t2 , "+
+				 " d_table_desc t3 "+
+				 " WHERE t2.column_name=t1.column_name(+) "+
+				 " AND t2.table_name   =t3.table_name(+) "+
+				 " AND t2.table_name   =:tableName "
+				 );
+		
+		try {
+			conn = ConnectionFactory.getConnection();
+			ps = conn.prepareStatement(sql.getSql());
+			sql.setString("tableName", tableName);
+			ps = sql.fillParams(ps);
+			sql.log(this.getClass());
+			rs = ps.executeQuery();
+		
+			while (rs.next()) {
+				DColumnDescSVO column=new DColumnDescSVO();
+				column.setColumnDescId(rs.getString("column_desc_id"));
+				column.setColumnName(rs.getString("column_name"));
+				column.setTableName(rs.getString("table_name"));
+				column.setColumnDesc(rs.getString("column_desc"));
+				column.setIsShow(rs.getString("is_show"));
+				res.add(column);
+			}
+
+		} catch (SQLException se) {
+			throw new SysException("100003", "JDBC操作异常！", se);
+		} finally {
+			JdbcUtil.close(rs, ps);
+		}
+		return res;
+	
+	}
 }

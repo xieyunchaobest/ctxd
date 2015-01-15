@@ -18,6 +18,7 @@ import com.cattsoft.sm.component.dao.ISysUserSDAO;
 import com.cattsoft.sm.vo.SysUserSVO;
 import com.cattsoft.tm.component.dao.ICtxdMDAO;
 import com.cattsoft.tm.component.dao.ILoginLogSDAO;
+import com.cattsoft.tm.vo.DTableDescSVO;
 import com.cattsoft.tm.vo.FuncNodeSVO;
 import com.cattsoft.tm.vo.FuncNodeTreeSVO;
 import com.cattsoft.tm.vo.LoginLogSVO;
@@ -137,5 +138,32 @@ public class CtxdDOM {
 		return treeList;
 	}
 
+	/**
+	 * 获取当前数据库用户的表
+	 * @return
+	 * @throws AppException
+	 * @throws SysException
+	 */
+	public List getDBTables()throws AppException, SysException{
+		ICtxdMDAO mdao= (ICtxdMDAO) DAOFactory.getDAO(ICtxdMDAO.class);
+		return mdao.getDBTables();
+	}
 
+	
+	public DTableDescSVO getConfigTableInfo(String tableId)throws AppException, SysException{
+		ICtxdMDAO mdao= (ICtxdMDAO) DAOFactory.getDAO(ICtxdMDAO.class);
+		return mdao.getConfigTableInfo(tableId);
+	}
+	
+	/**
+	 * 获取列的说明信息，如果没有，则取数据字典的说明
+	 * @param svo
+	 * @return
+	 * @throws AppException
+	 * @throws SysException
+	 */
+	public List getColumnDescList(String tableName)throws AppException, SysException{
+		ICtxdMDAO mdao= (ICtxdMDAO) DAOFactory.getDAO(ICtxdMDAO.class);
+		return mdao.getColumnDescList(tableName);
+	}
 }

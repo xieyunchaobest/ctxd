@@ -17,9 +17,12 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
+import com.cattsoft.pub.exception.AppException;
+import com.cattsoft.pub.exception.SysException;
 import com.cattsoft.pub.util.DateUtil;
 import com.cattsoft.pub.util.PagInfo;
 import com.cattsoft.pub.util.PagView;
+import com.cattsoft.pub.util.StringUtil;
 import com.cattsoft.sm.vo.SysUserSVO;
 import com.cattsoft.tm.delegate.CtxdDelegate;
 import com.cattsoft.webpub.util.ReqUtil;
@@ -153,10 +156,27 @@ public class CtxdAction extends DispatchAction{
 	 */
 	public ActionForward settingTable(ActionMapping mapping,ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception{
+		List dbTableList=CtxdDelegate.getDelegate().getDBTables();
+		request.setAttribute("dbTableList", dbTableList);
 		return  mapping.findForward("settingTable");
-		
 	}
 	
-	
+	/**
+	 * 获取列的说明信息，如果没有，则取数据字典的说明
+	 * @param svo
+	 * @return
+	 * @throws AppException
+	 * @throws SysException
+	 */
+	public ActionForward showColumnComments(ActionMapping mapping,ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception{
+		String tableName=request.getParameter("tableName");
+		List columnDescList=new ArrayList();
+		if(!StringUtil.isBlank(tableName)) {
+			columnDescList=CtxdDelegate.getDelegate().getColumnDescList(tableName);
+		}
+		request.setAttribute("columnDescList", columnDescList);
+		return mapping.findForward("showColumnComments");
+	}
 	
 }
