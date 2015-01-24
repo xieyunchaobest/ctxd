@@ -92,7 +92,7 @@ $(function(){
     <div class="sidebar fleft"><div class="btn"></div></div>
     <div class="page">
     <iframe width="100%" scrolling="auto" height="100%" frameborder="false" 
-    	allowtransparency="true" style="border: medium none;" src="../tm/ctxdAction.do?method=initQueryPage&&tableName=T_RPT_ZDYWRTB_TB" id="rightMain" name="right"></iframe>
+    	allowtransparency="true" style="border: medium none;" src="../tm/ctxdAction.do?method=initQueryPage&&instanceId=1000" id="rightMain" name="right"></iframe>
     </div>
     </div><!--#content -->
     <div class="clear"></div>

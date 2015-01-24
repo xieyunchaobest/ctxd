@@ -40,16 +40,14 @@ public class CtxdAction extends DispatchAction{
 	
 	public ActionForward initQueryPage(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception{
-		String tableName=request.getParameter("tableName");
-		List queryConditionList = CtxdDelegate.getDelegate().getQueryConditionList(tableName,null);
-		List queryColumnList = CtxdDelegate.getDelegate().getQueryColumnList(tableName);
+		String instanceId=request.getParameter("instanceId");
+		List queryConditionList = CtxdDelegate.getDelegate().getQueryConditionList(instanceId,null);
+		List queryColumnList = CtxdDelegate.getDelegate().getQueryColumnList(instanceId);
 		//List resList = CtxdDelegate.getDelegate().queryResult(tableId,null);
 		request.setAttribute("resList", new PagView());
-		DTableDescSVO tableVO=CtxdDelegate.getDelegate().getTableVO(tableName);
 		request.setAttribute("conditionList", queryConditionList);
 		request.setAttribute("queryColumnList", queryColumnList);
-		request.setAttribute("tableName", tableName);
-		request.setAttribute("tableVO", tableVO);
+		request.setAttribute("instanceId", instanceId);
 		return mapping.findForward("queryPages");
 	}
 
@@ -82,6 +80,19 @@ public class CtxdAction extends DispatchAction{
 		List conditionListFromPage=new ArrayList();//从页面中获取查询条件值，通过匹配获得含有值的查询条件列表
 		while (eNames.hasMoreElements()) {
 			key = (String) eNames.nextElement();
+			if(key.startsWith("QRY_END_"))continue; 
+			if(key.startsWith("QRY_START_")) {//
+				String valueStart = request.getParameter(key);
+				valueStart=(valueStart==null?"":valueStart);
+				String valueEnd=request.getParameter("QRY_END_"+key.substring(10));
+				valueEnd=(valueEnd==null?"":valueEnd);
+				Map m=new HashMap();
+				m.put("paraName", key.substring(10));
+				m.put("value", valueStart+","+valueEnd);
+				conditionListFromPage.add(m);
+				continue;
+			}
+			
 			if(key.startsWith("QRY_")) {
 				String value = request.getParameter(key);
 				Map m=new HashMap();
@@ -293,6 +304,8 @@ public class CtxdAction extends DispatchAction{
 		return  mapping.findForward("instanceList");
 		
 	}
+
 	
+
 	
 }

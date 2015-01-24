@@ -10,11 +10,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.cattsoft.pub.ConstantsHelp;
 import com.cattsoft.pub.connection.ConnectionFactory;
 import com.cattsoft.pub.dao.DAOFactory;
 import com.cattsoft.pub.dao.Sql;
 import com.cattsoft.pub.exception.AppException;
 import com.cattsoft.pub.exception.SysException;
+import com.cattsoft.pub.util.Constant;
 import com.cattsoft.pub.util.JdbcUtil;
 import com.cattsoft.pub.util.PagInfo;
 import com.cattsoft.pub.util.PagUtil;
@@ -65,7 +67,17 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Sql sql = new Sql(this.getWholeSql(instanceId, conditionListFromPage));
+		QueryInstanceSVO instacne=new QueryInstanceSVO();
+		instacne.setQueryInstanceId(instanceId);
+		
+		String queryType=((QueryInstanceSVO)findByPK(instacne)).getInstanceType();
+		Sql sql =null;
+		if(ConstantsHelp.INSTANCE_TYPE_COMMON.equals(queryType)) {
+			sql=new Sql(this.getWholeSql(instanceId, conditionListFromPage));
+		}else {
+			sql=new Sql(this.getWholeSql4Group(instanceId, conditionListFromPage));
+		}
+		
 		List conditions = this
 				.getQueryCondition(instanceId, conditionListFromPage);
 		List columns = this.getColumnList(instanceId);
@@ -98,13 +110,41 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 	 * 
 	 * @return
 	 */
-	private void fillParameters(List queryColumns, Sql sql) {
-		for (int i = 0; i < queryColumns.size(); i++) {
-			QueryConditionSVO m = (QueryConditionSVO) queryColumns.get(i);
+	private void fillParameters(List conditions, Sql sql) {
+		for (int i = 0; i < conditions.size(); i++) {
+			QueryConditionSVO m = (QueryConditionSVO) conditions.get(i);
 			String columnName = (String) m.getColumnName();
 			String dataType = (String) m.getDataType();
 			String value = (String) m.getValue();
+			String conditionType=m.getConditionType();
 			if (!StringUtil.isBlank(value)) {
+				if(ConstantsHelp.CONDITION_TYPE_CONTAIN.equals(conditionType)) {
+					value="%"+value+"%";
+				} 
+				if(ConstantsHelp.CONDITION_TYPE_SIDING.equals(conditionType)) {
+					
+					String vals[]=value.split(",");
+					int vallen=vals.length;
+					System.out.println("asfafasfasfasfasfadsfas="+value);
+					if (Tools.isDateType(dataType) || Tools.isVarchar(dataType)) {
+						if(vallen==1) {
+							sql.setString(ConstantsHelp.PRE_START+columnName, vals[0]);
+						}else if(vallen==2) {
+							sql.setString(ConstantsHelp.PRE_START+columnName, vals[0]);
+							sql.setString(ConstantsHelp.PRE_END+columnName, vals[1]);
+						}
+						
+					} else {
+						if(vallen==1) {
+							sql.setInteger(ConstantsHelp.PRE_START+columnName, vals[0]);
+						}else if(vallen==2) {
+							sql.setInteger(ConstantsHelp.PRE_START+columnName, vals[0]);
+							sql.setInteger(ConstantsHelp.PRE_END+columnName, vals[1]);
+						}
+						
+					}
+					continue;
+				}
 				if (Tools.isDateType(dataType) || Tools.isVarchar(dataType)) {
 					sql.setString(columnName, value);
 				} else {
@@ -172,6 +212,36 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 		return sql;
 	}
 
+	
+	/**
+	 * 获取完整sql
+	 * 
+	 * @param tableId
+	 * @return
+	 * @throws AppException
+	 * @throws SysException
+	 */
+	private String getWholeSql4Group(String instanceId, List conditionListFromPage)
+			throws AppException, SysException {
+		QueryInstanceSVO instance=new QueryInstanceSVO();
+		instance.setQueryInstanceId(instanceId);
+		String sql = "";
+		String select = "select ";
+		String from = " from ";
+		String where = " where 1=1 ";
+		String atableName = ((QueryInstanceSVO)findByPK(instance)).getTableName();
+
+		List columns =getColumnList(instanceId);
+		String sqlColumn = getSqlColumns4Group(columns);
+
+		List conditions = getQueryCondition(instanceId, conditionListFromPage);
+		String sqlCondition = getConditionSql(conditions);
+		String sqlGroupBy=getSqlGroup(columns);
+		sql = select + sqlColumn + from + atableName + where + sqlCondition+sqlGroupBy;
+		return sql;
+	}
+
+	
 	/**
 	 * 获取查询条件sql
 	 * 
@@ -188,18 +258,86 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 			String columnName = (String) m.getColumnName();
 			String dataType = (String) m.getDataType();
 			String value = (String) m.getValue();
+			String conditionType=m.getConditionType();
 			if (!StringUtil.isBlank(value)) {
-				if ("DATE".equals(dataType)) {
-					sqlCondtion = sqlCondtion + " and to_char(" + columnName
-							+ ",'yyyy-mm-dd')=:" + columnName;
-				} else {
-					sqlCondtion = sqlCondtion + " and " + columnName + "=:"
-							+ columnName;
-				}
+				String vals[]=value.split(",");
+				int vallen=vals.length;
+				
+					if(ConstantsHelp.CONDITION_TYPE_CONTAIN.equals(conditionType)) {
+						sqlCondtion = sqlCondtion + " and " + columnName + " like :"
+								+ columnName;
+					}else if(ConstantsHelp.CONDITION_TYPE_SIDING.equals(conditionType)) {
+						if(vallen==1) {
+							if("DATE".equals(dataType)) {
+								sqlCondtion = sqlCondtion + " and to_char(" + columnName + ",'yyyy-mm-dd')>=:"
+										+ ConstantsHelp.PRE_START+columnName;
+								
+							}else {
+								sqlCondtion = sqlCondtion + " and " + columnName + ">=:"
+										+ ConstantsHelp.PRE_START+columnName;
+							}
+						}else if(vallen==2) {
+							if("DATE".equals(dataType)) {
+								sqlCondtion = sqlCondtion + " and to_char(" + columnName + ",'yyyy-mm-dd')>=:"
+										+ ConstantsHelp.PRE_START+columnName     +
+										" and to_char("+  columnName + ",'yyyy-mm-dd')<=:"
+										+ ConstantsHelp.PRE_END+columnName ;
+								
+							}else {
+								sqlCondtion = sqlCondtion + " and " + columnName + ">=:"
+										+ ConstantsHelp.PRE_START+columnName     +
+										" and "+  columnName + "<=:"
+										+ ConstantsHelp.PRE_END+columnName ;
+							}
+						}
+						
+					}else{
+						if(Tools.isDateType(dataType)) {
+							sqlCondtion = sqlCondtion + " and to_char(" + columnName
+									+ ",'yyyy-mm-dd')=:" + columnName;
+						}else {
+							sqlCondtion = sqlCondtion + " and " + columnName + "=:"
+									+ columnName;
+						}
+						
+					}
+					
 			}
 		}
 		return sqlCondtion;
 	}
+	
+	/**
+	 * 获取sql语句中查询的字段
+	 * 
+	 * @param columns
+	 * @return
+	 */
+	private String getSqlColumns4Group(List columns) throws AppException,
+			SysException {
+		if (columns == null || columns.size() == 0) {
+			throw new AppException("11111", "获取不到字段列表！");
+		}
+		String queryColum = "";
+		for (int i = 0; i < columns.size(); i++) {
+			QueryInstanceColumnSVO column = (QueryInstanceColumnSVO) columns.get(i);
+			String columnName = column.getColumnName();
+			String dataType=column.getDataType();
+			String isSum=column.getIsSum();
+			String isGroup=column.getIsGroup();
+			if("Y".equals(isSum)) {
+				columnName="sum("+columnName+") as "+columnName;
+			}
+			if(com.cattsoft.tm.struts.Tools.isDateType(dataType)) {
+				columnName=" to_char("+columnName+",'yyyy-mm-dd') as "+columnName;
+			}
+			queryColum = queryColum + columnName + ",";
+		}
+		queryColum = queryColum.substring(0, queryColum.length() - 1);
+		return queryColum;
+	}
+
+	
 
 	/**
 	 * 获取sql语句中查询的字段
@@ -257,6 +395,34 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 		}
 		return conditionList;
 	}
+	
+	/**
+	 * 获取查询条件列表,包含查询条件值
+	 * 
+	 * @param tableId
+	 * @return
+	 * @throws AppException
+	 * @throws SysException
+	 */
+	public String getSqlGroup(List columns)
+			throws AppException, SysException {
+		if (columns == null || columns.size() == 0) {
+			throw new AppException("11111", "获取不到字段列表！");
+		}
+		String groupSql=" group by ";
+		for (int i = 0; i < columns.size(); i++) {
+			QueryInstanceColumnSVO column = (QueryInstanceColumnSVO) columns.get(i);
+			String columnName = column.getColumnName();
+			String dataType=column.getDataType();
+			String isGroup=column.getIsGroup();
+			if("Y".equals(isGroup)) {
+				groupSql=groupSql+columnName+",";
+			}
+		}
+		groupSql = groupSql.substring(0, groupSql.length() - 1);
+		return groupSql;
+		}
+	
 
 //	/**
 //	 * 获取查询条件列表
@@ -700,7 +866,7 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 		Sql sql = new Sql("SELECT  "+
        " T2.QUERY_INSTANCE_COLUMN_ID,"+
        " T2.COLUMN_NAME,"+
-       " T3.COLUMN_DESC ,T3.DATA_TYPE"+
+       " T3.COLUMN_DESC ,T3.DATA_TYPE,  T2.IS_SUM,T2.IS_GROUP "+
        " FROM QUERY_INSTANCE T1,"+
        " QUERY_INSTANCE_COLUMN T2,"+
        " D_COLUMN_DESC T3 "+
@@ -724,6 +890,8 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 				column.setColumnName(rs.getString("COLUMN_NAME"));
 				column.setDataType(rs.getString("DATA_TYPE"));
 				column.setColumnDesc(rs.getString("COLUMN_DESC"));
+				column.setIsSum(rs.getString("IS_SUM"));
+				column.setIsGroup(rs.getString("IS_GROUP"));
 				res.add(column);
 			}
 

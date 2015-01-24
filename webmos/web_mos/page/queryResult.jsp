@@ -8,6 +8,7 @@
 <%@page import="java.util.Map"%>
 <%@page import="com.cattsoft.tm.vo.QueryConditionSVO"%>
 <%@page import="com.cattsoft.tm.vo.QueryInstanceColumnSVO"%>
+<%@page import="com.cattsoft.pub.util.StringUtil" %>
 <%@ page contentType="text/html; charset=GBK"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
@@ -64,6 +65,18 @@ body {
 }
 
 
+.datetext {
+	background: #fafdfe;
+	height: 28px;
+	width: 80px;
+	line-height: 28px;
+	border: 1px solid #9bc0dd;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+}
+
+
 </style>
 
 <script type="text/javascript">
@@ -104,6 +117,22 @@ $(function(){
 									QueryConditionSVO m = (QueryConditionSVO) conditionList.get(i);
 									String columnDesc = m.getColumnDesc();
 									String conditionType = m.getConditionType();
+									String v1="";
+									String v2="";
+									if("S".equals(conditionType)){
+										String vals=m.getValue();
+										System.out.println("vvvvvvvvvvvv="+vals);
+										if(!StringUtil.isBlank(vals)){
+											String vs[]=vals.split(",");
+											System.out.println("vsvsvsvsvsvsvsvsvs="+vs.length);
+											if(vs.length==1){
+												v1=vs[0];
+											}else if(vs.length==2){
+												v1=vs[0];
+												v2=vs[1];
+											}
+										}
+									}
 									String columnName = m.getColumnName();
 									String dataType = m.getDataType();
 									List data = (List) m.getData();
@@ -128,20 +157,42 @@ $(function(){
 							</select>
 							</td>
 							<%
-								} else {
+								} else if("E".equals(conditionType) || "C".equals(conditionType)){
 										if (Tools.isDateType(dataType)) {
 							%>
-							<td width='100px'><input type='text' class='shottext'  onClick="WdatePicker()" readonly="true"
+							<td width='100px'><input type='text' class='datetext'  onClick="WdatePicker()" readonly="true"
 								value="<%=value%>" name="QRY_<%=columnName%>" />
 							</td>
 							<%
 								} else {
 							%>
-							<td width='100px'><input type='text' class='shottext'
-								value="<%=value%>" name="QRY_<%=columnName%>" />
+							<td width='100px'>
+								<input type='text' class='shottext' value="<%=value%>" name="QRY_<%=columnName%>" />
 							</td>
 							<%
 								}
+									}else if("S".equals(conditionType)){
+										if (Tools.isDateType(dataType)) {
+										%>
+										<td width='200px'>
+											<input type='text' class='datetext'  onClick="WdatePicker()" readonly="true"
+											value="<%=v1%>" name="QRY_START_<%=columnName%>" /> ¡ª
+											<input type='text' class='datetext'  onClick="WdatePicker()" readonly="true"
+											value="<%=v2%>" name="QRY_END_<%=columnName%>" />
+											
+										</td>
+										<%
+											} else {
+										%>
+										<td width='200px'>
+											<input type='text' class='shottext'
+											value="<%=v1%>" name="QRY_START_<%=columnName%>" /> ¡ª
+											<input type='text' class='shottext'
+											value="<%=v2%>" name="QRY_END_<%=columnName%>" />
+										</td>
+										<%
+										}
+									
 									}
 								}
 							%>

@@ -69,6 +69,12 @@ $(function(){
 			showCover();
 			$("#queryForm").submit();
 		});
+		
+		$('#btnAddCommonQuery').click(function() {
+			$("#typeFlag").val("C");
+			$("#formAddInstance").submit();
+		});
+	
 	
 	
 })
@@ -79,7 +85,7 @@ $(function(){
 <body>
 	<form id="queryForm" action="../tm/ctxdAction.do?method=getQueryInstanceList"
 		method="post">
-		<span style="display:none"><input type="hidden" value='<%=request.getAttribute("tableName")%>' name="tableName"/></span>
+		
 		<div id="contentWrap">
 			<div class="pageTitle"></div>
 			<div class="pageColumn">
@@ -125,8 +131,23 @@ $(function(){
 					</tbody>
 				</table>
 				</div> 
+				<div style="width:100%;height:50px;">
+					<div style="float:right;width:80px;">
+						<input type="button" value="添加通用查询" style="width:80px;height:28px;" id="btnAddCommonQuery"/>
+					</div>
+					<div style="float:right;margin-left:30px">
+						<div style="width:50px;float:right;"></div>
+						<input type="button" value="添加汇总查询" style="width:80px;height:28px;" id="btnAddGroupQuery"/>
+					</div>
+				</div>
 			</div>
 		</div>
+	</form>
+	<form action="../tm/instanceSettingAction.do" id="formAddInstance"
+		method="post" style="display:none">
+		<span style="display:none"><input type="hidden" value='<%=request.getAttribute("tableName")%>' name="tableName"/></span>
+		<input type="hidden" id="typeFlag" /> <input type="hidden"
+			name="method" value="addInstanceInit" />
 	</form>
 </body>
 </html>
