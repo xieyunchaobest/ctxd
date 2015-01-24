@@ -6,6 +6,8 @@
 <%@page import="java.util.List"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map"%>
+<%@page import="com.cattsoft.tm.vo.QueryConditionSVO"%>
+<%@page import="com.cattsoft.tm.vo.QueryInstanceColumnSVO"%>
 <%@ page contentType="text/html; charset=GBK"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
@@ -13,10 +15,11 @@
 <%@ taglib uri="/WEB-INF/pagination.tld" prefix="pag"%>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>简单漂亮的后台管理界面模板 - 源码之家</title>
+<title>数据查询</title>
 <link href="../css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="../js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="../js/public.js"></script>
 
 <style type="text/css">
 body {
@@ -59,6 +62,8 @@ body {
 .btn {
 	background-image: url("../images/button_bg.png");
 }
+
+
 </style>
 
 <script type="text/javascript">
@@ -72,6 +77,12 @@ $(function(){
 	%>
 	
 	
+		$('#btnQuery').click(function() {
+			showCover();
+			$("#queryForm").submit();
+		});
+	
+	
 })
 </script>
 
@@ -80,7 +91,7 @@ $(function(){
 <body>
 	<form id="queryForm" action="../tm/ctxdAction.do?method=queryResult"
 		method="post">
-		<span style="display:none"><input type="hidden" value='<%=request.getAttribute("tableName")%>' name="tableName"/></span>
+		<span style="display:none"><input type="hidden" name="instanceId" value='<%=request.getAttribute("instanceId")%>'/></span>
 		<div id="contentWrap">
 			<div class="pageTitle"></div>
 			<div class="pageColumn">
@@ -90,15 +101,15 @@ $(function(){
 							<%
 								List conditionList = (List) request.getAttribute("conditionList");
 								for (int i = 0; i < conditionList.size(); i++) {
-									Map m = (HashMap) conditionList.get(i);
-									String columnDesc = (String) m.get("columnDesc");
-									String conditionType = (String) m.get("conditionType");
-									String columnName = (String) m.get("columnName");
-									String dataType = (String) m.get("dataType");
-									List data = (List) m.get("data");
-									String value = (String) m.get("value");
+									QueryConditionSVO m = (QueryConditionSVO) conditionList.get(i);
+									String columnDesc = m.getColumnDesc();
+									String conditionType = m.getConditionType();
+									String columnName = m.getColumnName();
+									String dataType = m.getDataType();
+									List data = (List) m.getData();
+									String value = (String) m.getValue();
 									out.print("<td width='100px'>" + columnDesc + "</td>");
-									if ("M".equals(conditionType)) {
+									if ("B".equals(conditionType)) {
 										out.print("<td width='100px'>");
 							%>
 							<select class="shortselect" name="QRY_<%=columnName%>">
@@ -134,7 +145,7 @@ $(function(){
 									}
 								}
 							%>
-							<td><input type="submit" class="btn" style="width:100px;height:28px"
+							<td><input type="button" class="btn" style="width:100px;height:28px" id="btnQuery"
 								value="查 询" />
 							</td>
 						</tr>
@@ -161,7 +172,7 @@ $(function(){
 									List queryColumnList = (List) request
 											.getAttribute("queryColumnList");
 									for (int j = 0; j < queryColumnList.size(); j++) {
-										DColumnDescSVO column = (DColumnDescSVO) queryColumnList
+										QueryInstanceColumnSVO column = (QueryInstanceColumnSVO) queryColumnList
 												.get(j);
 										String columnName = column.getColumnName();
 										out.print("<td  class='ctd'>" + m.get(columnName)
@@ -178,6 +189,12 @@ $(function(){
 					</tbody>
 				</table>
 				</div>
+				<table style="border:0px">
+					<tr style="border:0px;">
+						<td style="border:0px;width:80px;text-align:left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;说明：</td>
+						<td style="border:0px;text-align:left">&nbsp;</td>
+					</tr>
+				</table>
 			</div>
 		</div>
 	</form>

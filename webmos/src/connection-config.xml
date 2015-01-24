@@ -24,7 +24,7 @@
 		<url>jdbc:oracle:thin:@60.31.254.52:1521:zsjfdb</url>
 		<!--<url>jdbc:oracle:thin:@60.31.254.52:1521:zsjfdb</url>-->
 		<pool-maxActive>100</pool-maxActive>
-		<pool-maxWait>12000</pool-maxWait>
+		<pool-maxWait>1200</pool-maxWait>
 		<pool-maxIdle>10</pool-maxIdle>
 		
 	</connection> 

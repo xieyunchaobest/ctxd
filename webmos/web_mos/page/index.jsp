@@ -11,7 +11,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=GBK" />
-<title>掌上经分首页</title>
+<title>经营数据支撑系统</title>
 <link href="../css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="../js/jquery-1.11.2.min.js"></script>
 <script type="text/javascript">

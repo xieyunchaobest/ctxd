@@ -51,26 +51,26 @@ public class CustomExceptionHandle extends ExceptionHandler {
   /*String url=request.getRequestURI();
   request.setAttribute("url",url);*/
   if(ex instanceof SysException) {
-	  String errMsg=((SysException)ex).getErrMsg();
+	  //String errMsg=((SysException)ex).getErrMsg();
       log.debug("SysException:---------------------------"+((SysException)ex).getErrMsg());
       log.debug("SysException OriMsg:---------------------------"+((SysException)ex).getErrMsgOri());
       ((SysException)ex).printDebug();
       request.getSession().setAttribute("errInfo", ex);
-      String errHtml=com.cattsoft.pub.util.StringUtil.getAppException4MOS(errMsg);
-      ReqUtil.write(response, errHtml);
+      //String errHtml=com.cattsoft.pub.util.StringUtil.getAppException4MOS(errMsg);
+      //ReqUtil.write(response, errHtml);
       
       
-      //return mapping.findForward("errorSys");
+      return mapping.findForward("errorSys");
     }else if(ex instanceof AppException) {
-    	String errMsg=((AppException)ex).getErrMsg();
+    	//String errMsg=((AppException)ex).getErrMsg();
         log.debug("AppException:---------------------------"+((AppException)ex).getErrId()+":"+((AppException)ex).getErrMsg());
         request.getSession().setAttribute("errInfo", ex);
-       // return mapping.findForward("errorApp");
-        String errHtml=com.cattsoft.pub.util.StringUtil.getAppException4MOS(errMsg);
-        ReqUtil.write(response, errHtml);
+        return mapping.findForward("errorApp");
+//        String errHtml=com.cattsoft.pub.util.StringUtil.getAppException4MOS(errMsg);
+//        ReqUtil.write(response, errHtml);
   }
   
-  return null;
+  return mapping.findForward("errorSys");
 }
 
 

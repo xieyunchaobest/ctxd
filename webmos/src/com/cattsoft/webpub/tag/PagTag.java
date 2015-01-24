@@ -350,14 +350,14 @@ public class PagTag extends BodyTagSupport {
 			out = pageContext.getOut();
 		}
 		else{
-			try {
-				log.debug("shishi---");
-				out.flush();
-				log.debug("shishi2---");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+//			try {
+//				log.debug("shishi---");
+//				//out.flush();
+//				log.debug("shishi2---");
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 			out = pageContext.getOut();
 
 		}

@@ -13,7 +13,7 @@
 <%@ taglib uri="/WEB-INF/pagination.tld" prefix="pag"%>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>配置表格</title>
+<title>简单漂亮的后台管理界面模板 - 源码之家</title>
 <link href="../css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="../js/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="../js/jquery-1.11.2.min.js"></script>

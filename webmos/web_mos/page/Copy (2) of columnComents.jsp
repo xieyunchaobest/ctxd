@@ -84,21 +84,30 @@ body {
 				<div class="qryCondition">
 					<table style="height:50px;margin-bottom:6px" id="tShowColumn">
 					<%
-				List columnCommentList=(List)request.getAttribute("columnCommentList");
-				if(columnCommentList!=null && columnCommentList.size()>0){
-					out.print("<input type='hidden' name='columnCount' value='"+columnCommentList.size()+"'");
+				List columnDescList=(List)request.getAttribute("columnDescList");
+				if(columnDescList!=null && columnDescList.size()>0){
+					out.print("<input type='hidden' name='columnCount' value='"+columnDescList.size()+"'");
 				}
 			 %>
 						<thead>
 							<th style="width:100px">
-								字段
+								字段名
 							</th>
 							<th style="width:100px">
-								别名
+								名称
+							</th>
+							<th style="width:50px">
+								是否展示
+							</th>
+							<th style="width:50px">
+								查询条件
+							</th>
+							<th style="width:100px">
+								条件类型
 							</th>
 						</thead>
 						<%int i=0; %>
-						<logic:iterate id="column" name="columnCommentList" indexId="number" >
+						<logic:iterate id="column" name="columnDescList" indexId="number" >
 							<% i++;%>
 							<tr>
 								<td class="ctd">
@@ -108,6 +117,24 @@ body {
 								</td>
 								<td class="ctd">
 									<input type="text" class='shottext' name="columnDesc<%=i%>" value="<bean:write name='column' property='columnDesc'/>" />
+								</td>
+								<td  class="ctd">&nbsp;
+									<input type="checkbox" name="isShow<%=i%>"  value="Y"
+										<logic:equal name="column"  property="isShow" value="Y">checked</logic:equal>
+									/>
+								</td>
+								<td  class="ctd">&nbsp;
+									<input type="checkbox" name="isQueryCondition<%=i%>" value="Y" onclick="ckQueryCondition(this);"
+										<logic:equal name="column"  property="isQueryCondition" value="Y">checked</logic:equal>
+									/>
+								</td>
+								<td  class="ctd">&nbsp;
+									<input type="radio" name="conditionType<%=i%>" value="S" onclick="ckConditionType(this)"
+										<logic:equal name="column"  property="conditionType" value="S">checked</logic:equal>
+									/>单值
+									<input type="radio" name="conditionType<%=i%>" value="M" onclick="ckConditionType(this)"
+										<logic:equal name="column"  property="conditionType" value="M">checked</logic:equal>
+									/>多值
 								</td>
 							</tr>
 						</logic:iterate>

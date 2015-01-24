@@ -28,19 +28,20 @@ import com.cattsoft.tm.vo.DTableDescSVO;
 import com.cattsoft.tm.vo.FuncNodeSVO;
 import com.cattsoft.tm.vo.FuncNodeTreeSVO;
 import com.cattsoft.tm.vo.LoginLogSVO;
+import com.cattsoft.tm.vo.QueryInstanceSVO;
 import com.cattsoft.pub.util.PagInfo;
 public class CtxdDOM {
-	public PagView queryResult(String tableId, List conditionListFromPage,PagInfo pg)
+	public PagView queryResult(String instanceId, List conditionListFromPage,PagInfo pg)
 			throws AppException, SysException {
 		ICtxdMDAO ctxddao = (ICtxdMDAO) DAOFactory.getDAO(ICtxdMDAO.class);
-		PagView res = ctxddao.queryResult(tableId, conditionListFromPage,pg);
+		PagView res = ctxddao.queryResult(instanceId, conditionListFromPage,pg);
 		return res;
 	}
 
-	public List getQueryConditionList(String tableId, List conditionListFromPage)
+	public List getQueryConditionList(String instanceId, List conditionListFromPage)
 			throws AppException, SysException {
 		ICtxdMDAO ctxddao = (ICtxdMDAO) DAOFactory.getDAO(ICtxdMDAO.class);
-		List conditionList = ctxddao.getQueryCondition(tableId,
+		List conditionList = ctxddao.getQueryCondition(instanceId,
 				conditionListFromPage);
 
 		return conditionList;
@@ -54,10 +55,10 @@ public class CtxdDOM {
 	 * @throws AppException
 	 * @throws SysException
 	 */
-	public List getQueryColumnList(String tableId) throws AppException,
+	public List getQueryColumnList(String instanceId) throws AppException,
 			SysException {
 		ICtxdMDAO ctxddao = (ICtxdMDAO) DAOFactory.getDAO(ICtxdMDAO.class);
-		List conditionList = ctxddao.getQueryColumnList(tableId);
+		List conditionList = ctxddao.getColumnList(instanceId);
 		return conditionList;
 	}
 
@@ -76,7 +77,7 @@ public class CtxdDOM {
 		sysUserSVO.setSysUserName(userName);
 		sysUserSVO.setPassword(passWord);
 
-		List userList = sysUserSDAO.findByVO(sysUserSVO);
+		List userList = sysUserSDAO  .findByVO(sysUserSVO);
 		if (userList == null || userList.size() == 0) {
 			return "E";
 		} else {
@@ -110,6 +111,7 @@ public class CtxdDOM {
 	public List getFuncNodeListByUser(SysUserSVO user) throws AppException,SysException {
 		com.cattsoft.tm.component.dao.IFuncNodeTreeSDAO treeSDAO = (com.cattsoft.tm.component.dao.IFuncNodeTreeSDAO) DAOFactory.getDAO(com.cattsoft.tm.component.dao.IFuncNodeTreeSDAO.class);
 		FuncNodeTreeSVO atree=new FuncNodeTreeSVO();
+		atree.setSts("A");
 		List treeList=treeSDAO.findByVO(atree);
 		
 		ICtxdMDAO zsjfmdao = (ICtxdMDAO) DAOFactory.getDAO(ICtxdMDAO.class);
@@ -194,10 +196,43 @@ public class CtxdDOM {
 		
 	}
 	
+	public DTableDescSVO getTableVO(String tableName) throws AppException, SysException {
+		IDTableDescSDAO tableDAO= (IDTableDescSDAO) DAOFactory.getDAO(IDTableDescSDAO.class);
+		DTableDescSVO vo=new DTableDescSVO();
+		vo.setTableName(tableName);
+		return (DTableDescSVO)tableDAO.findByVO(vo).get(0);
+	}
+	
 	public List getConfigTabList() throws AppException, SysException {
 		IDTableDescSDAO tableDAO= (IDTableDescSDAO) DAOFactory.getDAO(IDTableDescSDAO.class);
 		DTableDescSVO svo=new DTableDescSVO();
 		List tableList=tableDAO.findByVO(svo);
 		return tableList;
+	}
+	
+	public List getColumnCommentsByTable(String tableName)throws AppException, SysException{
+		ICtxdMDAO mdao= (ICtxdMDAO) DAOFactory.getDAO(ICtxdMDAO.class);
+		return mdao.getColumnCommentsByTable(tableName);
+	}
+	
+	
+	public PagView getQueryInstanceList(QueryInstanceSVO i,PagInfo pagInfo)throws AppException, SysException{
+		ICtxdMDAO mdao= (ICtxdMDAO) DAOFactory.getDAO(ICtxdMDAO.class);
+		return mdao.getQueryInstanceList(i,pagInfo);
+	}
+	
+	public List getColumnList(String instacneId) throws AppException, SysException{
+		ICtxdMDAO mdao= (ICtxdMDAO) DAOFactory.getDAO(ICtxdMDAO.class);
+		return mdao.getColumnList(instacneId);
+	}
+	
+	public List getQueryConditionList(String instanceId) throws AppException,SysException{
+		ICtxdMDAO mdao= (ICtxdMDAO) DAOFactory.getDAO(ICtxdMDAO.class);
+		return mdao.getQueryConditionList(instanceId);
+	}
+	
+	public QueryInstanceSVO getQueryInstanceSVO(QueryInstanceSVO svo)throws AppException, SysException {
+		ICtxdMDAO mdao= (ICtxdMDAO) DAOFactory.getDAO(ICtxdMDAO.class);
+		return (QueryInstanceSVO)mdao.findByVO(svo).get(0);
 	}
 }

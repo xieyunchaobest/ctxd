@@ -29,6 +29,7 @@ import com.cattsoft.tm.delegate.CtxdDelegate;
 import com.cattsoft.tm.vo.DColumnDescSVO;
 import com.cattsoft.tm.vo.DQueryConditionSVO;
 import com.cattsoft.tm.vo.DTableDescSVO;
+import com.cattsoft.tm.vo.QueryInstanceSVO;
 import com.cattsoft.webpub.util.ReqUtil;
 
 /**
@@ -44,9 +45,11 @@ public class CtxdAction extends DispatchAction{
 		List queryColumnList = CtxdDelegate.getDelegate().getQueryColumnList(tableName);
 		//List resList = CtxdDelegate.getDelegate().queryResult(tableId,null);
 		request.setAttribute("resList", new PagView());
+		DTableDescSVO tableVO=CtxdDelegate.getDelegate().getTableVO(tableName);
 		request.setAttribute("conditionList", queryConditionList);
 		request.setAttribute("queryColumnList", queryColumnList);
 		request.setAttribute("tableName", tableName);
+		request.setAttribute("tableVO", tableVO);
 		return mapping.findForward("queryPages");
 	}
 
@@ -66,11 +69,11 @@ public class CtxdAction extends DispatchAction{
 		if(Integer.parseInt(currentDate)>20150310) {
 			return null;
 		}
-		String tableName=request.getParameter("tableName");
+		String instanceId=request.getParameter("instanceId");
 		String pageNo=request.getParameter("pageNo");
 		String pagSize=request.getParameter("pagSize");
 		if(pageNo==null)pageNo="1";
-		if(pagSize==null)pagSize="20";
+		if(pagSize==null)pagSize="10";
 		PagInfo p=new PagInfo();
 		p.setPagNo(Integer.parseInt(pageNo));
 		p.setPagSize(Integer.parseInt(pagSize));
@@ -87,14 +90,16 @@ public class CtxdAction extends DispatchAction{
 				conditionListFromPage.add(m);
 			}
 		}
-		List queryConditionList = CtxdDelegate.getDelegate().getQueryConditionList(tableName,conditionListFromPage);
-		List queryColumnList = CtxdDelegate.getDelegate().getQueryColumnList(tableName);
+		List queryConditionList = CtxdDelegate.getDelegate().getQueryConditionList(instanceId,conditionListFromPage);
+		List queryColumnList = CtxdDelegate.getDelegate().getQueryColumnList(instanceId);
 		
-		PagView resList = CtxdDelegate.getDelegate().queryResult(tableName,conditionListFromPage,p);
+		PagView resList = CtxdDelegate.getDelegate().queryResult(instanceId,conditionListFromPage,p);
+		//DTableDescSVO tableVO=CtxdDelegate.getDelegate().getTableVO(instanceId);
 		request.setAttribute("resList", resList);
 		request.setAttribute("conditionList", queryConditionList);
 		request.setAttribute("queryColumnList", queryColumnList);
-		request.setAttribute("tableName", tableName);
+		request.setAttribute("instanceId", instanceId);
+		//request.setAttribute("tableVO", tableVO);
 		return mapping.findForward("queryPages");
 	}
 
@@ -133,7 +138,7 @@ public class CtxdAction extends DispatchAction{
 	 * @throws Exception
 	 */
 	public ActionForward login(ActionMapping mapping,ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception{
+			HttpServletResponse response) throws AppException,SysException {
 		String currentDate=DateUtil.getCurrentDateStr(DateUtil.datef1);
 		if(Integer.parseInt(currentDate)>20150310) {
 			return null;
@@ -172,17 +177,17 @@ public class CtxdAction extends DispatchAction{
 	 * @throws AppException
 	 * @throws SysException
 	 */
-	public ActionForward showColumnComments(ActionMapping mapping,ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception{
-		String tableName=request.getParameter("tableName");
-		List columnDescList=new ArrayList();
-		if(!StringUtil.isBlank(tableName)) {
-			columnDescList=CtxdDelegate.getDelegate().getColumnDescList(tableName);
-		}
-		request.setAttribute("columnDescList", columnDescList);
-		return mapping.findForward("showColumnComments");
-	}
-	
+//	public ActionForward showColumnComments(ActionMapping mapping,ActionForm form, HttpServletRequest request,
+//			HttpServletResponse response) throws Exception{
+//		String tableName=request.getParameter("tableName");
+//		List columnDescList=new ArrayList();
+//		if(!StringUtil.isBlank(tableName)) {
+//			columnDescList=CtxdDelegate.getDelegate().getColumnDescList(tableName);
+//		}
+//		request.setAttribute("columnDescList", columnDescList);
+//		return mapping.findForward("showColumnComments");
+//	}
+//	
 	
 	/**
 	 * 
@@ -200,8 +205,6 @@ public class CtxdAction extends DispatchAction{
 		String tableName=request.getParameter("dbTableList");
 		String tableDesc=request.getParameter("cnTableName");
 		String staticRule=request.getParameter("staticRule");
-		
-		
 		
 		DTableDescSVO table=new DTableDescSVO();
 		table.setTableName(tableName);
@@ -254,5 +257,42 @@ public class CtxdAction extends DispatchAction{
 		
 		return mapping.findForward("settingQueryInit");
 	}
+	
+	public ActionForward showColumnComments(ActionMapping mapping,ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception{
+		String tableName=request.getParameter("tableName");
+		List columnCommentList=new ArrayList();
+		if(!StringUtil.isBlank(tableName)) {
+			columnCommentList=CtxdDelegate.getDelegate().getColumnCommentsByTable(tableName);
+		}
+		request.setAttribute("columnCommentList", columnCommentList);
+		return  mapping.findForward("showColumnComments");
+	}
+	
+	public ActionForward getQueryInstanceList(ActionMapping mapping,ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws AppException, SysException {
+		QueryInstanceSVO i=new QueryInstanceSVO();
+		String instanceType=request.getParameter("instanceType");
+		String instanceName=request.getParameter("instanceName");
+		String tableDesc=request.getParameter("tableDesc");
+		i.setInstanceType(instanceType);
+		i.setInstanceName(instanceName);
+		i.setTableDesc(tableDesc);
+		
+		String pageNo=request.getParameter("pageNo");
+		String pagSize=request.getParameter("pagSize");
+		if(pageNo==null)pageNo="1";
+		if(pagSize==null)pagSize="10";
+		PagInfo p=new PagInfo();
+		p.setPagNo(Integer.parseInt(pageNo));
+		p.setPagSize(Integer.parseInt(pagSize));
+		
+		PagView instancePage=CtxdDelegate.getDelegate().getQueryInstanceList(i,p);
+		request.setAttribute("instancePage", instancePage);
+		request.setAttribute("instanceName", instanceName);
+		return  mapping.findForward("instanceList");
+		
+	}
+	
 	
 }

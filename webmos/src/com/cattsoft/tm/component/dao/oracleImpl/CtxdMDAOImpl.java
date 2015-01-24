@@ -29,8 +29,11 @@ import com.cattsoft.tm.struts.Tools;
 import com.cattsoft.tm.vo.DColumnDescSVO;
 import com.cattsoft.tm.vo.DTableDescSVO;
 import com.cattsoft.tm.vo.FuncNodeSVO;
+import com.cattsoft.tm.vo.QueryConditionSVO;
+import com.cattsoft.tm.vo.QueryInstanceColumnSVO;
+import com.cattsoft.tm.vo.QueryInstanceSVO;
 
-public class CtxdMDAOImpl implements ICtxdMDAO {
+public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 
 	
 	/**
@@ -45,16 +48,16 @@ public class CtxdMDAOImpl implements ICtxdMDAO {
 			SysException, SQLException {
 		Map m = new LinkedHashMap();
 		for (int i = 0; i < columns.size(); i++) {
-			DColumnDescSVO column = (DColumnDescSVO) columns.get(i);
+			QueryInstanceColumnSVO column = (QueryInstanceColumnSVO) columns.get(i);
 			String columnName = column.getColumnName();
 			m.put(columnName, rs.getString(columnName));
 		}
 		return m;
 	}
 
-	public PagView queryResult(String tableId, List conditionListFromPage,
+	public PagView queryResult(String instanceId, List conditionListFromPage,
 			PagInfo pagInfo) throws AppException, SysException {
-		if (StringUtil.isBlank(tableId)) {
+		if (StringUtil.isBlank(instanceId)) {
 			throw new AppException("100001", "缺少DAO操作对象！");
 		}
 		List res = new ArrayList();
@@ -62,10 +65,10 @@ public class CtxdMDAOImpl implements ICtxdMDAO {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Sql sql = new Sql(this.getWholeSql(tableId, conditionListFromPage));
+		Sql sql = new Sql(this.getWholeSql(instanceId, conditionListFromPage));
 		List conditions = this
-				.getQueryCondition(tableId, conditionListFromPage);
-		List columns = this.getQueryColumnList(tableId);
+				.getQueryCondition(instanceId, conditionListFromPage);
+		List columns = this.getColumnList(instanceId);
 		try {
 			fillParameters(conditions, sql);
 
@@ -97,10 +100,10 @@ public class CtxdMDAOImpl implements ICtxdMDAO {
 	 */
 	private void fillParameters(List queryColumns, Sql sql) {
 		for (int i = 0; i < queryColumns.size(); i++) {
-			Map m = (HashMap) queryColumns.get(i);
-			String columnName = (String) m.get("columnName");
-			String dataType = (String) m.get("dataType");
-			String value = (String) m.get("value");
+			QueryConditionSVO m = (QueryConditionSVO) queryColumns.get(i);
+			String columnName = (String) m.getColumnName();
+			String dataType = (String) m.getDataType();
+			String value = (String) m.getValue();
 			if (!StringUtil.isBlank(value)) {
 				if (Tools.isDateType(dataType) || Tools.isVarchar(dataType)) {
 					sql.setString(columnName, value);
@@ -123,23 +126,24 @@ public class CtxdMDAOImpl implements ICtxdMDAO {
 		return  (DTableDescSVO)tableSDAO.findByVO(t).get(0);
 	}
 
-	/**
-	 * 获取需要查询的列
-	 * 
-	 * @param tableId
-	 * @return
-	 * @throws AppException
-	 * @throws SysException
-	 */
-	public List getQueryColumnList(String tableId) throws AppException,
-			SysException {
-		IDColumnDescSDAO columnSDAO = (IDColumnDescSDAO) DAOFactory
-				.getDAO(IDColumnDescSDAO.class);
-		DColumnDescSVO column = new DColumnDescSVO();
-		column.setTableName(tableId);
-		List columns = columnSDAO.findByVO(column);
-		return columns;
-	}
+//	/**
+//	 * 获取需要查询的列
+//	 * 
+//	 * @param tableId
+//	 * @return
+//	 * @throws AppException
+//	 * @throws SysException
+//	 */
+//	public List getQueryColumnList(String tableName) throws AppException,
+//			SysException {
+//		IDColumnDescSDAO columnSDAO = (IDColumnDescSDAO) DAOFactory
+//				.getDAO(IDColumnDescSDAO.class);
+//		DColumnDescSVO column = new DColumnDescSVO();
+//		column.setTableName(tableName);
+//		column.setIsShow("Y");
+//		List columns = columnSDAO.findByVO(column);
+//		return columns;
+//	}
 
 	/**
 	 * 获取完整sql
@@ -149,20 +153,22 @@ public class CtxdMDAOImpl implements ICtxdMDAO {
 	 * @throws AppException
 	 * @throws SysException
 	 */
-	private String getWholeSql(String tableName, List conditionListFromPage)
+	private String getWholeSql(String instanceId, List conditionListFromPage)
 			throws AppException, SysException {
+		QueryInstanceSVO instance=new QueryInstanceSVO();
+		instance.setQueryInstanceId(instanceId);
 		String sql = "";
 		String select = "select ";
 		String from = " from ";
 		String where = " where 1=1 ";
-		String atableName = getTableByName(tableName).getTableName();
+		String atableName = ((QueryInstanceSVO)findByPK(instance)).getTableName();
 
-		List columns = getQueryColumnList(atableName);
+		List columns =getColumnList(instanceId);
 		String sqlColumn = getSqlColumns(columns);
 
-		List conditions = getQueryCondition(atableName, conditionListFromPage);
+		List conditions = getQueryCondition(instanceId, conditionListFromPage);
 		String sqlCondition = getConditionSql(conditions);
-		sql = select + sqlColumn + from + tableName + where + sqlCondition;
+		sql = select + sqlColumn + from + atableName + where + sqlCondition;
 		return sql;
 	}
 
@@ -178,10 +184,10 @@ public class CtxdMDAOImpl implements ICtxdMDAO {
 		}
 		String sqlCondtion = "";
 		for (int i = 0; i < conditions.size(); i++) {
-			Map m = (HashMap) conditions.get(i);
-			String columnName = (String) m.get("columnName");
-			String dataType = (String) m.get("dataType");
-			String value = (String) m.get("value");
+			QueryConditionSVO m = (QueryConditionSVO) conditions.get(i);
+			String columnName = (String) m.getColumnName();
+			String dataType = (String) m.getDataType();
+			String value = (String) m.getValue();
 			if (!StringUtil.isBlank(value)) {
 				if ("DATE".equals(dataType)) {
 					sqlCondtion = sqlCondtion + " and to_char(" + columnName
@@ -208,8 +214,12 @@ public class CtxdMDAOImpl implements ICtxdMDAO {
 		}
 		String queryColum = "";
 		for (int i = 0; i < columns.size(); i++) {
-			DColumnDescSVO column = (DColumnDescSVO) columns.get(i);
+			QueryInstanceColumnSVO column = (QueryInstanceColumnSVO) columns.get(i);
 			String columnName = column.getColumnName();
+			String dataType=column.getDataType();
+			if(com.cattsoft.tm.struts.Tools.isDateType(dataType)) {
+				columnName=" to_char("+columnName+",'yyyy-mm-dd') as "+columnName;
+			}
 			queryColum = queryColum + columnName + ",";
 		}
 		queryColum = queryColum.substring(0, queryColum.length() - 1);
@@ -224,13 +234,13 @@ public class CtxdMDAOImpl implements ICtxdMDAO {
 	 * @throws AppException
 	 * @throws SysException
 	 */
-	public List getQueryCondition(String tableName, List conditionListFromPage)
+	public List getQueryCondition(String instanceId, List conditionListFromPage)
 			throws AppException, SysException {
-		List conditionList = getQueryCondition(tableName);
+		List conditionList = getQueryConditionList(instanceId);
 		if (conditionList != null && conditionList.size() > 0) {
 			for (int i = 0; i < conditionList.size(); i++) {
-				Map qm = (Map) conditionList.get(i);
-				String conditionName = (String) qm.get("columnName");
+				QueryConditionSVO qm = (QueryConditionSVO) conditionList.get(i);
+				String conditionName = (String) qm.getColumnName();
 				if (conditionListFromPage != null
 						&& conditionListFromPage.size() > 0) {
 					for (int j = 0; j < conditionListFromPage.size(); j++) {
@@ -238,7 +248,7 @@ public class CtxdMDAOImpl implements ICtxdMDAO {
 						String paraName = (String) m.get("paraName");
 						String value = (String) m.get("value");
 						if (paraName.equals(conditionName)) {
-							qm.put("value", value);
+							qm.setValue(value);
 							break;
 						}
 					}
@@ -248,65 +258,65 @@ public class CtxdMDAOImpl implements ICtxdMDAO {
 		return conditionList;
 	}
 
-	/**
-	 * 获取查询条件列表
-	 * 
-	 * @param tableId
-	 * @return
-	 * @throws AppException
-	 * @throws SysException
-	 */
-	public List getQueryCondition(String tableName) throws AppException,
-			SysException {
-		if (StringUtil.isBlank(tableName)) {
-			throw new AppException("100001", "缺少DAO操作对象！");
-		}
-		List res = new ArrayList();
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		Sql sql = new Sql(
-				"select t.table_id,  t.table_name, c.column_desc_id, c.column_name, c.column_desc,c.data_type, q.condition_type" +
-				" from d_column_desc C, D_TABLE_DESC T, D_QUERY_CONDITION Q "
-						+ " WHERE c.column_name = q.column_name and c.table_name = t.table_name and t.table_name = :tableName" +
-						" and Q.table_name=:tableName");
-		try {
-			sql.setString("tableName", tableName);
-
-			conn = ConnectionFactory.getConnection();
-			ps = conn.prepareStatement(sql.getSql());
-			ps = sql.fillParams(ps);
-			sql.log(this.getClass());
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				Map m = new HashMap();
-//				m.put("tableName", rs.getString("TABLE_NAME"));
-				String atableName = rs.getString("table_name");
-				m.put("tableName", atableName);
-				m.put("columnDescId", rs.getString("column_desc_id"));
-				String columnName = rs.getString("column_name");
-				m.put("columnName", columnName);
-				m.put("columnDesc", rs.getString("column_desc"));
-				String conditionType = rs.getString("condition_type");
-				m.put("conditionType", conditionType);
-				m.put("dataType", rs.getString("data_type"));
-				m.put("value", "");
-				if ("M".equals(conditionType)) {
-					m.put("data", getQueryConditionData(tableName, columnName));
-				}
-				res.add(m);
-			}
-		} catch (SQLException se) {
-			throw new SysException("100003", "JDBC操作异常！", se);
-		} finally {
-			JdbcUtil.close(rs, ps);
-		}
-
-		if (0 == res.size())
-			res = null;
-		return res;
-	}
+//	/**
+//	 * 获取查询条件列表
+//	 * 
+//	 * @param tableId
+//	 * @return
+//	 * @throws AppException
+//	 * @throws SysException
+//	 */
+//	public List getQueryCondition(String tableName) throws AppException,
+//			SysException {
+//		if (StringUtil.isBlank(tableName)) {
+//			throw new AppException("100001", "缺少DAO操作对象！");
+//		}
+//		List res = new ArrayList();
+//		Connection conn = null;
+//		PreparedStatement ps = null;
+//		ResultSet rs = null;
+//		Sql sql = new Sql(
+//				"select t.table_id,  t.table_name, c.column_desc_id, c.column_name, c.column_desc,c.data_type, q.condition_type" +
+//				" from d_column_desc C, D_TABLE_DESC T, D_QUERY_CONDITION Q "
+//						+ " WHERE c.column_name = q.column_name and c.table_name = t.table_name and t.table_name = :tableName" +
+//						" and Q.table_name=:tableName");
+//		try {
+//			sql.setString("tableName", tableName);
+//
+//			conn = ConnectionFactory.getConnection();
+//			ps = conn.prepareStatement(sql.getSql());
+//			ps = sql.fillParams(ps);
+//			sql.log(this.getClass());
+//			rs = ps.executeQuery();
+//
+//			while (rs.next()) {
+//				Map m = new HashMap();
+////				m.put("tableName", rs.getString("TABLE_NAME"));
+//				String atableName = rs.getString("table_name");
+//				m.put("tableName", atableName);
+//				m.put("columnDescId", rs.getString("column_desc_id"));
+//				String columnName = rs.getString("column_name");
+//				m.put("columnName", columnName);
+//				m.put("columnDesc", rs.getString("column_desc"));
+//				String conditionType = rs.getString("condition_type");
+//				m.put("conditionType", conditionType);
+//				m.put("dataType", rs.getString("data_type"));
+//				m.put("value", "");
+//				if ("M".equals(conditionType)) {
+//					m.put("data", getQueryConditionData(tableName, columnName));
+//				}
+//				res.add(m);
+//			}
+//		} catch (SQLException se) {
+//			throw new SysException("100003", "JDBC操作异常！", se);
+//		} finally {
+//			JdbcUtil.close(rs, ps);
+//		}
+//
+//		if (0 == res.size())
+//			res = null;
+//		return res;
+//	}
 
 	/**
 	 * 如果查询条件为M类型，则取该字段的distinct数据作为查询条件
@@ -316,7 +326,7 @@ public class CtxdMDAOImpl implements ICtxdMDAO {
 	 * @throws AppException
 	 * @throws SysException
 	 */
-	private List getQueryConditionData(String tableName, String columnName)
+	private List getQueryConditionData(String instanceId, String columnName)
 			throws AppException, SysException {
 		if (StringUtil.isBlank(columnName)) {
 			throw new AppException("100001", "缺少DAO操作对象！");
@@ -325,8 +335,10 @@ public class CtxdMDAOImpl implements ICtxdMDAO {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
+		QueryInstanceSVO instance=new QueryInstanceSVO();
+		instance.setQueryInstanceId(instanceId);
 		Sql sql = new Sql("select distinct " + columnName + " from "
-				+ tableName);
+				+ ((QueryInstanceSVO)findByPK(instance)).getTableName());
 		try {
 
 			conn = ConnectionFactory.getConnection();
@@ -348,30 +360,7 @@ public class CtxdMDAOImpl implements ICtxdMDAO {
 		return res;
 	}
 
-	public GenericVO findByPK(GenericVO vo) throws AppException, SysException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	public void add(GenericVO vo) throws AppException, SysException {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void update(GenericVO vo) throws AppException, SysException {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void delete(GenericVO vo) throws AppException, SysException {
-		// TODO Auto-generated method stub
-
-	}
-
-	public List findByVO(GenericVO vo) throws AppException, SysException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	public List getFuncNodeListByUser(SysUserSVO vo) throws AppException,
 			SysException {
@@ -598,6 +587,218 @@ public class CtxdMDAOImpl implements ICtxdMDAO {
 		
 	}
 	
+	
+	public List getColumnCommentsByTable(String tableName)throws AppException, SysException {
+		if(tableName==null) {
+			throw new AppException("100001", "缺少DAO操作对象！");
+		}
+		List res = new ArrayList();
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Sql sql = new Sql("SELECT t2.column_desc_id, t1.table_name, " + " t1.column_name," + " ("
+				+ " CASE" + "   WHEN t2.column_desc IS NULL"
+				+ "   THEN t1.comments" + "   ELSE t2.column_desc"
+				+ " END ) AS column_desc," + " t3.data_type,"
+				+ " t3.column_id AS seq" + " FROM user_col_comments t1,"
+				+ " d_column_desc t2," + " user_tab_cols t3"
+				+ " WHERE t3.column_name=t1.column_name"
+				+ " AND t1.column_name  =t2.column_name(+)"
+				+ " AND t1.table_name   =:tableName"
+				+ " AND t2.table_name(+)=:tableName"
+				+ " AND t3.table_name   =:tableName");
+		
+		try {
+			conn = ConnectionFactory.getConnection();
+			ps = conn.prepareStatement(sql.getSql());
+			sql.setString("tableName", tableName);
+			ps = sql.fillParams(ps);
+			sql.log(this.getClass());
+			rs = ps.executeQuery();
+		
+			while (rs.next()) {
+				DColumnDescSVO column=new DColumnDescSVO();
+				column.setColumnDescId(rs.getString("column_desc_id"));
+				column.setColumnName(rs.getString("column_name"));
+				column.setTableName(rs.getString("table_name"));
+				column.setColumnDesc(rs.getString("column_desc"));
+				column.setDataType(rs.getString("data_type"));
+				res.add(column);
+			}
+
+		} catch (SQLException se) {
+			throw new SysException("100003", "JDBC操作异常！", se);
+		} finally {
+			JdbcUtil.close(rs, ps);
+		}
+		return res;
+	
+	}
+	
+	public PagView getQueryInstanceList(QueryInstanceSVO i,PagInfo pagInfo)throws AppException, SysException {
+		List res = new ArrayList();
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Sql sql = new Sql(" select "+
+				"q.query_instance_id,"+
+				"q.instance_type,"+
+				"decode(instance_type,'C','通用查询','S','分组汇总') instance_type_name,  "+
+				"q.instance_name,"+
+				"q.table_name,"+
+				"t.table_desc "+
+				"from query_instance q,"+
+				"     d_table_desc t "+
+				"     where q.table_name =t.table_name");
+		PagView pagView = null;
+		
+		try {
+			conn = ConnectionFactory.getConnection();
+			
+			if(!StringUtil.isBlank(i.getInstanceName())) {
+				sql.append(" and q.instance_name like :instanceName");
+				sql.setString("instanceName", "%"+i.getInstanceName()+"%");
+			}
+			ps = conn.prepareStatement(sql.getSql());
+			ps = sql.fillParams(ps);
+			
+			pagView = PagUtil.InitPagViewJDBC(conn, sql, pagInfo);
+			rs = PagUtil.queryOracle(conn, sql, pagInfo);
+			
+			sql.log(this.getClass());
+			rs = ps.executeQuery();
+		
+			while (rs.next()) {
+				QueryInstanceSVO instance=new QueryInstanceSVO();
+				instance.setQueryInstanceId(rs.getString("query_instance_id"));
+				instance.setInstanceType(rs.getString("instance_type"));
+				instance.setInstanceName(rs.getString("instance_name"));
+				instance.setTableName(rs.getString("table_name"));
+				instance.setTableDesc(rs.getString("table_desc"));
+				instance.setInstanceTypeName(rs.getString("instance_type_name"));
+				res.add(instance);
+			}
+
+		} catch (SQLException se) {
+			throw new SysException("100003", "JDBC操作异常！", se);
+		} finally {
+			JdbcUtil.close(rs, ps);
+		}
+		pagView.setViewList(res);
+		return pagView;
+	}
+	
+	
+	public List getColumnList(String instacneId) throws AppException, SysException {
+		if(instacneId==null) {
+			throw new AppException("100001", "缺少DAO操作对象！");
+		}
+		List res = new ArrayList();
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Sql sql = new Sql("SELECT  "+
+       " T2.QUERY_INSTANCE_COLUMN_ID,"+
+       " T2.COLUMN_NAME,"+
+       " T3.COLUMN_DESC ,T3.DATA_TYPE"+
+       " FROM QUERY_INSTANCE T1,"+
+       " QUERY_INSTANCE_COLUMN T2,"+
+       " D_COLUMN_DESC T3 "+
+       " WHERE T1.QUERY_INSTANCE_ID = T2.INSTANCE_ID "+
+       " AND T2.COLUMN_NAME=T3.COLUMN_NAME "+
+       " AND T1.TABLE_NAME=T3.TABLE_NAME "+
+       " AND T1.QUERY_INSTANCE_ID = :instacneId "+
+       " ORDER BY T2.SEQ, T2.COLUMN_NAME");
+		
+		try {
+			conn = ConnectionFactory.getConnection();
+			ps = conn.prepareStatement(sql.getSql());
+			sql.setString("instacneId", instacneId);
+			ps = sql.fillParams(ps);
+			sql.log(this.getClass());
+			rs = ps.executeQuery();
+		
+			while (rs.next()) {
+				QueryInstanceColumnSVO column=new QueryInstanceColumnSVO();
+				column.setQueryInstanceColumnId(rs.getString("QUERY_INSTANCE_COLUMN_ID"));
+				column.setColumnName(rs.getString("COLUMN_NAME"));
+				column.setDataType(rs.getString("DATA_TYPE"));
+				column.setColumnDesc(rs.getString("COLUMN_DESC"));
+				res.add(column);
+			}
+
+		} catch (SQLException se) {
+			throw new SysException("100003", "JDBC操作异常！", se);
+		} finally {
+			JdbcUtil.close(rs, ps);
+		}
+		return res;
+	}
+	
+	/**
+	 * 获取查询条件列表
+	 * 
+	 * @param tableId
+	 * @return
+	 * @throws AppException
+	 * @throws SysException
+	 */
+	public List getQueryConditionList(String instanceId)
+			throws AppException, SysException {
+
+		if(instanceId==null) {
+			throw new AppException("100001", "缺少DAO操作对象！");
+		}
+		List res = new ArrayList();
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Sql sql = new Sql("SELECT  "+
+       "T2.QUERY_CONDITION_ID,"+
+       "T2.COLUMN_NAME,"+
+       "T2.CONDITION_TYPE,"+
+       "T2.INSTANCE_ID," +
+       "T3.COLUMN_DESC, " +
+       "T3.DATA_TYPE "+
+  "FROM QUERY_INSTANCE T1,"+
+  " QUERY_CONDITION T2,"+
+   "D_COLUMN_DESC T3 "+
+ "WHERE T1.QUERY_INSTANCE_ID = T2.INSTANCE_ID AND "+
+  "     T3.TABLE_NAME=T1.TABLE_NAME AND "+
+  "     T2.COLUMN_NAME=T3.COLUMN_NAME"+
+  " AND T1.QUERY_INSTANCE_ID = :instanceId");
+		
+		try {
+			conn = ConnectionFactory.getConnection();
+			ps = conn.prepareStatement(sql.getSql());
+			sql.setString("instanceId", instanceId);
+			ps = sql.fillParams(ps);
+			sql.log(this.getClass());
+			rs = ps.executeQuery();
+		
+			while (rs.next()) {
+				QueryConditionSVO condition=new QueryConditionSVO();
+				String columnName=rs.getString("COLUMN_NAME");
+				condition.setColumnName(columnName);
+				String conditionType=rs.getString("CONDITION_TYPE");
+				condition.setConditionType(conditionType);
+				condition.setColumnDesc(rs.getString("COLUMN_DESC"));
+				condition.setDataType(rs.getString("DATA_TYPE"));
+				if ("B".equals(conditionType)) {
+					condition.setData(getQueryConditionData(instanceId, columnName));
+					//m.put("data", getQueryConditionData(tableName, columnName));
+				}
+				res.add(condition);
+			}
+
+		} catch (SQLException se) {
+			throw new SysException("100003", "JDBC操作异常！", se);
+		} finally {
+			JdbcUtil.close(rs, ps);
+		}
+		return res;
+	
+	}
 	
 	
 }

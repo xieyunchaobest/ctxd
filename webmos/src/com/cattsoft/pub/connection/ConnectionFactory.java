@@ -112,6 +112,7 @@ public class ConnectionFactory {
 		ds.setTestOnBorrow(true);
 		ds.setTestOnReturn(true);
 		ds.setTestWhileIdle(true);
+		ds.setMinIdle(5);
 		return ds;
 
 	}

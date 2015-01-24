@@ -14,6 +14,7 @@ import com.cattsoft.pub.util.PagView;
 import com.cattsoft.sm.vo.SysUserSVO;
 import com.cattsoft.tm.component.domain.CtxdDOM;
 import com.cattsoft.tm.vo.DTableDescSVO;
+import com.cattsoft.tm.vo.QueryInstanceSVO;
 
 
 /**
@@ -56,52 +57,42 @@ public class CtxdDelegate {
 			CtxdDOM dom=new CtxdDOM();
 			returnValue =dom.queryResult(tableId,conditionListFromPage,pageInfo);
 			ConnectionFactory.commit();
-		} catch (Exception e) { 
-			e.printStackTrace();
-			log.error("[IOM系统接口svcCallIOMByMosNative异常]" + e);
-			try {
-				ConnectionFactory.rollback();
-			} catch (Exception e1) {
-				e1.printStackTrace();
-				log.error("[IOM系统接口svcCallIOMByMosNative事务回滚异常]" + e1);
-			}
-		} finally {
-			try {
+		}catch (SysException e1) { 
+			ConnectionFactory.rollback();
+			throw e1;
+		}catch (AppException e2) { 
+			ConnectionFactory.rollback();
+			throw e2;
+		}catch (Exception e) { 
+			ConnectionFactory.rollback();
+			throw new SysException("","出现未知异常！",e);
+		}finally {
 				ConnectionFactory.closeConnection();
-			} catch (Exception e) {
-				e.printStackTrace();
-				log.error("[IOM系统接口svcCallIOMByMosNative数据库连接关闭异常]" + e);
-			}
 		}
 		return returnValue;
 	}
 	
 	
-	public List getQueryConditionList(String tableId,List conditionListFromPage)throws AppException,SysException{
+	public List getQueryConditionList(String instanceId,List conditionListFromPage)throws AppException,SysException{
 		Connection conn = null;
 		List returnValue = null;
 		try {
 			conn = ConnectionFactory.createConnection();
 			conn.setAutoCommit(false);
 			CtxdDOM dom=new CtxdDOM();
-			returnValue =dom.getQueryConditionList(tableId,conditionListFromPage);
+			returnValue =dom.getQueryConditionList(instanceId,conditionListFromPage);
 			ConnectionFactory.commit();
-		} catch (Exception e) { 
-			e.printStackTrace();
-			log.error("[IOM系统接口svcCallIOMByMosNative异常]" + e);
-			try {
-				ConnectionFactory.rollback();
-			} catch (Exception e1) {
-				e1.printStackTrace();
-				log.error("[IOM系统接口svcCallIOMByMosNative事务回滚异常]" + e1);
-			}
-		} finally {
-			try {
+		} catch (SysException e1) { 
+			ConnectionFactory.rollback();
+			throw e1;
+		}catch (AppException e2) { 
+			ConnectionFactory.rollback();
+			throw e2;
+		}catch (Exception e) { 
+			ConnectionFactory.rollback();
+			throw new SysException("","出现未知异常！",e);
+		}finally {
 				ConnectionFactory.closeConnection();
-			} catch (Exception e) {
-				e.printStackTrace();
-				log.error("[IOM系统接口svcCallIOMByMosNative数据库连接关闭异常]" + e);
-			}
 		}
 		return returnValue;
 	}
@@ -113,31 +104,26 @@ public class CtxdDelegate {
 	 * @throws AppException
 	 * @throws SysException
 	 */
-	public  List getQueryColumnList(String tableId) throws AppException, SysException{
+	public  List getQueryColumnList(String tableName) throws AppException, SysException{
 		Connection conn = null;
 		List returnValue = null;
 		try {
 			conn = ConnectionFactory.createConnection();
 			conn.setAutoCommit(false);
 			CtxdDOM dom=new CtxdDOM();
-			returnValue =dom.getQueryColumnList(tableId);
+			returnValue =dom.getQueryColumnList(tableName);
 			ConnectionFactory.commit();
-		} catch (Exception e) { 
-			e.printStackTrace();
-			log.error("[IOM系统接口svcCallIOMByMosNative异常]" + e);
-			try {
-				ConnectionFactory.rollback();
-			} catch (Exception e1) {
-				e1.printStackTrace();
-				log.error("[IOM系统接口svcCallIOMByMosNative事务回滚异常]" + e1);
-			}
-		} finally {
-			try {
+		} catch (SysException e1) { 
+			ConnectionFactory.rollback();
+			throw e1;
+		}catch (AppException e2) { 
+			ConnectionFactory.rollback();
+			throw e2;
+		}catch (Exception e) { 
+			ConnectionFactory.rollback();
+			throw new SysException("","出现未知异常！",e);
+		}finally {
 				ConnectionFactory.closeConnection();
-			} catch (Exception e) {
-				e.printStackTrace();
-				log.error("[IOM系统接口svcCallIOMByMosNative数据库连接关闭异常]" + e);
-			}
 		}
 		return returnValue;
 	}
@@ -151,22 +137,17 @@ public class CtxdDelegate {
 			CtxdDOM dom=new CtxdDOM();
 			returnValue =dom.getFuncNodeListByUser(user);
 			ConnectionFactory.commit();
-		} catch (Exception e) { 
-			e.printStackTrace();
-			log.error("[IOM系统接口svcCallIOMByMosNative异常]" + e);
-			try {
-				ConnectionFactory.rollback();
-			} catch (Exception e1) {
-				e1.printStackTrace();
-				log.error("[IOM系统接口svcCallIOMByMosNative事务回滚异常]" + e1);
-			}
-		} finally {
-			try {
+		} catch (SysException e1) { 
+			ConnectionFactory.rollback();
+			throw e1;
+		}catch (AppException e2) { 
+			ConnectionFactory.rollback();
+			throw e2;
+		}catch (Exception e) { 
+			ConnectionFactory.rollback();
+			throw new SysException("","出现未知异常！",e);
+		}finally {
 				ConnectionFactory.closeConnection();
-			} catch (Exception e) {
-				e.printStackTrace();
-				log.error("[IOM系统接口svcCallIOMByMosNative数据库连接关闭异常]" + e);
-			}
 		}
 		return returnValue;
 	}
@@ -180,22 +161,17 @@ public class CtxdDelegate {
 			CtxdDOM dom=new CtxdDOM();
 			returnValue =dom.login(user);
 			ConnectionFactory.commit();
-		} catch (Exception e) { 
-			e.printStackTrace();
-			log.error("[IOM系统接口svcCallIOMByMosNative异常]" + e);
-			try {
-				ConnectionFactory.rollback();
-			} catch (Exception e1) {
-				e1.printStackTrace();
-				log.error("[IOM系统接口svcCallIOMByMosNative事务回滚异常]" + e1);
-			}
-		} finally {
-			try {
+		}catch (SysException e1) { 
+			ConnectionFactory.rollback();
+			throw e1;
+		}catch (AppException e2) { 
+			ConnectionFactory.rollback();
+			throw e2;
+		}catch (Exception e) { 
+			ConnectionFactory.rollback();
+			throw new SysException("","出现未知异常！",e);
+		}finally {
 				ConnectionFactory.closeConnection();
-			} catch (Exception e) {
-				e.printStackTrace();
-				log.error("[IOM系统接口svcCallIOMByMosNative数据库连接关闭异常]" + e);
-			}
 		}
 		return returnValue;
 	}
@@ -215,22 +191,17 @@ public class CtxdDelegate {
 			CtxdDOM dom=new CtxdDOM();
 			returnValue =dom.getDBTables();
 			ConnectionFactory.commit();
-		} catch (Exception e) { 
-			e.printStackTrace();
-			log.error("[IOM系统接口svcCallIOMByMosNative异常]" + e);
-			try {
-				ConnectionFactory.rollback();
-			} catch (Exception e1) {
-				e1.printStackTrace();
-				log.error("[IOM系统接口svcCallIOMByMosNative事务回滚异常]" + e1);
-			}
-		} finally {
-			try {
+		} catch (SysException e1) { 
+			ConnectionFactory.rollback();
+			throw e1;
+		}catch (AppException e2) { 
+			ConnectionFactory.rollback();
+			throw e2;
+		}catch (Exception e) { 
+			ConnectionFactory.rollback();
+			throw new SysException("","出现未知异常！",e);
+		}finally {
 				ConnectionFactory.closeConnection();
-			} catch (Exception e) {
-				e.printStackTrace();
-				log.error("[IOM系统接口svcCallIOMByMosNative数据库连接关闭异常]" + e);
-			}
 		}
 		return returnValue;
 	}
@@ -244,22 +215,17 @@ public class CtxdDelegate {
 			CtxdDOM dom=new CtxdDOM();
 			returnValue =dom.getConfigTableInfo(tableId);
 			ConnectionFactory.commit();
-		} catch (Exception e) { 
-			e.printStackTrace();
-			log.error("[IOM系统接口svcCallIOMByMosNative异常]" + e);
-			try {
-				ConnectionFactory.rollback();
-			} catch (Exception e1) {
-				e1.printStackTrace();
-				log.error("[IOM系统接口svcCallIOMByMosNative事务回滚异常]" + e1);
-			}
-		} finally {
-			try {
+		} catch (SysException e1) { 
+			ConnectionFactory.rollback();
+			throw e1;
+		}catch (AppException e2) { 
+			ConnectionFactory.rollback();
+			throw e2;
+		}catch (Exception e) { 
+			ConnectionFactory.rollback();
+			throw new SysException("","出现未知异常！",e);
+		}finally {
 				ConnectionFactory.closeConnection();
-			} catch (Exception e) {
-				e.printStackTrace();
-				log.error("[IOM系统接口svcCallIOMByMosNative数据库连接关闭异常]" + e);
-			}
 		}
 		return returnValue;
 	
@@ -281,22 +247,17 @@ public class CtxdDelegate {
 			CtxdDOM dom=new CtxdDOM();
 			returnValue =dom.getColumnDescList(tableName);
 			ConnectionFactory.commit();
-		} catch (Exception e) { 
-			e.printStackTrace();
-			log.error("[IOM系统接口svcCallIOMByMosNative异常]" + e);
-			try {
-				ConnectionFactory.rollback();
-			} catch (Exception e1) {
-				e1.printStackTrace();
-				log.error("[IOM系统接口svcCallIOMByMosNative事务回滚异常]" + e1);
-			}
-		} finally {
-			try {
+		} catch (SysException e1) { 
+			ConnectionFactory.rollback();
+			throw e1;
+		}catch (AppException e2) { 
+			ConnectionFactory.rollback();
+			throw e2;
+		}catch (Exception e) { 
+			ConnectionFactory.rollback();
+			throw new SysException("","出现未知异常！",e);
+		}finally {
 				ConnectionFactory.closeConnection();
-			} catch (Exception e) {
-				e.printStackTrace();
-				log.error("[IOM系统接口svcCallIOMByMosNative数据库连接关闭异常]" + e);
-			}
 		}
 		return returnValue;
 	}
@@ -317,22 +278,17 @@ public class CtxdDelegate {
 			CtxdDOM dom=new CtxdDOM();
 			dom.saveTableConfig(table,columns,queryConditionList);
 			ConnectionFactory.commit();
-		} catch (Exception e) { 
-			e.printStackTrace();
-			log.error("[IOM系统接口svcCallIOMByMosNative异常]" + e);
-			try {
-				ConnectionFactory.rollback();
-			} catch (Exception e1) {
-				e1.printStackTrace();
-				log.error("[IOM系统接口svcCallIOMByMosNative事务回滚异常]" + e1);
-			}
-		} finally {
-			try {
+		}catch (SysException e1) { 
+			ConnectionFactory.rollback();
+			throw e1;
+		}catch (AppException e2) { 
+			ConnectionFactory.rollback();
+			throw e2;
+		}catch (Exception e) { 
+			ConnectionFactory.rollback();
+			throw new SysException("","出现未知异常！",e);
+		}finally {
 				ConnectionFactory.closeConnection();
-			} catch (Exception e) {
-				e.printStackTrace();
-				log.error("[IOM系统接口svcCallIOMByMosNative数据库连接关闭异常]" + e);
-			}
 		}
 	}
 	
@@ -345,22 +301,90 @@ public class CtxdDelegate {
 			CtxdDOM dom=new CtxdDOM();
 			res=dom.getConfigTabList();
 			ConnectionFactory.commit();
-		} catch (Exception e) { 
-			e.printStackTrace();
-			log.error("[IOM系统接口svcCallIOMByMosNative异常]" + e);
-			try {
-				ConnectionFactory.rollback();
-			} catch (Exception e1) {
-				e1.printStackTrace();
-				log.error("[IOM系统接口svcCallIOMByMosNative事务回滚异常]" + e1);
-			}
-		} finally {
-			try {
+		} catch (SysException e1) { 
+			ConnectionFactory.rollback();
+			throw e1;
+		}catch (AppException e2) { 
+			ConnectionFactory.rollback();
+			throw e2;
+		}catch (Exception e) { 
+			ConnectionFactory.rollback();
+			throw new SysException("","出现未知异常！",e);
+		}finally {
 				ConnectionFactory.closeConnection();
-			} catch (Exception e) {
-				e.printStackTrace();
-				log.error("[IOM系统接口svcCallIOMByMosNative数据库连接关闭异常]" + e);
-			}
+		}
+		return res;
+	}
+	
+	public DTableDescSVO getTableVO(String tableName) throws AppException, SysException {
+		Connection conn = null;
+		DTableDescSVO res=null;
+		try {
+			conn = ConnectionFactory.createConnection();
+			conn.setAutoCommit(false);
+			CtxdDOM dom=new CtxdDOM();
+			res=dom.getTableVO(tableName);
+			ConnectionFactory.commit();
+		} catch (SysException e1) { 
+			ConnectionFactory.rollback();
+			throw e1;
+		}catch (AppException e2) { 
+			ConnectionFactory.rollback();
+			throw e2;
+		}catch (Exception e) { 
+			ConnectionFactory.rollback();
+			throw new SysException("","出现未知异常！",e);
+		}finally {
+				ConnectionFactory.closeConnection();
+		}
+		return res;
+	
+	}
+	
+	public List getColumnCommentsByTable(String tableName)throws AppException, SysException{
+		Connection conn = null;
+		List res=null;
+		try {
+			conn = ConnectionFactory.createConnection();
+			conn.setAutoCommit(false);
+			CtxdDOM dom=new CtxdDOM();
+			res=dom.getColumnCommentsByTable(tableName);
+			ConnectionFactory.commit();
+		} catch (SysException e1) { 
+			ConnectionFactory.rollback();
+			throw e1;
+		}catch (AppException e2) { 
+			ConnectionFactory.rollback();
+			throw e2;
+		}catch (Exception e) { 
+			ConnectionFactory.rollback();
+			throw new SysException("","出现未知异常！",e);
+		}finally {
+				ConnectionFactory.closeConnection();
+		}
+		return res;
+	}
+	
+	public PagView getQueryInstanceList(QueryInstanceSVO i,PagInfo pagInfo) throws AppException, SysException{
+		Connection conn = null;
+		PagView res=null;
+		try {
+			conn = ConnectionFactory.createConnection();
+			conn.setAutoCommit(false);
+			CtxdDOM dom=new CtxdDOM();
+			res=dom.getQueryInstanceList(i,pagInfo);
+			ConnectionFactory.commit();
+		} catch (SysException e1) { 
+			ConnectionFactory.rollback();
+			throw e1;
+		}catch (AppException e2) { 
+			ConnectionFactory.rollback();
+			throw e2;
+		}catch (Exception e) { 
+			ConnectionFactory.rollback();
+			throw new SysException("","出现未知异常！",e);
+		}finally {
+				ConnectionFactory.closeConnection();
 		}
 		return res;
 	}
