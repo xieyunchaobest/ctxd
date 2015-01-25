@@ -74,16 +74,19 @@ $(function(){
 			$("#typeFlag").val("C");
 			$("#formAddInstance").submit();
 		});
-	
-	
-	
 })
+
+function deleteConfim(instanceId){
+	if (confirm("Ò»µ©É¾³ý£¬½«ÎÞ·¨»Ö¸´¡£È·ÈÏÉ¾³ýÂð£¿")) {
+            window.location.href="../tm/instanceSettingAction.do?method=delete&instanceId="+instanceId; 
+     }
+}
 </script>
 
 </head>
 
 <body>
-	<form id="queryForm" action="../tm/ctxdAction.do?method=getQueryInstanceList"
+	<form id="queryForm" action="../tm/instanceSettingAction.do?method=getQueryInstanceList"
 		method="post">
 		
 		<div id="contentWrap">
@@ -121,12 +124,13 @@ $(function(){
 							 	<td class="ctd"><bean:write name="instance" property="tableName"/></td>
 							 	<td class="ctd"><bean:write name="instance" property="tableDesc"/></td>
 							 	<td class="ctd">
-							 		Ô¤ÀÀ   ÐÞ¸Ä   É¾³ý
+							 		<a href="../tm/ctxdAction.do?method=queryResult&instanceId=<bean:write name='instance' property='queryInstanceId' />" >Ô¤ÀÀ</a>&nbsp;&nbsp;
+							 		 <a href="javascript:void(0)" onclick="deleteConfim(<bean:write name='instance' property='queryInstanceId' />)" >É¾³ý</a>  
 							 	</td>
 							</tr> 
 						</logic:iterate>
 						<tr>
-							<pag:pagination name="instancePage" requestUri=" ../tm/ctxdAction.do?method=getQueryInstanceList&turnpag=yes" /> 
+							<pag:pagination name="instancePage" requestUri=" ../tm/instanceSettingAction.do?method=getQueryInstanceList&turnpag=yes" /> 
 						</tr>
 					</tbody>
 				</table>

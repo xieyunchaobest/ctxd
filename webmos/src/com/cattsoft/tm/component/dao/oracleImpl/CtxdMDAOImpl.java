@@ -832,7 +832,7 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 			rs = PagUtil.queryOracle(conn, sql, pagInfo);
 			
 			sql.log(this.getClass());
-			rs = ps.executeQuery();
+			//rs = ps.executeQuery();
 		
 			while (rs.next()) {
 				QueryInstanceSVO instance=new QueryInstanceSVO();

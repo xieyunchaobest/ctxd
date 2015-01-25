@@ -23,3 +23,18 @@ function cancelCoverit(){
 	cover.style.display = 'none';
 	covershow.style.display = 'none';
 }
+
+
+function selectAll(){
+	var ischecked=document.getElementById("chkselectAll").checked;
+	//alert(ischecked);
+	if(ischecked==true){
+		$(".ck").each(function() {
+			$(this).attr("checked", true);
+		});
+	}else{
+		$(".ck").each(function() {
+			$(this).attr("checked", false);
+		});
+	}
+}

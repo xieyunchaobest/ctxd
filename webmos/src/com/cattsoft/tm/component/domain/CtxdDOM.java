@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.cattsoft.pub.SysConstants;
 import com.cattsoft.pub.dao.DAOFactory;
 import com.cattsoft.pub.exception.AppException;
@@ -62,7 +64,7 @@ public class CtxdDOM {
 		return conditionList;
 	}
 
-	public String login(SysUserSVO user) throws AppException, SysException {
+	public String login(SysUserSVO user,HttpServletRequest request) throws AppException, SysException {
 		ISysUserSDAO sysUserSDAO = (ISysUserSDAO) DAOFactory
 				.getDAO(ISysUserSDAO.class);
 		String userName = user.getSysUserName();
@@ -97,6 +99,7 @@ public class CtxdDOM {
 			svo.setUserId(sysuserSVO.getSysUserId());
 			loginLogSDAO.add(svo);
 
+			request.getSession().setAttribute("user", sysuserSVO);
 //			List funcList = this.getFuncNodeListByUser(sysuserSVO);
 //
 //			Map sysUserSVOMap = new HashMap();
@@ -220,6 +223,8 @@ public class CtxdDOM {
 		ICtxdMDAO mdao= (ICtxdMDAO) DAOFactory.getDAO(ICtxdMDAO.class);
 		return mdao.getQueryInstanceList(i,pagInfo);
 	}
+	
+	
 	
 	public List getColumnList(String instacneId) throws AppException, SysException{
 		ICtxdMDAO mdao= (ICtxdMDAO) DAOFactory.getDAO(ICtxdMDAO.class);

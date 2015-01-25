@@ -56,7 +56,6 @@
 			<forward name="settingTable"   module="/page"  path="/settingTable.jsp" />
 			<forward name="showColumnComments"   module="/page"  path="/columnComents.jsp" />
 			<forward name="settingQueryInit"   module="/page"  path="/settingQueryInit.jsp" />
-			<forward name="instanceList"   module="/page"  path="/instanceList.jsp" />
 		</action>
 		
 		<action path="/tm/instanceSettingAction" parameter="method"
@@ -64,6 +63,7 @@
 				<forward name="addInstanceInit"   module="/page"  path="/addInstanceMain.jsp" />
 				<forward name="addInstanceSub"   module="/page"  path="/addInstanceSub.jsp" />
 				<forward name="instanceColumnList"   module="/page"  path="/addInstanceSub.jsp" />
+				<forward name="instanceList"   module="/page"  path="/instanceList.jsp" />
 				
 		</action>
 		

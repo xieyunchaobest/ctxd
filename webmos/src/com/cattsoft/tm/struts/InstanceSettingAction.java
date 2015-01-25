@@ -18,7 +18,12 @@ import org.apache.struts.actions.DispatchAction;
 import com.cattsoft.pub.ConstantsHelp;
 import com.cattsoft.pub.exception.AppException;
 import com.cattsoft.pub.exception.SysException;
+import com.cattsoft.pub.util.PagInfo;
+import com.cattsoft.pub.util.PagView;
 import com.cattsoft.pub.util.StringUtil;
+import com.cattsoft.sm.vo.SysUserMVO;
+import com.cattsoft.sm.vo.SysUserSVO;
+import com.cattsoft.tm.delegate.CtxdDelegate;
 import com.cattsoft.tm.delegate.InstanceSettingDelegate;
 import com.cattsoft.tm.vo.QueryConditionSVO;
 import com.cattsoft.tm.vo.QueryInstanceColumnSVO;
@@ -29,6 +34,33 @@ import com.cattsoft.tm.vo.QueryInstanceSVO;
  * CreateTime 2015-09-10 ÉÏÎç10:55:59
  */
 public class InstanceSettingAction extends DispatchAction{
+	
+	
+	public ActionForward getQueryInstanceList(ActionMapping mapping,ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws AppException, SysException {
+		QueryInstanceSVO i=new QueryInstanceSVO();
+//		String instanceType=request.getParameter("instanceType");
+		String instanceName=request.getParameter("instanceName");
+//		String tableDesc=request.getParameter("tableDesc");
+//		i.setInstanceType(instanceType);
+		i.setInstanceName(instanceName);
+//		i.setTableDesc(tableDesc);
+		
+		String pageNo=request.getParameter("pageNo");
+		String pagSize=request.getParameter("pagSize");
+		if(pageNo==null)pageNo="1";
+		if(pagSize==null)pagSize="10";
+		PagInfo p=new PagInfo();
+		p.setPagNo(Integer.parseInt(pageNo));
+		p.setPagSize(Integer.parseInt(pagSize));
+		
+		PagView instancePage=CtxdDelegate.getDelegate().getQueryInstanceList(i,p);
+		request.setAttribute("instancePage", instancePage);
+		request.setAttribute("instanceName", instanceName);
+		return  mapping.findForward("instanceList");
+		
+	}
+	
 	
 	/**
 	 * 
@@ -45,7 +77,9 @@ public class InstanceSettingAction extends DispatchAction{
 			HttpServletResponse response) throws AppException, SysException {
 		String tableName=request.getParameter("tableName");
 		List tableList=InstanceSettingDelegate.getDelegate().getTables();
+		List instanceTypeList=InstanceSettingDelegate.getDelegate().getInstanceTypeList();
 		request.setAttribute("tableList", tableList);
+		request.setAttribute("instanceTypeList", instanceTypeList);
 		return mapping.findForward("addInstanceInit");
 
 	}
@@ -69,8 +103,7 @@ public class InstanceSettingAction extends DispatchAction{
 		String instanceName=request.getParameter("instanceName");
 		String instanceType=request.getParameter("instanceType");
 		String columnCount=request.getParameter("columnCount");
-		String isQueryCondition=request.getParameter("chkIsCondition");
-		String queryConditionType=request.getParameter("sltConditionType");
+		String treeId=request.getParameter("treeId");
 		
 		Date d=new Date();
 		
@@ -80,6 +113,7 @@ public class InstanceSettingAction extends DispatchAction{
 		instance.setTableName(tableName);
 		instance.setCreateTime(d);
 		instance.setSts(ConstantsHelp.ACTIVE);
+		instance.setTreeId(treeId);
 		
 		String isSum=ConstantsHelp.NO;
 		String isGroup=ConstantsHelp.NO;
@@ -101,6 +135,8 @@ public class InstanceSettingAction extends DispatchAction{
 				c.setSts(ConstantsHelp.ACTIVE);
 				columnList.add(c);
 				
+				String isQueryCondition=request.getParameter("chkIsCondition"+i);
+				String queryConditionType=request.getParameter("sltConditionType"+i);
 				if(ConstantsHelp.YES.equals(isQueryCondition)) {
 					QueryConditionSVO condition=new QueryConditionSVO();
 					condition.setColumnName(columnName);
@@ -112,9 +148,16 @@ public class InstanceSettingAction extends DispatchAction{
 			}
 		}
 		
-		return mapping.findForward("addInstanceInit");
+		InstanceSettingDelegate.getDelegate().addInstance(instance, columnList, conditionList);
+		return getQueryInstanceList(mapping,form,request,response);
 	}
 
-
+	public ActionForward delete(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws AppException, SysException {
+		String instanceId=request.getParameter("instanceId");
+		InstanceSettingDelegate.getDelegate().deleteInstance(instanceId);
+		return getQueryInstanceList(mapping,form,request,response);
+	}
 
 }

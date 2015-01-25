@@ -1,4 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%@page import="com.cattsoft.tm.vo.FuncNodeTreeSVO"%>
 <%@page import="com.cattsoft.tm.vo.DTableDescSVO"%>
 <%@page import="com.cattsoft.pub.util.PagView"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -99,14 +100,16 @@ body {
 	$(function() {
 
 		$('#btnSave').click(function() {
+			var flag=validate();
+			if(flag==false)return ;
 			showCover();
 			var html = $("#columnFrame").contents().find("#datatable").formhtml();
 			$("#iframhtml").html('').html(html);
 			$("#columnsForm").submit();
 		});
 		
-		$('#tableSelect').change(function() {
-			var tableName=$("#tableSelect").val();
+		$('#tableName').change(function() {
+			var tableName=$("#tableName").val();
 			$("#columnFrame").attr(
 				"src",
 				"../tm/instanceSettingAction.do?method=columnsInit&tableName="
@@ -115,16 +118,63 @@ body {
 		
 	})
 	
+	function validate(){
+		
+		if($("tableName").val()==''){
+			alert('请选择表名！');
+			return false;
+		}
+		
+		if($("#instanceName").val()==""){
+			alert('请填写实例名称！');
+			return false;
+		}
+		
+		if($("#treeId").val()==''){
+			alert('请选择类别！');
+			return false;
+		}
+		
+		var isShowFlag=false;
+		$("#columnFrame").contents().find("[id^='chkIsShow']").each(function(i) {
+			  	//alert($(this).prop('checked'));
+			  	if($(this).prop('checked')==true){
+			  		isShowFlag=true;
+			  	} 
+		});
+		if(isShowFlag==false){
+		 alert('请选择显示列！');
+		 return false;	
+		}	
+		
+		var flag=true;
+		$("#columnFrame").contents().find("[id^='chkIsCondition']").each(function(i) {
+				var trn=$(this).parent().parent().prevAll().length;
+			  	var n=parseInt(trn)-1;
+			  	//alert($(this).prop('checked'));
+			  	if($(this).prop('checked')==true){
+			  		var conditonTypeVal=$("#columnFrame").contents().find("#sltConditionType"+n).val();
+			  		if(conditonTypeVal==''){
+			  			alert('请选择条件类型');
+			  			flag=false;
+			  			return false;
+			  		}
+			  	} 
+		});
+		if(flag==false) return false;	
+		
+	}
+	
 </script>
 
 	<%
 		List tableList=(List)request.getAttribute("tableList");
-		
+		List instanceTypeList=(List)request.getAttribute("instanceTypeList");
 	 %>
 </head>
 
 <body>
-	<form id="columnsForm" action="../tm/ctxdAction.do?method=addInstance"
+	<form id="columnsForm" action="../tm/instanceSettingAction.do?method=addInstance"
 		method="post">
 		<span style="display:none"></span>
 		<div id="contentWrap">
@@ -136,7 +186,7 @@ body {
 							<td width="50px"></td>
 							<td width='200px'>
 								<label for="tableSelect">表名：</label>
-								 <select class='shortselect' id="tableSelect" name="tableSelect">
+								 <select class='shortselect' id="tableName" name="tableName">
 								 	<option value="">请选择</option>
 								 	<%
 										if(tableList!=null){
@@ -150,8 +200,22 @@ body {
 							</td>
 							 <td style="float:left;line-height:50px">
 							 	<label for="instanceName"  style="margin-left:50px">实例名称：</label>
-							 	<input type="text"  class="shottext"  name="instanceName" id="instanceName" size=80/>
+							 	<input type="text"  class="shottext"  name="instanceName" id="instanceName"  />
 							 </td>
+							 <td style="float:left;line-height:50px">
+								<label for="treeId" style="margin-left:50px">类别：</label>
+								 <select class='shortselect' id="treeId" name="treeId">
+								 	<option value="">请选择</option>
+								 	<%
+										if(instanceTypeList!=null){
+											for(int i=0;i<instanceTypeList.size();i++){
+												FuncNodeTreeSVO tree=(FuncNodeTreeSVO)instanceTypeList.get(i);
+												out.println("<option value='" +tree.getNodeTreeId()+"'>"+tree.getNodeTreeName()+"</option>");
+											}
+										}								 	
+								 	 %>
+								 </select>
+							</td>
 							<td>
 								<input type="button" class="btn" style="width:100px;height:28px" id="btnSave" value="保  存" />
 							</td>
@@ -165,7 +229,7 @@ body {
 					src="../tm/instanceSettingAction.do?method=columnsInit"
 					id="columnFrame" name="columnFrame"></iframe>
 				</div>
-				<span id="iframhtml"></span>
+				<span id="iframhtml" style="display:none"></span>
 			</div>
 		</div>
 	</form>

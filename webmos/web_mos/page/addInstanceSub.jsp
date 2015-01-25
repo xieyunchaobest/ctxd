@@ -119,9 +119,19 @@ $(function(){
 			showCover();
 			$("#queryForm").submit();
 		});
-	
-	
 })
+
+function doChange(obj){
+	var trn=$(obj).parent().parent().prevAll().length;
+	var n=parseInt(trn)-1;
+	if($(obj).val()!=''){
+		//$("#chkIsCondition"+n).attr("checked", true);
+		document.getElementById("chkIsCondition"+n).checked=true;
+	}else{
+		//$("#chkIsCondition"+n).attr("checked", false);
+		document.getElementById("chkIsCondition"+n).checked=false;
+	}
+}
 </script>
 
 <%
@@ -143,7 +153,10 @@ $(function(){
 				<table id="datatable">
 					<thead>
 						<th>列名</th>
-						<th>是否显示</th>
+						<th>
+							是否显示
+							<input type="checkbox" name="chkselectAll" id="chkselectAll" onclick="selectAll();"/>	
+						</th>
 						<th>查询条件</th>
 						<th>条件类型</th>
 						<th>序号</th>
@@ -155,12 +168,12 @@ $(function(){
 								out.println("<tr>");
 								DColumnDescSVO  column=(DColumnDescSVO)columnList.get(i);
 								out.println("<td class='ctd'>"+column.getColumnDesc()+"</td>");
-								out.println("<td class='ctd'><input type='checkbox' id='chkIsShow"+i +"' name='chkIsShow"+i+"' value='Y' /></td>");
-								out.println("<td class='ctd'><input type='checkbox' id='chkIsCondition"+i +"' name='chkIsCondition"+i+"'  /></td>");
+								out.println("<td class='ctd'><input type='checkbox' class='ck' id='chkIsShow"+i +"' name='chkIsShow"+i+"' value='Y' /></td>");
+								out.println("<td class='ctd'><input type='checkbox' id='chkIsCondition"+i +"' name='chkIsCondition"+i+"'  value='Y' /></td>");
 						%>
 							<td class='ctd'>
-								<input type="hidden" id="columnName"+<%=i%> name="columnName"+<%=i%> value="<%=column.getColumnName() %>" />
-								<select id="sltConditionType"+<%=i%> name="sltConditionType"+<%=i%> class="smallselect" >
+								<input type="hidden" id="columnName<%=i%>" name="columnName<%=i%>" value="<%=column.getColumnName() %>" />
+								<select id="sltConditionType<%=i%>" name="sltConditionType<%=i%>" class="smallselect" onchange="doChange(this);">
 									<option value="">请选择</option>
 									<option value="E">等于</option>
 									<option value="B">属于</option>
@@ -169,7 +182,7 @@ $(function(){
 								</select>
 							</td>
 							<td class="ctd">
-								<input type="text" id="seq"+<%=i%> name="seq"+<%=i%>  class="smalltext" value="<%=i%>"/>
+								<input type="text" id="seq<%=i%>" name="seq<%=i%>"  class="smalltext" value="<%=i%>"/>
 							</td>
 						<%		
 								

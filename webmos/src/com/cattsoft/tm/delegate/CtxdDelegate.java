@@ -3,6 +3,8 @@ package com.cattsoft.tm.delegate;
 import java.sql.Connection;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -152,14 +154,14 @@ public class CtxdDelegate {
 		return returnValue;
 	}
 	
-	public String login(SysUserSVO user) throws AppException,SysException{
+	public String login(SysUserSVO user, HttpServletRequest request) throws AppException,SysException{
 		Connection conn = null;
 		String returnValue = null;
 		try {
 			conn = ConnectionFactory.createConnection();
 			conn.setAutoCommit(false);
 			CtxdDOM dom=new CtxdDOM();
-			returnValue =dom.login(user);
+			returnValue =dom.login(user,request);
 			ConnectionFactory.commit();
 		}catch (SysException e1) { 
 			ConnectionFactory.rollback();

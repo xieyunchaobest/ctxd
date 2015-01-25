@@ -52,7 +52,6 @@ public class CtxdAction extends DispatchAction{
 	}
 
 	/**
-	 * 查询通话记录详情
 	 * @param mapping
 	 * @param form
 	 * @param request
@@ -159,7 +158,11 @@ public class CtxdAction extends DispatchAction{
 		SysUserSVO user=new SysUserSVO();
 		user.setSysUserName(userName);
 		user.setPassword(password);
-		String res=CtxdDelegate.getDelegate().login(user);
+		String res=CtxdDelegate.getDelegate().login(user,request);
+		if("S".equals(res)) { //如果成功放入权限信息
+			request.getSession().setAttribute("user", user);
+		}
+		
 		ReqUtil.write(response, res);
 		return null;
 		
@@ -279,31 +282,7 @@ public class CtxdAction extends DispatchAction{
 		request.setAttribute("columnCommentList", columnCommentList);
 		return  mapping.findForward("showColumnComments");
 	}
-	
-	public ActionForward getQueryInstanceList(ActionMapping mapping,ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws AppException, SysException {
-		QueryInstanceSVO i=new QueryInstanceSVO();
-		String instanceType=request.getParameter("instanceType");
-		String instanceName=request.getParameter("instanceName");
-		String tableDesc=request.getParameter("tableDesc");
-		i.setInstanceType(instanceType);
-		i.setInstanceName(instanceName);
-		i.setTableDesc(tableDesc);
-		
-		String pageNo=request.getParameter("pageNo");
-		String pagSize=request.getParameter("pagSize");
-		if(pageNo==null)pageNo="1";
-		if(pagSize==null)pagSize="10";
-		PagInfo p=new PagInfo();
-		p.setPagNo(Integer.parseInt(pageNo));
-		p.setPagSize(Integer.parseInt(pagSize));
-		
-		PagView instancePage=CtxdDelegate.getDelegate().getQueryInstanceList(i,p);
-		request.setAttribute("instancePage", instancePage);
-		request.setAttribute("instanceName", instanceName);
-		return  mapping.findForward("instanceList");
-		
-	}
+
 
 	
 

@@ -18,4 +18,12 @@ public class ConstantsHelp {
 	public static final String PRE_START="START_";
 	public static final String PRE_END="END_";
 	
+	public static final String SEQ_QUERY_INSTANCE="QUERY_INSTANCE";
+	public static final String SEQ_UERY_INSTANCE_COLUMN="QUERY_INSTANCE_COLUMN";
+	public static final String SEQ_QUERY_CONDITION_SEQ="QUERY_CONDITION";
+	public static final String SEQ_FUNC_NODE="FUNC_NODE";
+	
+	
+	public static final String INSTANCEURL="../tm/ctxdAction.do?method=queryResult&instanceId=";
+	
 }
