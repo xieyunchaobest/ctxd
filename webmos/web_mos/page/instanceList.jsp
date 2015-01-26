@@ -74,6 +74,11 @@ $(function(){
 			$("#typeFlag").val("C");
 			$("#formAddInstance").submit();
 		});
+		
+		$('#btnAddGroupQuery').click(function() {
+			$("#typeFlag").val("S");
+			$("#formAddInstance").submit();
+		});
 })
 
 function deleteConfim(instanceId){
@@ -150,7 +155,7 @@ function deleteConfim(instanceId){
 	<form action="../tm/instanceSettingAction.do" id="formAddInstance"
 		method="post" style="display:none">
 		<span style="display:none"><input type="hidden" value='<%=request.getAttribute("tableName")%>' name="tableName"/></span>
-		<input type="hidden" id="typeFlag" /> <input type="hidden"
+		<input type="hidden" id="typeFlag" name="typeFlag"/> <input type="hidden"
 			name="method" value="addInstanceInit" />
 	</form>
 </body>

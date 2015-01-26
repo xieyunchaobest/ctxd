@@ -153,10 +153,8 @@ function doChange(obj){
 				<table id="datatable">
 					<thead>
 						<th>列名</th>
-						<th>
-							是否显示
-							<input type="checkbox" name="chkselectAll" id="chkselectAll" onclick="selectAll();"/>	
-						</th>
+						<th>分组</th>
+						<th>汇总</th>
 						<th>查询条件</th>
 						<th>条件类型</th>
 						<th>序号</th>
@@ -168,7 +166,8 @@ function doChange(obj){
 								out.println("<tr>");
 								DColumnDescSVO  column=(DColumnDescSVO)columnList.get(i);
 								out.println("<td class='ctd'>"+column.getColumnDesc()+"</td>");
-								out.println("<td class='ctd'><input type='checkbox' class='ck' id='chkIsShow"+i +"' name='chkIsShow"+i+"' value='Y' /></td>");
+								out.println("<td class='ctd'><input type='checkbox' id='chkIsGroup"+i +"' name='chkIsGroup"+i+"'  value='Y' /></td>");
+								out.println("<td class='ctd'><input type='checkbox' id='chkIsSum"+i +"' name='chkIsSum"+i+"'  value='Y' /></td>");
 								out.println("<td class='ctd'><input type='checkbox' id='chkIsCondition"+i +"' name='chkIsCondition"+i+"'  value='Y' /></td>");
 						%>
 							<td class='ctd'>
@@ -189,6 +188,7 @@ function doChange(obj){
 								out.println("</tr>");
 							}
 						 %>
+						 <input type="hidden" style="display:none" name="instanceType" value="C" />
 					</tbody>
 				</table>
 				</div>

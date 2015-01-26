@@ -76,10 +76,12 @@ public class InstanceSettingAction extends DispatchAction{
 			ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws AppException, SysException {
 		String tableName=request.getParameter("tableName");
+		String typeFlag=request.getParameter("typeFlag");
 		List tableList=InstanceSettingDelegate.getDelegate().getTables();
 		List instanceTypeList=InstanceSettingDelegate.getDelegate().getInstanceTypeList();
 		request.setAttribute("tableList", tableList);
 		request.setAttribute("instanceTypeList", instanceTypeList);
+		request.setAttribute("typeFlag", typeFlag);
 		return mapping.findForward("addInstanceInit");
 
 	}
@@ -88,12 +90,19 @@ public class InstanceSettingAction extends DispatchAction{
 			ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws AppException, SysException{
 		String tableName=request.getParameter("tableName");
+		String  typeFlag=request.getParameter("typeFlag");
+		
 		List columnList=new ArrayList();
 		if(!StringUtil.isBlank(tableName)) {
 			columnList=InstanceSettingDelegate.getDelegate().getTableColumns(tableName);
 		}
 		request.setAttribute("columnList", columnList);
-		return mapping.findForward("instanceColumnList");
+		if(ConstantsHelp.INSTANCE_TYPE_COMMON.equals(typeFlag)) {
+			return mapping.findForward("instanceColumnList");
+		}else {
+			return mapping.findForward("instanceColumnListGroup");
+		}
+		
 	}
 	
 	public ActionForward addInstance(ActionMapping mapping,
@@ -101,15 +110,15 @@ public class InstanceSettingAction extends DispatchAction{
 			HttpServletResponse response) throws AppException, SysException {
 		String tableName=request.getParameter("tableName");
 		String instanceName=request.getParameter("instanceName");
-		String instanceType=request.getParameter("instanceType");
 		String columnCount=request.getParameter("columnCount");
 		String treeId=request.getParameter("treeId");
+		String  typeFlag=request.getParameter("typeFlag"); 
 		
 		Date d=new Date();
 		
 		QueryInstanceSVO instance=new QueryInstanceSVO();
 		instance.setInstanceName(instanceName);
-		instance.setInstanceType(instanceType);
+		instance.setInstanceType(typeFlag);
 		instance.setTableName(tableName);
 		instance.setCreateTime(d);
 		instance.setSts(ConstantsHelp.ACTIVE);
@@ -120,20 +129,62 @@ public class InstanceSettingAction extends DispatchAction{
 		List columnList=new ArrayList();
 		List conditionList=new ArrayList();
 		
-		
-		for(int i=0;i<Integer.parseInt(columnCount);i++) {
-			String isShow=request.getParameter("chkIsShow"+i);
-			if(ConstantsHelp.YES.equals(isShow)) {
-				QueryInstanceColumnSVO c=new QueryInstanceColumnSVO();
+		if(ConstantsHelp.INSTANCE_TYPE_COMMON.equals(typeFlag)) {
+			for(int i=0;i<Integer.parseInt(columnCount);i++) {
+				String isShow=request.getParameter("chkIsShow"+i);
+				if(ConstantsHelp.YES.equals(isShow)) {
+					QueryInstanceColumnSVO c=new QueryInstanceColumnSVO();
+					String columnName=request.getParameter("columnName"+i);
+					String seq=request.getParameter("seq"+i);
+					c.setColumnName(columnName);
+					c.setCreateTime(d);
+					c.setIsGroup(isGroup);
+					c.setIsSum(isSum);
+					c.setSeq(seq);
+					c.setSts(ConstantsHelp.ACTIVE);
+					columnList.add(c);
+					
+					String isQueryCondition=request.getParameter("chkIsCondition"+i);
+					String queryConditionType=request.getParameter("sltConditionType"+i);
+					if(ConstantsHelp.YES.equals(isQueryCondition)) {
+						QueryConditionSVO condition=new QueryConditionSVO();
+						condition.setColumnName(columnName);
+						condition.setConditionType(queryConditionType);
+						condition.setSts(ConstantsHelp.ACTIVE);
+						condition.setCreateTime(d);
+						conditionList.add(condition);
+					}
+				}
+			}
+		}else {
+			for(int i=0;i<Integer.parseInt(columnCount);i++) {
+				//针对分组的情况
+				String isSumG=request.getParameter("chkIsSum"+i);
+				String isGroupG=request.getParameter("chkIsGroup"+i);
 				String columnName=request.getParameter("columnName"+i);
 				String seq=request.getParameter("seq"+i);
-				c.setColumnName(columnName);
-				c.setCreateTime(d);
-				c.setIsGroup(isGroup);
-				c.setIsSum(isSum);
-				c.setSeq(seq);
-				c.setSts(ConstantsHelp.ACTIVE);
-				columnList.add(c);
+				QueryInstanceColumnSVO c=null;
+				if(ConstantsHelp.YES.equals(isGroupG)) {
+					c=new QueryInstanceColumnSVO();
+					c.setColumnName(columnName);
+					c.setIsGroup(isGroupG);
+					c.setIsSum(ConstantsHelp.NO);
+					c.setCreateTime(d);
+					c.setSeq(seq);
+					c.setSts(ConstantsHelp.ACTIVE);
+					columnList.add(c);
+				}
+				
+				if(ConstantsHelp.YES.equals(isSumG)) {
+					c=new QueryInstanceColumnSVO();
+					c.setColumnName(columnName);
+					c.setIsGroup(ConstantsHelp.NO);
+					c.setIsSum(isSumG);
+					c.setCreateTime(d);
+					c.setSeq(seq);
+					c.setSts(ConstantsHelp.ACTIVE);
+					columnList.add(c);
+				}
 				
 				String isQueryCondition=request.getParameter("chkIsCondition"+i);
 				String queryConditionType=request.getParameter("sltConditionType"+i);
@@ -145,8 +196,13 @@ public class InstanceSettingAction extends DispatchAction{
 					condition.setCreateTime(d);
 					conditionList.add(condition);
 				}
+				
 			}
+			
+			
+			
 		}
+		
 		
 		InstanceSettingDelegate.getDelegate().addInstance(instance, columnList, conditionList);
 		return getQueryInstanceList(mapping,form,request,response);

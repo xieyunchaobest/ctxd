@@ -110,16 +110,17 @@ body {
 		
 		$('#tableName').change(function() {
 			var tableName=$("#tableName").val();
+			var typeFlag=$("#typeFlag").val();
 			$("#columnFrame").attr(
 				"src",
 				"../tm/instanceSettingAction.do?method=columnsInit&tableName="
-						+ tableName);		
+						+ tableName+"&typeFlag="+typeFlag);		
 		});
 		
 	})
 	
 	function validate(){
-		
+		var typeFlag=$("#typeFlag").val();
 		if($("tableName").val()==''){
 			alert('请选择表名！');
 			return false;
@@ -135,17 +136,59 @@ body {
 			return false;
 		}
 		
-		var isShowFlag=false;
-		$("#columnFrame").contents().find("[id^='chkIsShow']").each(function(i) {
-			  	//alert($(this).prop('checked'));
-			  	if($(this).prop('checked')==true){
-			  		isShowFlag=true;
-			  	} 
-		});
-		if(isShowFlag==false){
-		 alert('请选择显示列！');
-		 return false;	
-		}	
+		
+		if(typeFlag=="C"){
+			var isShowFlag=false;
+			$("#columnFrame").contents().find("[id^='chkIsShow']").each(function(i) {
+				  	//alert($(this).prop('checked'));
+				  	if($(this).prop('checked')==true){
+				  		isShowFlag=true;
+				  	} 
+			});
+			if(isShowFlag==false){
+			 alert('请选择显示列！');
+			 return false;	
+			}	
+		}else if(typeFlag=="S"){
+			var isGroupFlag=false;
+			$("#columnFrame").contents().find("[id^='chkIsGroup']").each(function(i) {
+				  	//alert($(this).prop('checked'));
+				  	if($(this).prop('checked')==true){
+				  		isGroupFlag=true;
+				  	} 
+			});
+			if(isGroupFlag==false){
+			 alert('请选择分组项！');
+			 return false;	
+			}	
+			
+			
+			var isSumFlag=false;
+			$("#columnFrame").contents().find("[id^='chkIsSum']").each(function(i) {
+				  	//alert($(this).prop('checked'));
+				  	if($(this).prop('checked')==true){
+				  		isSumFlag=true;
+				  	} 
+			});
+			if(isSumFlag==false){
+			 alert('请选择汇总项！');
+			 return false;	
+			}	
+			
+		}
+		//查询条件
+		var isConditionFlag=false;
+			$("#columnFrame").contents().find("[id^='chkIsCondition']").each(function(i) {
+				  	//alert($(this).prop('checked'));
+				  	if($(this).prop('checked')==true){
+				  		isConditionFlag=true;
+				  	} 
+			});
+			if(isConditionFlag==false){
+			 alert('请选择查询条件!');
+			 return false;	
+			}	
+		
 		
 		var flag=true;
 		$("#columnFrame").contents().find("[id^='chkIsCondition']").each(function(i) {
@@ -170,13 +213,17 @@ body {
 	<%
 		List tableList=(List)request.getAttribute("tableList");
 		List instanceTypeList=(List)request.getAttribute("instanceTypeList");
+		String typeFlag=(String)request.getAttribute("typeFlag");
+		
 	 %>
 </head>
 
 <body>
 	<form id="columnsForm" action="../tm/instanceSettingAction.do?method=addInstance"
 		method="post">
-		<span style="display:none"></span>
+		<span style="display:none">
+			<% out.println("<input type='hidden' name='typeFlag' id='typeFlag' value='"+typeFlag+"' />");  %>;
+		</span>
 		<div id="contentWrap">
 			<div class="pageTitle"></div>
 			<div class="pageColumn">
@@ -226,7 +273,7 @@ body {
 				<iframe width="100%" scrolling="auto" height="100%"
 					frameborder="false" allowtransparency="true"
 					style="border: medium none;"
-					src="../tm/instanceSettingAction.do?method=columnsInit"
+					src="../tm/instanceSettingAction.do?method=columnsInit&typeFlag=<%=typeFlag%>"
 					id="columnFrame" name="columnFrame"></iframe>
 				</div>
 				<span id="iframhtml" style="display:none"></span>

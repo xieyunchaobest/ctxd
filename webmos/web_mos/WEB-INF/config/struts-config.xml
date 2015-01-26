@@ -63,6 +63,7 @@
 				<forward name="addInstanceInit"   module="/page"  path="/addInstanceMain.jsp" />
 				<forward name="addInstanceSub"   module="/page"  path="/addInstanceSub.jsp" />
 				<forward name="instanceColumnList"   module="/page"  path="/addInstanceSub.jsp" />
+				<forward name="instanceColumnListGroup"   module="/page"  path="/addInstanceSubGroup.jsp" />
 				<forward name="instanceList"   module="/page"  path="/instanceList.jsp" />
 				
 		</action>
