@@ -25,5 +25,7 @@ public class ConstantsHelp {
 	
 	
 	public static final String INSTANCEURL="../tm/ctxdAction.do?method=queryResult&instanceId=";
+	public static final String FROM_PAGE_OA="oa";
+	
 	
 }

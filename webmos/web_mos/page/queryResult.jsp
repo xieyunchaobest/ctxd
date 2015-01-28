@@ -243,7 +243,7 @@ $(function(){
 				<table style="border:0px">
 					<tr style="border:0px;">
 						<td style="border:0px;width:80px;text-align:left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ËµÃ÷£º</td>
-						<td style="border:0px;text-align:left">&nbsp;</td>
+						<td style="border:0px;text-align:left">&nbsp;<bean:write name="tableVO" property="tableDesc" />  </td>
 					</tr>
 				</table>
 			</div>

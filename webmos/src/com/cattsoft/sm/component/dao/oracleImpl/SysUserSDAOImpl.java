@@ -11,6 +11,7 @@ import com.cattsoft.pub.dao.Sql;
 import com.cattsoft.pub.exception.AppException;
 import com.cattsoft.pub.exception.SysException;
 import com.cattsoft.pub.util.ResultSetUtil;
+import com.cattsoft.pub.util.StringUtil;
 import com.cattsoft.pub.vo.GenericVO;
 import com.cattsoft.sm.component.dao.ISysUserSDAO;
 import com.cattsoft.sm.vo.SysUserSVO;
@@ -255,6 +256,9 @@ public class SysUserSDAOImpl implements ISysUserSDAO {
         if (sysUser.getStsDate() != null) {
             sql.append(" and local_net_id=?");
         }
+        if(!StringUtil.isBlank(sysUser.getErpno())) {
+        	sql.append(" and erp_no=?");
+        }
         Connection connection = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -297,6 +301,9 @@ public class SysUserSDAOImpl implements ISysUserSDAO {
             }
             if (sysUser.getLocalNetId() != null)
                 sql.setString(index++, sysUser.getLocalNetId());
+            if(!StringUtil.isBlank(sysUser.getErpno())) {
+            	sql.setString(index++, sysUser.getErpno());
+            }
             sql.fillParams(ps);
             sql.log(this.getClass());
             rs = ps.executeQuery();

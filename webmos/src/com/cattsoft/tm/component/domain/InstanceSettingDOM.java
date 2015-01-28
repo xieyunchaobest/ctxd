@@ -120,4 +120,11 @@ public class InstanceSettingDOM {
 		}
 	}
 	
+	public QueryInstanceSVO getQueryInstance(String instanceId) throws AppException,SysException {
+		IQueryInstanceSDAO instanceDAO= (IQueryInstanceSDAO) DAOFactory.getDAO(IQueryInstanceSDAO.class);
+		QueryInstanceSVO svo=new QueryInstanceSVO();
+		svo.setQueryInstanceId(instanceId);
+		return (QueryInstanceSVO)instanceDAO.findByPK(svo);
+	}
+	
 }

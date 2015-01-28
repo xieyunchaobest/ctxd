@@ -61,7 +61,7 @@ $(function(){
             <!-- <div class="nav-right fleft"></div> -->
         </ul>
     </div>
-    <a class="logout fright" href="login.html"> </a>
+    <a class="logout fright" href="../tm/ctxdAction.do?method=loginOut"> </a>
     <div class="clear"></div>
     <div class="subnav">
     	<div class="subnavLeft fleft"></div>

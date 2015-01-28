@@ -38,7 +38,10 @@ public class SysUserSVO extends GenericVO {
     
     //added by yangkai 增加日志记录 2009-6-9   
     private ActionLogSVO actionLog=null;
-
+    
+    private String erpno;
+    
+    
     public String getLocalNetId() {
         return localNetId;
     }
@@ -165,4 +168,14 @@ public class SysUserSVO extends GenericVO {
 	public void setActionLog(ActionLogSVO actionLog) {
 		this.actionLog = actionLog;
 	}
+
+	public String getErpno() {
+		return erpno;
+	}
+
+	public void setErpno(String erpno) {
+		this.erpno = erpno;
+	}
+	
+	
 }

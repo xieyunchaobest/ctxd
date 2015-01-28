@@ -56,6 +56,7 @@
 			<forward name="settingTable"   module="/page"  path="/settingTable.jsp" />
 			<forward name="showColumnComments"   module="/page"  path="/columnComents.jsp" />
 			<forward name="settingQueryInit"   module="/page"  path="/settingQueryInit.jsp" />
+			<forward name="loginout"   redirect="true" module="/page"  path="/login.jsp" />
 		</action>
 		
 		<action path="/tm/instanceSettingAction" parameter="method"

@@ -17,6 +17,7 @@ import com.cattsoft.pub.util.DateUtil;
 import com.cattsoft.pub.util.MaxId;
 import com.cattsoft.pub.util.PagView;
 import com.cattsoft.pub.util.PasswordUtil;
+import com.cattsoft.pub.util.StringUtil;
 import com.cattsoft.sm.component.dao.ISysUserSDAO;
 import com.cattsoft.sm.vo.SysUserSVO;
 import com.cattsoft.tm.component.dao.ICtxdMDAO;
@@ -69,15 +70,23 @@ public class CtxdDOM {
 				.getDAO(ISysUserSDAO.class);
 		String userName = user.getSysUserName();
 		String passWord = user.getPassword();
-		try {
-			passWord = PasswordUtil.getMD5Str(passWord);
-		} catch (NoSuchAlgorithmException e) {
-			throw new AppException("", "加密过程出现错误！");
-		}
-
+		String erpno=user.getErpno();
+		
 		SysUserSVO sysUserSVO = new SysUserSVO();
-		sysUserSVO.setSysUserName(userName);
-		sysUserSVO.setPassword(passWord);
+		
+		if(StringUtil.isBlank(userName) && StringUtil.isBlank(passWord)) {//用户名和密码都是空的情况下，说明是从oa系统进来的
+			sysUserSVO.setErpno(erpno);
+		}else {
+			try {
+				passWord = PasswordUtil.getMD5Str(passWord);
+			} catch (NoSuchAlgorithmException e) {
+				throw new AppException("", "加密过程出现错误！");
+			}
+			sysUserSVO.setSysUserName(userName);
+			sysUserSVO.setPassword(passWord);
+		}
+		
+		
 
 		List userList = sysUserSDAO  .findByVO(sysUserSVO);
 		if (userList == null || userList.size() == 0) {
@@ -182,7 +191,7 @@ public class CtxdDOM {
 		IDTableDescSDAO tableDAO= (IDTableDescSDAO) DAOFactory.getDAO(IDTableDescSDAO.class);
 		IDColumnDescSDAO columnDAO= (IDColumnDescSDAO) DAOFactory.getDAO(IDColumnDescSDAO.class);
 		
-		IDQueryConditionSDAO conditionDAO= (IDQueryConditionSDAO) DAOFactory.getDAO(IDQueryConditionSDAO.class);
+		//IDQueryConditionSDAO conditionDAO= (IDQueryConditionSDAO) DAOFactory.getDAO(IDQueryConditionSDAO.class);
 		//先删除，再添加
 		tableDAO.delete(table);
 		DColumnDescSVO cvo=new DColumnDescSVO();
@@ -190,12 +199,12 @@ public class CtxdDOM {
 		columnDAO.delete(cvo);
 		DQueryConditionSVO condition=new DQueryConditionSVO();
 		condition.setTableName(table.getTableName());
-		conditionDAO.delete(condition);
+		//conditionDAO.delete(condition);
 		
 		table.setTableId(MaxId.getSequenceNextVal(Constant.D_TABLE_DESC));
 		tableDAO.add(table);
 		columnDAO.addBat(columns);
-		conditionDAO.addBat(queryConditionList);
+		//conditionDAO.addBat(queryConditionList);
 		
 	}
 	

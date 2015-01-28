@@ -77,12 +77,7 @@ body {
 }
 
 
-</style>
-
-<script type="text/javascript">
- 
-</script>
-
+</style> 
 </head>
 
 <body>

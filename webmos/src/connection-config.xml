@@ -21,8 +21,6 @@
 		<driver-class>oracle.jdbc.driver.OracleDriver</driver-class>
 		<username>ctxd</username>
 		<password>ctxd_123</password>
-		<url>jdbc:oracle:thin:@60.31.254.52:1521:zsjfdb</url>
-		<!--<url>jdbc:oracle:thin:@60.31.254.52:1521:zsjfdb</url>-->
 		<pool-maxActive>100</pool-maxActive>
 		<pool-maxWait>1200</pool-maxWait>
 		<pool-maxIdle>10</pool-maxIdle>

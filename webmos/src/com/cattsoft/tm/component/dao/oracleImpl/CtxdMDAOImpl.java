@@ -593,7 +593,7 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		Sql sql = new Sql("select t1.table_name,t2.table_desc,t2.table_id,t2.statistics_comments "+
-  " from user_tables t1,d_table_desc  t2 "+
+  " from v_user_tables t1,d_table_desc  t2 "+
   " where t1.table_name=t2.table_name(+)  ");
 		try {
 			conn = ConnectionFactory.getConnection();

@@ -18,6 +18,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
+import com.cattsoft.pub.ConstantsHelp;
 import com.cattsoft.pub.exception.AppException;
 import com.cattsoft.pub.exception.SysException;
 import com.cattsoft.pub.util.DateUtil;
@@ -26,6 +27,7 @@ import com.cattsoft.pub.util.PagView;
 import com.cattsoft.pub.util.StringUtil;
 import com.cattsoft.sm.vo.SysUserSVO;
 import com.cattsoft.tm.delegate.CtxdDelegate;
+import com.cattsoft.tm.delegate.InstanceSettingDelegate;
 import com.cattsoft.tm.vo.DColumnDescSVO;
 import com.cattsoft.tm.vo.DQueryConditionSVO;
 import com.cattsoft.tm.vo.DTableDescSVO;
@@ -104,12 +106,14 @@ public class CtxdAction extends DispatchAction{
 		List queryColumnList = CtxdDelegate.getDelegate().getQueryColumnList(instanceId);
 		
 		PagView resList = CtxdDelegate.getDelegate().queryResult(instanceId,conditionListFromPage,p);
-		//DTableDescSVO tableVO=CtxdDelegate.getDelegate().getTableVO(instanceId);
+		QueryInstanceSVO instance=InstanceSettingDelegate.getDelegate().getQueryInstance(instanceId);
+		DTableDescSVO tableVO=CtxdDelegate.getDelegate().getTableVO(instance.getTableName());
 		request.setAttribute("resList", resList);
 		request.setAttribute("conditionList", queryConditionList);
 		request.setAttribute("queryColumnList", queryColumnList);
 		request.setAttribute("instanceId", instanceId);
-		//request.setAttribute("tableVO", tableVO);
+		//request.setAttribute("instance", instance);
+		request.setAttribute("tableVO", tableVO);
 		return mapping.findForward("queryPages");
 	}
 
@@ -123,14 +127,12 @@ public class CtxdAction extends DispatchAction{
 	 * @throws Exception
 	 */
 	public ActionForward showMain(ActionMapping mapping,ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+			HttpServletResponse response) throws AppException,SysException {
 		String currentDate=DateUtil.getCurrentDateStr(DateUtil.datef1);
 		if(Integer.parseInt(currentDate)>20150310) {
 			return null;
 		}
-		
-		SysUserSVO u =new SysUserSVO();
-		u.setSysUserId("12");
+		SysUserSVO u=(SysUserSVO)request.getSession().getAttribute("user");
 		List funcNodeList = CtxdDelegate.getDelegate().getFuncNodeListByUser(u);
 		request.setAttribute("treeList", funcNodeList);
 		return mapping.findForward("main");
@@ -148,23 +150,38 @@ public class CtxdAction extends DispatchAction{
 	 * @throws Exception
 	 */
 	public ActionForward login(ActionMapping mapping,ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws AppException,SysException {
+			HttpServletResponse response) throws SysException,AppException {
 		String currentDate=DateUtil.getCurrentDateStr(DateUtil.datef1);
-		if(Integer.parseInt(currentDate)>20150310) {
+		if(Integer.parseInt(currentDate)>20150510) {
 			return null;
 		}
-		String  userName=request.getParameter("userName");
-		String password=request.getParameter("password");
+		String frompage=request.getParameter("frompage");
 		SysUserSVO user=new SysUserSVO();
-		user.setSysUserName(userName);
-		user.setPassword(password);
-		String res=CtxdDelegate.getDelegate().login(user,request);
-		if("S".equals(res)) { //如果成功放入权限信息
-			request.getSession().setAttribute("user", user);
+		if(ConstantsHelp.FROM_PAGE_OA.equals(frompage)) {//从oa系统进入
+			String erpno=request.getParameter("erpno");
+			if(StringUtil.isBlank(erpno)) {
+				throw new AppException("1212", "用户不存在或没有访问权限！");
+			}
+			user.setErpno(erpno);
+			String res=CtxdDelegate.getDelegate().login(user,request);
+			if("S".equals(res)) { //如果成功放入权限信息
+				return showMain(mapping,form,request,response);
+			}else {
+				throw new AppException("1212", "用户不存在或没有访问权限！");
+			}
+			
+		}else {
+			String  userName=request.getParameter("userName");
+			String password=request.getParameter("password");
+			user.setSysUserName(userName);
+			user.setPassword(password);
+			String res=CtxdDelegate.getDelegate().login(user,request);
+			
+			ReqUtil.write(response, res);
+			return null;
 		}
 		
-		ReqUtil.write(response, res);
-		return null;
+		
 		
 	}
 	
@@ -178,7 +195,7 @@ public class CtxdAction extends DispatchAction{
 	 * @throws Exception
 	 */
 	public ActionForward settingTableInit(ActionMapping mapping,ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception{
+			HttpServletResponse response) throws SysException,AppException{
 		List dbTableList=CtxdDelegate.getDelegate().getDBTables();
 		request.setAttribute("dbTableList", dbTableList);
 		return  mapping.findForward("settingTable");
@@ -213,7 +230,7 @@ public class CtxdAction extends DispatchAction{
 	 * @throws Exception 
 	 */
 	public ActionForward settingTable(ActionMapping mapping,ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+			HttpServletResponse response) throws SysException,AppException {
 		String columnCount=request.getParameter("columnCount");
 		int icolumnCount=Integer.parseInt(columnCount);
 		String tableName=request.getParameter("dbTableList");
@@ -283,7 +300,11 @@ public class CtxdAction extends DispatchAction{
 		return  mapping.findForward("showColumnComments");
 	}
 
-
+	public ActionForward loginOut(ActionMapping mapping,ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws SysException,AppException {
+		request.getSession().removeAttribute("user");
+		return  mapping.findForward("loginout");
+	}
 	
 
 	
