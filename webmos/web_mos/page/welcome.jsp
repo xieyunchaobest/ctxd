@@ -8,7 +8,7 @@
 <%@page import="java.util.Map"%>
 <%@page import="com.cattsoft.tm.vo.QueryConditionSVO"%>
 <%@page import="com.cattsoft.tm.vo.QueryInstanceColumnSVO"%>
-<%@page import="com.cattsoft.pub.util.StringUtil" %>
+<%@page import="com.cattsoft.pub.util.StringUtil"%>
 <%@ page contentType="text/html; charset=GBK"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
@@ -24,7 +24,11 @@
 
 <style type="text/css">
 body {
-	background: #FFF
+	background: #FFF;
+	margin: 0;padding: 0;
+}
+html{
+margin: 0;padding: 0;
 }
 
 .shortselect {
@@ -64,7 +68,6 @@ body {
 	background-image: url("../images/button_bg.png");
 }
 
-
 .datetext {
 	background: #fafdfe;
 	height: 28px;
@@ -75,39 +78,23 @@ body {
 	-webkit-border-radius: 2px;
 	border-radius: 2px;
 }
-
-
-</style> 
+</style>
 </head>
 
 <body>
-	<form id="queryForm" action="../tm/ctxdAction.do?method=queryResult"
-		method="post">
-		<span style="display:none"> </span>
-		<div id="contentWrap">
-			<div class="pageTitle"></div>
-			<div class="pageColumn">
-				<div class="qryCondition">
-					<table>
-						<tr>
-							<td>
-								<font size="6">欢迎进入经营数据支撑系统！</font>
-							</td>
-						</tr>
-						<tr>
-							<td style="float:left;height:60px;overflow:hidden;text-align:left">
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<font size="4">
-									该系统可以根据您的需要，在经过简单配置后，查询数据库中任意表的内容。它具备了查询明细信息、汇总信息、设置查询内容、
-									查询条件的功能。其灵活性、扩展性将帮助用户更加轻松的完成对经营数据的查看和分析。
-								</font>
-							</td>
-						</tr>
-					</table>
-						
-				</div>
-			</div>
-		</div>
-	</form>
+	<div class="pageTitle"></div>
+	<table>
+		<tr class="ctr">
+			<td class="ctd"><font size="6">欢迎进入经营数据支撑系统！</font></td>
+		</tr>
+		<tr class="ctr">
+			<td class="ctd" style="float:left;height:60px;overflow:hidden;text-align:left">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font
+				size="4">
+					该系统可以根据您的需要，在经过简单配置后，查询数据库中任意表的内容。它具备了查询明细信息、汇总信息、设置查询内容、
+					查询条件的功能。其灵活性、扩展性将帮助用户更加轻松的完成对经营数据的查看和分析。 </font></td>
+		</tr>
+	</table>
+
 </body>
 </html>

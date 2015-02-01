@@ -94,6 +94,9 @@ $(function(){
 			showCover();
 			$("#queryForm").submit();
 		});
+		
+		var menudesc=$('#menudesc', window.parent.document).val();
+		$(".pageTitle").html(menudesc);
 	
 	
 })
@@ -109,8 +112,8 @@ $(function(){
 			<div class="pageTitle"></div>
 			<div class="pageColumn">
 				<div class="qryCondition">
-					<table style="height:50px;margin-bottom:6px">
-						<tr>
+					<table style="height:50px;margin-bottom:6px;border:1px solid #c5dbe2">
+						<tr class="ctrb" >
 							<%
 								List conditionList = (List) request.getAttribute("conditionList");
 								for (int i = 0; i < conditionList.size(); i++) {
@@ -196,13 +199,13 @@ $(function(){
 									}
 								}
 							%>
-							<td><input type="button" class="btn" style="width:100px;height:28px" id="btnQuery"
+							<td><input type="button" class="sbtn"   id="btnQuery"
 								value="²é Ñ¯" />
 							</td>
 						</tr>
 					</table>
 				</div>
-				<div id="datadiv" style="width:100%;overflow: auto;">
+				<div id="datadiv" style="width:100%;">
 				<table id="datatable">
 					<thead>
 						<logic:iterate id="condition" name="queryColumnList">

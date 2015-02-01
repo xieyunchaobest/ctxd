@@ -86,6 +86,12 @@ function deleteConfim(instanceId){
             window.location.href="../tm/instanceSettingAction.do?method=delete&instanceId="+instanceId; 
      }
 }
+
+$(function(){
+		var menudesc=$('#menudesc', window.parent.document).val();
+		$(".pageTitle").html(menudesc);
+	});
+	
 </script>
 
 </head>
@@ -93,12 +99,11 @@ function deleteConfim(instanceId){
 <body>
 	<form id="queryForm" action="../tm/instanceSettingAction.do?method=getQueryInstanceList"
 		method="post">
-		
 		<div id="contentWrap">
 			<div class="pageTitle"></div>
 			<div class="pageColumn">
 				<div class="qryCondition">
-					<table style="height:50px;margin-bottom:6px">
+					<table  style="height:50px;margin-bottom:6px;border:1px solid #c5dbe2">
 						<tr>
 							<td style="width:30px"></td>
 						 	<td style="width:250px;">
@@ -106,7 +111,7 @@ function deleteConfim(instanceId){
 						 		<input type="text" class="shottext" name="instanceName" value='<%=request.getAttribute("instanceName")==null?"":request.getAttribute("instanceName") %>' /> 
 						 	</td>
 							<td>
-								<input type="button" class="btn" style="width:100px;height:28px" id="btnQuery"
+								<input type="button"   class="sbtn"  id="btnQuery"
 								value="²é Ñ¯" />
 							</td>
 						</tr>

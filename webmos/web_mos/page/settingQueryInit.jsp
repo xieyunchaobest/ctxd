@@ -169,6 +169,12 @@ body {
 			}
 		%>
 	}
+	
+	$(function(){
+		var menudesc=$('#menudesc', window.parent.document).val();
+		$(".pageTitle").html(menudesc);
+	});
+	
 </script>
 
 </head>

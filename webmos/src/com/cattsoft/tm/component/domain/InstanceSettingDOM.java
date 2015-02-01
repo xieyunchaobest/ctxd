@@ -78,6 +78,7 @@ public class InstanceSettingDOM {
 		node.setVersion("1.0");
 		node.setSts(ConstantsHelp.ACTIVE);
 		node.setStsDate(DateUtil.getDBDate());
+		node.setInstanceId(instanceId);
 		nodeDAO.add(node);
 		
 	}
@@ -94,6 +95,7 @@ public class InstanceSettingDOM {
 		IQueryInstanceSDAO instanceDAO= (IQueryInstanceSDAO) DAOFactory.getDAO(IQueryInstanceSDAO.class);
 		IQueryInstanceColumnSDAO columnDAO= (IQueryInstanceColumnSDAO) DAOFactory.getDAO(IQueryInstanceColumnSDAO.class);
 		IQueryConditionSDAO conditionDAO= (IQueryConditionSDAO) DAOFactory.getDAO(IQueryConditionSDAO.class);
+		IFuncNodeSDAO nodeDAO= (IFuncNodeSDAO) DAOFactory.getDAO(IFuncNodeSDAO.class);
 		
 		QueryInstanceSVO instance=new QueryInstanceSVO();
 		instance.setQueryInstanceId(instanceId);
@@ -118,6 +120,8 @@ public class InstanceSettingDOM {
 				conditionDAO.delete(c);
 			}
 		}
+		
+		nodeDAO.deleteByInstanceId(Long.parseLong(instanceId));
 	}
 	
 	public QueryInstanceSVO getQueryInstance(String instanceId) throws AppException,SysException {

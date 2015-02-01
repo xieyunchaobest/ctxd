@@ -17,9 +17,9 @@
 <script type="text/javascript">
 $(function(){
 	//setMenuHeight
-	$('.menu').height($(window).height()-51-27-26);
-	$('.sidebar').height($(window).height()-51-27-26);
-	$('.page').height($(window).height()-51-27-26);
+	$('.menu').height($(window).height()-51-27-32);
+	$('.sidebar').height($(window).height()-51-27-32);
+	$('.page').height($(window).height()-51-27-32);
 	$('.page iframe').width($(window).width()-15-168);
 	$('.subMenu a[href="#"]').next('ul').hide();
 	//menu on and off
@@ -39,6 +39,29 @@ $(function(){
 		return false;
 		});
 })
+
+
+/* $(function() {
+		$("#pageContent").load("../page/welcome.jsp", function() {
+  		//alert("Load was performed.");
+	});
+	}) */
+	
+	function showPosition(obj,depth){
+		var titleBar=$("#rightMain").contents().find(".pageTitle")
+		var txt="";
+		if(depth=='1'){
+			txt=$(obj).html();
+			titleBar.html(txt);
+		}else{
+			var ptxt=$(obj).parent().parent().parent().find("a").first().html();
+			var subtxt=$(obj).html();
+			txt=ptxt+">>"+subtxt;
+		}
+		$("#menudesc").val(txt);
+	}
+	
+	
 </script>
 
 
@@ -47,9 +70,11 @@ $(function(){
 <body>
 <div id="wrap">
 	<div id="header">
-    <div class="logo fleft"></div>
+	<!-- <img src="../images/index_word.png" style="width:301px:height:35px;margin:0 auto;margin-top:10px;"  /> -->
+	<div style="display:none"><input type="hidden"  id="menudesc" /></div>
+    <div class="logo fleft"> </div>
     <div class="nav fleft">
-    	<ul>
+    	<!-- <ul> -->
         	<!-- <div class="nav-left fleft"></div> -->
             <!-- <li class="first">我的面板</li>
         	<li>设置</li>
@@ -59,7 +84,7 @@ $(function(){
             <li>扩展</li>
             <li>应用</li> -->
             <!-- <div class="nav-right fleft"></div> -->
-        </ul>
+        <!-- </ul> -->
     </div>
     <a class="logout fright" href="../tm/ctxdAction.do?method=loginOut"> </a>
     <div class="clear"></div>
@@ -76,11 +101,11 @@ $(function(){
     	<li class="subMenuTitle">功能菜单</li>
     		<logic:notEmpty name="treeList">
     			<logic:iterate id="tree" name="treeList">
-    				<li class="subMenu"><a href="#"><bean:write name="tree" property="nodeTreeName" /></a>
+    				<li class="subMenu"><a href="#" onclick="showPosition(this,1)"><bean:write name="tree" property="nodeTreeName" /></a>
     				<ul>
     					 <logic:notEmpty name="tree" property="userFuncNodeList">
     						<logic:iterate id="node" name="tree" property="userFuncNodeList">
-    							<li><a href="<bean:write name='node' property='html' />" target="right"><bean:write name="node" property="funcNodeName" /></a></li>
+    							<li><a style="padding-left:33px;"  onclick="showPosition(this,2)" href="<bean:write name='node' property='html' />" target="right"><bean:write name="node" property="funcNodeName" /></a></li>
     						</logic:iterate>
     					</logic:notEmpty>
     				</ul>
@@ -90,13 +115,17 @@ $(function(){
         </ul>
     </div>
     <div class="sidebar fleft"><div class="btn"></div></div>
-    <div class="page">
-    <iframe width="100%" scrolling="auto" height="100%" frameborder="false" 
+    <div class="page" id="pageContent">
+     <iframe width="100%" scrolling="auto" height="100%" frameborder="false" marginwidth="0px"
     	allowtransparency="true" style="border: medium none;" src="../page/welcome.jsp" id="rightMain" name="right"></iframe>
     </div>
     </div><!--#content -->
     <div class="clear"></div>
-    <div id="footer"></div><!--#footer -->
+    <div id="footer">
+    	<div style="width:300px;margin:0 auto;color:white">
+    		Copyright @2015 中国联通内蒙古分公司
+    	</div>
+    </div><!--#footer -->
 </div><!--#wrap -->
 </body>
 </html>

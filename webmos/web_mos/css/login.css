@@ -81,3 +81,10 @@ body{ background:#0a76b0}
 	
 	background: #127386;
 }
+#loginword{
+	background:url(../images/login_word.png);
+	width:430px;
+	height:77px;
+	margin:0 auto;
+	margin-top:150px;
+}

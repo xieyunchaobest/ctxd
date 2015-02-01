@@ -8,8 +8,7 @@ form, fieldset, legend, button, input, textarea, /* form elements 表单元素 */
 th, td, /* table elements 表格元素 */
 img/* img elements 图片元素 */{
 border:medium none;
-margin: 0;
-padding: 0;
+margin: 0;padding: 0;
 }
  
 /** 设置默认字体 **/
@@ -51,36 +50,35 @@ table { border-collapse: collapse; border-spacing: 0; }
 .subnav{ height:27px; background:url(../images/index-subnav-bg.gif)}
 .subnav .subnavLeft{ width:17px; height:27px; background:url(../images/index-subnav-left.gif)}
 .subnav .subnavRight{ width:17px; height:27px; background:url(../images/index-subnav-right.gif)}
-.menu{ width:168px; height:495px; background:#e6f4fa; color:#075587; margin-left:5px;}
+.menu{ width:168px; height:495px; background:#e6f4fa; color:#075587; margin-left:2px;}
 .menu ul{ width:168px;}
 .menu ul li{ width:168px; background:url(../images/index-menu-bg.gif) no-repeat; text-align:center}
 .menu ul li a{ height:26px; line-height:26px; color:#075587}
-.menu ul li a:hover{ height:26px; line-height:26px; color:#075587; text-decoration:none; margin-left:10px;}
+.menu ul li a:hover{ height:26px; line-height:26px; color:#075587; text-decoration:none; margin-left:2px;}
 .menu .subMenuTitle{ background:url(../images/index-menu-title.gif); text-align:center; height:27px; line-height:26px; color:#fff}
 .menu ul li ul{ width:168px;}
-.menu ul li ul li{ background:url(../images/index-submenu-bg.gif);}
+.menu ul li ul li{ background:url(../images/index-submenu-bg.gif);text-align:left;}
 
 
 
 .sidebar{ width:5px; height:500px;}
 .sidebar .btn{ width:5px; height:39px; background:url(../images/sidebar-on.gif); margin-top:200px;}
 .sidebar .btn:hover{ background-position:0 -39px;}
-.page{ width:100%; height:500px; background:#FFF}
+.page{ height:500px; background:#FFF;margin:0 0;padding:0 0}
 .page iframe{ margin:0 auto;}
 #content .space{ height:5px; font-size:0px; background:#198bc9}
-#footer{ width:100%; height:26px; line-height:26px; background:url(../images/index-footer-bg.gif);}
+#footer{width:1004; height:26px; line-height:26px; background:url(../images/index-footer-bg.gif);}
 
 
-.pageTitle{ height:27px; line-height:27px; color:#075587; background:url(../images/page-pageTitle-bg.gif); }
+.pageTitle{width:100%px; height:27px; line-height:27px; color:#075587; background:url(../images/page-pageTitle-bg.gif);padding-left:15px}
 .pageTitle span{ margin-left:10px;}
 .pageButton{ height:50px;}
 
 
-.pageColumn{ background:url(../images/page-bg.gif) repeat-x; padding:5px;}
+.pageColumn{ background:url(../images/page-bg.gif) repeat-x; padding:0px;}
 .pageColumn table{ width:100%}
-.pageColumn thead{ border:1px solid #bfd8e0; color:#075587; background:url(../images/page-thead-bg.gif);}
+.pageColumn thead{ border:1px solid #bfd8e0; color:#075587; height:20px;background:url(../images/page-thead-bg.gif);background-repeat: repeat-x}
 .pageColumn thead th{ border-left:1px solid #c5dbe2; text-align:center; height:28px;}
-.ctd{ border-left:1px solid #c5dbe2; text-align:center; height:28px;}
 .pageColumn tbody tr{ border:1px solid #bfd8e0; height:28px;}
 .pageColumn tbody .trLight{ background:#f9fcfd}
 .pageColumn tbody .checkBox{ background:#f1f7f9; border:1px solid #bfd8e0; text-align:center}
@@ -121,3 +119,28 @@ table { border-collapse: collapse; border-spacing: 0; }
 	
 	background: #127386;
 }
+
+#sysword{
+	background:url(../images/index_word.png) norepeat;
+	width:100%;
+	height:35px;
+	margin:0 auto;
+	
+}
+
+.sbtn{
+	background:url(../images/button_bg_s.png);	
+	color:white;
+	width:60px;height:28px
+}
+
+
+.logof{ width:750px; height:35px; margin-top:5px; background:url(../images/index_word.png) no-repeat;}
+
+
+.ctable{ width:100%}
+.cthead{ border:1px solid #bfd8e0; color:#075587; background:url(../images/page-thead-bg.gif);}
+.ctheadth{ border-left:1px solid #c5dbe2; text-align:center; height:28px;}
+.ctr{ border:0px solid #bfd8e0; height:28px;}
+.ctrb{ border-left:1px solid #c5dbe2;border-right:1px solid #c5dbe2; border-top:1px solid #c5dbe2; border-bottom:1px solid #c5dbe2;height:50px;}
+.ctd{ border-left:1px solid #c5dbe2;border-right:1px solid #c5dbe2; border-top:0px solid #c5dbe2; border-bottom:1px solid #c5dbe2;text-align:center; height:28px;}

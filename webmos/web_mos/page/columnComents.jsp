@@ -90,10 +90,10 @@ body {
 				}
 			 %>
 						<thead>
-							<th style="width:100px">
+							<th style="width:100px;heigh:20px">
 								×Ö¶Î
 							</th>
-							<th style="width:100px">
+							<th style="width:100px;heigh:20px">
 								±ðÃû
 							</th>
 						</thead>

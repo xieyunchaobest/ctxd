@@ -303,7 +303,8 @@ public class CtxdAction extends DispatchAction{
 	public ActionForward loginOut(ActionMapping mapping,ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws SysException,AppException {
 		request.getSession().removeAttribute("user");
-		return  mapping.findForward("loginout");
+		//return  mapping.findForward("loginout");
+		return null;
 	}
 	
 

@@ -75,7 +75,9 @@
 
 <body onload="javascript:document.getElementById('userName').focus();">
 	<div id="wrap">
-		<div id="header"></div>
+		<div id="header">
+			<div id="loginword"/>
+		</div>
 		<div id="content-wrap">
 			<div class="space"></div>
 			<form action="../ctxdAction.do?method=login" id="loginForm"
@@ -97,7 +99,11 @@
 				</div>
 			</form>
 		</div>
-		<div id="footer"></div>
+		<div id="footer">
+			<div style="width:300px;margin:0 auto;color:white">
+    		Copyright @2015 中国联通内蒙古分公司
+    		</div>
+    	</div>
 	</div>
 </body>
 </html>

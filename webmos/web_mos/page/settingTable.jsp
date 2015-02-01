@@ -28,7 +28,7 @@ body {
 	width: 150px;
 	height: 450px;
 	margin-top: 50px;
-	margin-left: 50px;
+	margin-left: 20px;
 	float: left;
 }
 
@@ -61,7 +61,7 @@ body {
 	width: 400px;
 	height: 140px;
 	margin-top: 50px;
-	margin-left: 50px;
+	margin-left: 20px;
 	float: left;
 }
 
@@ -77,7 +77,7 @@ body {
 }
 
 .staticRule {
-	margin: 0px 0px 10px 8px;
+	margin: 0px 0px 10px 0px;
 	width: 300px;
 	height: 70px;
 	background: #fafdfe;
@@ -89,17 +89,15 @@ body {
 
 .columnscomment {
 	border: 1px solid #9bc0dd;
-	width: 500px;
+	width: 300px;
 	height: 450px;
 	margin-top: 50px;
 	margin-left: 50px;
 	float: left;
 }
-
 </style>
 
 <script type="text/javascript">
-
 	(function($) {//解决.html()方法获取不到修改value值后的问题
 		var oldHTML = $.fn.html;
 		$.fn.formhtml = function() {
@@ -111,12 +109,14 @@ body {
 			$(":radio,:checkbox", this).each(function() {
 				if (this.checked)
 					this.setAttribute('checked', 'checked');
-				else this.removeAttribute('checked');
+				else
+					this.removeAttribute('checked');
 			});
 			$("option", this).each(function() {
 				if (this.selected)
 					this.setAttribute('selected', 'selected');
-				else this.removeAttribute('selected');
+				else
+					this.removeAttribute('selected');
 			});
 			return oldHTML.apply(this);
 		};
@@ -135,81 +135,106 @@ body {
 	}
 
 	function submitForm() {
-		var flag=valiate();
-		if(flag==false)return ;
+		var flag = valiate();
+		if (flag == false)
+			return;
 		var html = $("#columnFrame").contents().find("#tShowColumn").formhtml();
 		$("#hiddens").html('').html(html);
 		$("#queryForm").submit();
 	}
-	
-	function valiate(){
-		if($("#dbTableList").val()=='' ||$("#dbTableList").val()==null){
+
+	function valiate() {
+		if ($("#dbTableList").val() == '' || $("#dbTableList").val() == null) {
 			alert('请选择表格！');
 			return false
 		}
-	
-		if( $.trim($("#txttableDesc").val())=='' ){
+
+		if ($.trim($("#txttableDesc").val()) == '') {
 			alert('请填写表名!');
 			return false;
 		}
-		var vc=true;
-		$("#columnFrame").contents().find("input[type='text']").each(function(i) {
-					if($.trim($(this).val())==''){
+		var vc = true;
+		$("#columnFrame").contents().find("input[type='text']").each(
+				function(i) {
+					if ($.trim($(this).val()) == '') {
 						alert('请填写注释内容!');
-						vc=false;
+						vc = false;
 						return false;
 					}
 				});
-			if(vc==false)return false;
-				return true;
+		if (vc == false)
+			return false;
+		return true;
+	}
+
+	function onFinish() {
+<%String flag = (String) request.getAttribute("flag");
+			if ("1".equals(flag)) {
+				out.println("alert('配置成功！');");
+			}%>
 	}
 	
-	function onFinish(){
-		<%
-			String flag=(String)request.getAttribute("flag");
-			if("1".equals(flag)){
-				out.println("alert('配置成功！');");
-			}
-		%>
-	}
+	$(function(){
+		var menudesc=$('#menudesc', window.parent.document).val();
+		$(".pageTitle").html(menudesc);
+	});
 </script>
 
 </head>
 
 <body onload="onFinish();">
-	<form id="queryForm" action="../tm/ctxdAction.do?method=settingTable"  
+<div class="pageTitle"></div>
+	<form id="queryForm" action="../tm/ctxdAction.do?method=settingTable"
 		method="post">
-			<div id="allTables" class="divalltable">
-			<span id='hiddens' style='display:none'></span>
-				待配置表格 <select name="dbTableList" size=6  id="dbTableList"
-					style="height:400px;width:98%" multiple onclick="reloadPage()">
+		<div style="text-align:center;width:100%">
+			<div style="margin:0 auto;width:1000px">
+				<div id="allTables" class="divalltable">
+					<span id='hiddens' style='display:none'></span> 待配置表格 <select
+						name="dbTableList" size=6 id="dbTableList"
+						style="height:400px;width:98%" multiple onclick="reloadPage()">
+						<logic:iterate id="dbtable" name="dbTableList">
+							<option
+								value="<bean:write name='dbtable'  property='tableName' />">
+								<bean:write name='dbtable' property='tableName' />
+							</option>
+						</logic:iterate>
+					</select>
+
 					<logic:iterate id="dbtable" name="dbTableList">
-						<option
-							value="<bean:write name='dbtable'  property='tableName' />">
-							<bean:write name='dbtable' property='tableName' />
-						</option>
+						<input type="hidden"
+							id="desc_<bean:write  name='dbtable' property='tableName'/>"
+							value="<bean:write  name='dbtable' property='tableDesc'/>" />
+						<input type="hidden"
+							id="stat_<bean:write  name='dbtable' property='tableName'/>"
+							value="<bean:write  name='dbtable' property='statisticsComments'/>" />
 					</logic:iterate>
-				</select>
-				
-				<logic:iterate id="dbtable" name="dbTableList">
-					<input type="hidden" id="desc_<bean:write  name='dbtable' property='tableName'/>" value="<bean:write  name='dbtable' property='tableDesc'/>"/>
-					<input type="hidden" id="stat_<bean:write  name='dbtable' property='tableName'/>" value="<bean:write  name='dbtable' property='statisticsComments'/>"/>
-				</logic:iterate>
 
 
+				</div>
+				<div id="columndiv" class="columns"
+					style="margin-left:20px;text-align:center;">
+					<span style="width:65px;">表名:</span><input type="text" id="txttableDesc" class="shottext" 
+						name="cnTableName" style="margin:10px 0px 10px 35px;width:300px" /><br>
+						<div style="float:left;width:65px">统计规则:</div>
+					<textarea id="txtstatRule" type="text" name="staticRule"
+						class="staticRule"></textarea>
+					<div style="width:100px;margin:0 auto;">
+						<input type="button" value="确定"
+						class="sbtn"
+							style="margin-top:50px;"
+							onclick="submitForm()" />
+					</div>
+
+				</div>
+				<div id="columndiv" class="columnscomment" style="margin-left:20px">
+					<iframe width="100%" scrolling="auto" height="100%"
+						frameborder="false" allowtransparency="true"
+						style="border: medium none;"
+						src="../tm/ctxdAction.do?method=showColumnComments"
+						id="columnFrame" name="columnFrame"></iframe>
+				</div>
 			</div>
-			<div id="columndiv" class="columns" style="margin-left:50px">
-				&nbsp;表&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：<input type="text" id="txttableDesc" class="shottext" name="cnTableName" style="margin:10px 0px 10px 10px;width:300px"/><br>
-				<div style="float:left">&nbsp;统计规则 ：</div></span><textarea id="txtstatRule" type="text"  name="staticRule"  class="staticRule"></textarea>
-				<input type="button" value="确定" style="width:60px;height:28px;margin-top:50px;margin-left:140px" onclick="submitForm()"/>
-			</div>
-			<div id="columndiv" class="columnscomment" style="margin-left:50px">
-				<iframe width="100%" scrolling="auto" height="100%"
-					frameborder="false" allowtransparency="true"
-					style="border: medium none;"
-					src="../tm/ctxdAction.do?method=showColumnComments"
-					id="columnFrame" name="columnFrame"></iframe>
-			</div>
+		</div>
 	</form>
 </body>
 </html>
