@@ -66,7 +66,9 @@
 				<forward name="instanceColumnList"   module="/page"  path="/addInstanceSub.jsp" />
 				<forward name="instanceColumnListGroup"   module="/page"  path="/addInstanceSubGroup.jsp" />
 				<forward name="instanceList"   module="/page"  path="/instanceList.jsp" />
-				
+				<forward name="editInstanceInit"   module="/page"  path="/editInstanceMain.jsp" />
+				<forward name="editInstanceSub"   module="/page"  path="/editInstanceSub.jsp" />
+				<forward name="editInstanceSubGroup"   module="/page"  path="/editInstanceSubGroup.jsp" />
 		</action>
 		
 	</action-mappings>

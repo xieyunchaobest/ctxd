@@ -30,11 +30,23 @@ function selectAll(){
 	//alert(ischecked);
 	if(ischecked==true){
 		$(".ck").each(function() {
-			$(this).attr("checked", true);
+			$(this).prop('checked',true);
+			//$(this).attr("checked", true);
 		});
 	}else{
 		$(".ck").each(function() {
-			$(this).attr("checked", false);
+			//$(this).attr("checked", false);
+			$(this).prop('checked',false);
 		});
+	}
+}
+
+
+function checkCondition(obj){
+	var trn=$(obj).parent().parent().prevAll().length;
+	var n=parseInt(trn)-1;
+	if($(obj).prop('checked')==true){
+	}else{
+		$("#sltConditionType"+n).val("");
 	}
 }

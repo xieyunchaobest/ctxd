@@ -1,4 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%@page import="com.cattsoft.tm.vo.QueryInstanceSVO"%>
 <%@page import="com.cattsoft.tm.vo.FuncNodeTreeSVO"%>
 <%@page import="com.cattsoft.tm.vo.DTableDescSVO"%>
 <%@page import="com.cattsoft.pub.util.PagView"%>
@@ -208,13 +209,22 @@ body {
 		
 	}
 	
+	$(function(){
+		var menudesc=$('#menudesc', window.parent.document).val();
+		$(".pageTitle").html(menudesc);
+})
+	
 </script>
 
 	<%
 		List tableList=(List)request.getAttribute("tableList");
 		List instanceTypeList=(List)request.getAttribute("instanceTypeList");
 		String typeFlag=(String)request.getAttribute("typeFlag");
-		
+		QueryInstanceSVO instance=(QueryInstanceSVO)request.getAttribute("instance");
+		QueryInstanceSVO inst=(QueryInstanceSVO)request.getAttribute("inst");
+		String treeId=instance.getTreeId();
+		String instanceId=instance.getQueryInstanceId();
+		//String tableDesc=inst.getTableDesc();
 	 %>
 </head>
 
@@ -222,7 +232,7 @@ body {
 	<form id="columnsForm" action="../tm/instanceSettingAction.do?method=addInstance"
 		method="post">
 		<span style="display:none">
-			<% out.println("<input type='hidden' name='typeFlag' id='typeFlag' value='"+typeFlag+"' />");  %>;
+			<% out.println("<input type='hidden' name='typeFlag' id='typeFlag' value='"+typeFlag+"' />");  %>
 		</span>
 		<div id="contentWrap">
 			<div class="pageTitle"></div>
@@ -232,22 +242,14 @@ body {
 						<tr>
 							<td width="50px"></td>
 							<td width='200px'>
-								<label for="tableSelect">表名：</label>
-								 <select class='shortselect' id="tableName" name="tableName">
-								 	<option value="">请选择</option>
-								 	<%
-										if(tableList!=null){
-											for(int i=0;i<tableList.size();i++){
-												DTableDescSVO table=(DTableDescSVO)tableList.get(i);
-												out.println("<option value='" +table.getTableName()+"'>"+table.getTableDesc()+"</option>");
-											}
-										}								 	
-								 	 %>
-								 </select>
+								<label>表名：</label>
+								<label>
+									<bean:write name="inst" property="tableDesc"/>
+								</label>
 							</td>
 							 <td style="float:left;line-height:50px">
-							 	<label for="instanceName"  style="margin-left:50px">实例名称：</label>
-							 	<input type="text"  class="shottext"  name="instanceName" id="instanceName"  />
+							 	<label style="margin-left:50px">实例名称：</label>
+							 	<label><input type="text" name="instanceName" class="shottext" value="<bean:write name='instance' property='instanceName' />"/></label>
 							 </td>
 							 <td style="float:left;line-height:50px">
 								<label for="treeId" style="margin-left:50px">类别：</label>
@@ -257,7 +259,13 @@ body {
 										if(instanceTypeList!=null){
 											for(int i=0;i<instanceTypeList.size();i++){
 												FuncNodeTreeSVO tree=(FuncNodeTreeSVO)instanceTypeList.get(i);
-												out.println("<option value='" +tree.getNodeTreeId()+"'>"+tree.getNodeTreeName()+"</option>");
+												String atreeId=tree.getNodeTreeId();
+												if(atreeId.equals(treeId)){
+													out.println("<option selected  value='" +tree.getNodeTreeId()+"'>"+tree.getNodeTreeName()+"</option>");
+												}else{
+													out.println("<option value='" +tree.getNodeTreeId()+"'>"+tree.getNodeTreeName()+"</option>");
+												}
+												
 											}
 										}								 	
 								 	 %>
@@ -273,10 +281,15 @@ body {
 				<iframe width="100%" scrolling="auto" height="100%"
 					frameborder="false" allowtransparency="true"
 					style="border: medium none;"
-					src="../tm/instanceSettingAction.do?method=columnsInit&typeFlag=<%=typeFlag%>"
+					src="../tm/instanceSettingAction.do?method=editInstanceColumnsInit&instanceId=<%=instanceId%>&typeFlag=<%=typeFlag%>"
 					id="columnFrame" name="columnFrame"></iframe>
 				</div>
-				<span id="iframhtml" style="display:none"></span>
+				<span id="iframhtml" style="display:none">
+				</span>
+				<span style="display:none">
+					<input type="hidden" name='tableName'  value='<bean:write name="instance" property="tableName"/>' />
+					<input type="hidden" name='instanceId'  value='<bean:write name="instance" property="queryInstanceId"/>' />
+				</span>
 			</div>
 		</div>
 	</form>

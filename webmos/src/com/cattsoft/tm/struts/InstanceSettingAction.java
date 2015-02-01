@@ -28,6 +28,7 @@ import com.cattsoft.tm.delegate.InstanceSettingDelegate;
 import com.cattsoft.tm.vo.QueryConditionSVO;
 import com.cattsoft.tm.vo.QueryInstanceColumnSVO;
 import com.cattsoft.tm.vo.QueryInstanceSVO;
+import com.sun.tools.corba.se.idl.toJavaPortable.Helper;
 
 /**
  * @author Xieyunchao
@@ -113,10 +114,12 @@ public class InstanceSettingAction extends DispatchAction{
 		String columnCount=request.getParameter("columnCount");
 		String treeId=request.getParameter("treeId");
 		String  typeFlag=request.getParameter("typeFlag"); 
+		String instanceId=request.getParameter("instanceId");
 		
 		Date d=new Date();
 		
 		QueryInstanceSVO instance=new QueryInstanceSVO();
+		instance.setQueryInstanceId(instanceId);
 		instance.setInstanceName(instanceName);
 		instance.setInstanceType(typeFlag);
 		instance.setTableName(tableName);
@@ -198,11 +201,7 @@ public class InstanceSettingAction extends DispatchAction{
 				}
 				
 			}
-			
-			
-			
 		}
-		
 		
 		InstanceSettingDelegate.getDelegate().addInstance(instance, columnList, conditionList);
 		return getQueryInstanceList(mapping,form,request,response);
@@ -215,5 +214,42 @@ public class InstanceSettingAction extends DispatchAction{
 		InstanceSettingDelegate.getDelegate().deleteInstance(instanceId);
 		return getQueryInstanceList(mapping,form,request,response);
 	}
+	
+	
+	public ActionForward editInstanceMainInit(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws AppException, SysException {
+		String instanceId=request.getParameter("instanceId");
+		String  typeFlag=request.getParameter("typeFlag"); 
+		QueryInstanceSVO instance=InstanceSettingDelegate.getDelegate().getQueryInstance(instanceId);
+		List instanceTypeList=InstanceSettingDelegate.getDelegate().getInstanceTypeList();
+		QueryInstanceSVO inst=InstanceSettingDelegate.getDelegate().getTableByInstanceId(instanceId);
+		request.setAttribute("instance", instance);   
+		request.setAttribute("instanceTypeList", instanceTypeList); 
+		request.setAttribute("typeFlag", typeFlag);
+		request.setAttribute("inst", inst);
+		
+		return mapping.findForward("editInstanceInit");
+	}
+	
+	public ActionForward editInstanceColumnsInit(ActionMapping mapping,
+			ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws AppException, SysException {
+		String instanceId=request.getParameter("instanceId");
+		String typeFlag=request.getParameter("typeFlag");
+		QueryInstanceSVO instance=InstanceSettingDelegate.getDelegate().getQueryInstance(instanceId);
+		List columnList=InstanceSettingDelegate.getDelegate().getQueryConfigColumnList(instanceId);
+		List instanceTypeList=InstanceSettingDelegate.getDelegate().getInstanceTypeList();
+		request.setAttribute("instance", instance); 
+		request.setAttribute("columnList", columnList); 
+		request.setAttribute("instanceTypeList", instanceTypeList); 
+		if(ConstantsHelp.INSTANCE_TYPE_COMMON.equals(typeFlag)) {
+			return mapping.findForward("editInstanceSub");
+		}else {
+			return mapping.findForward("editInstanceSubGroup");
+		}
+		
+	}
+	
 
 }

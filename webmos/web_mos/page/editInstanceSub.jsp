@@ -153,8 +153,10 @@ function doChange(obj){
 				<table id="datatable">
 					<thead>
 						<th>列名</th>
-						<th>分组</th>
-						<th>汇总</th>
+						<th>
+							是否显示
+							<input type="checkbox" name="chkselectAll" id="chkselectAll" onclick="selectAll();"/>	
+						</th>
 						<th>查询条件</th>
 						<th>条件类型</th>
 						<th>序号</th>
@@ -164,31 +166,34 @@ function doChange(obj){
 							out.println("<input type='hidden' name='columnCount' value='"+((List)request.getAttribute("columnList")).size()+"' />");
 							for(int i=0;i<columnList.size();i++){
 								out.println("<tr>");
-								DColumnDescSVO  column=(DColumnDescSVO)columnList.get(i);
+								com.cattsoft.tm.vo.QueryInstanceColumnSVO  column=(com.cattsoft.tm.vo.QueryInstanceColumnSVO)columnList.get(i);
+								String isShow=column.getIsShow();
+								String isCondition=column.getIsCondition();
+								String conditiontype=column.getConditionType();
+								String isShowChecked="Y".equals(isShow)?"checked":"";
+								String isConditionChecked="Y".equals(isCondition)?"checked":"";
+								String seq=column.getSeq()==null?"":column.getSeq();
 								out.println("<td class='ctd'>"+column.getColumnDesc()+"</td>");
-								out.println("<td class='ctd'><input type='checkbox' id='chkIsGroup"+i +"' name='chkIsGroup"+i+"'  value='Y' /></td>");
-								out.println("<td class='ctd'><input type='checkbox' id='chkIsSum"+i +"' name='chkIsSum"+i+"'  value='Y' /></td>");
-								out.println("<td class='ctd'><input type='checkbox' id='chkIsCondition"+i +"' name='chkIsCondition"+i+"'  value='Y' onclick='checkCondition(this);'/></td>");
+								out.println("<td class='ctd'><input type='checkbox' "+ isShowChecked+ " class='ck' id='chkIsShow"+i +"' name='chkIsShow"+i+"' value='Y' /></td>");
+								out.println("<td class='ctd'><input type='checkbox' "+isConditionChecked+" id='chkIsCondition"+i +"' name='chkIsCondition"+i+"'  value='Y' onclick='checkCondition(this);'/></td>");
 						%>
 							<td class='ctd'>
 								<input type="hidden" id="columnName<%=i%>" name="columnName<%=i%>" value="<%=column.getColumnName() %>" />
 								<select id="sltConditionType<%=i%>" name="sltConditionType<%=i%>" class="smallselect" onchange="doChange(this);">
-									<option value="">请选择</option>
-									<option value="E">等于</option>
-									<option value="B">属于</option>
-									<option value="C">包含</option>
-									<option value="S">区间</option>
+									<option value="" >请选择</option>
+									<option value="E" <%if("E".equals(conditiontype))out.print("selected"); %>>等于</option>
+									<option value="B" <%if("B".equals(conditiontype))out.print("selected"); %>>属于</option>
+									<option value="C" <%if("C".equals(conditiontype))out.print("selected"); %>>包含</option>
+									<option value="S" <%if("S".equals(conditiontype))out.print("selected"); %>>区间</option>
 								</select>
 							</td>
 							<td class="ctd">
-								<input type="text" id="seq<%=i%>" name="seq<%=i%>"  class="smalltext" value="<%=i%>"/>
+								<input type="text" id="seq<%=i%>" name="seq<%=i%>"  class="smalltext" value="<%=seq%>"/>
 							</td>
 						<%		
-								
 								out.println("</tr>");
 							}
 						 %>
-						 <input type="hidden" style="display:none" name="instanceType" value="C" />
 					</tbody>
 				</table>
 				</div>

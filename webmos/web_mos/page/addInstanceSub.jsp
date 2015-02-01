@@ -132,6 +132,8 @@ function doChange(obj){
 		document.getElementById("chkIsCondition"+n).checked=false;
 	}
 }
+
+
 </script>
 
 <%
@@ -169,7 +171,7 @@ function doChange(obj){
 								DColumnDescSVO  column=(DColumnDescSVO)columnList.get(i);
 								out.println("<td class='ctd'>"+column.getColumnDesc()+"</td>");
 								out.println("<td class='ctd'><input type='checkbox' class='ck' id='chkIsShow"+i +"' name='chkIsShow"+i+"' value='Y' /></td>");
-								out.println("<td class='ctd'><input type='checkbox' id='chkIsCondition"+i +"' name='chkIsCondition"+i+"'  value='Y' /></td>");
+								out.println("<td class='ctd'><input type='checkbox' id='chkIsCondition"+i +  "' name='chkIsCondition"+i+"'  value='Y' onclick='checkCondition(this);'/></td>");
 						%>
 							<td class='ctd'>
 								<input type="hidden" id="columnName<%=i%>" name="columnName<%=i%>" value="<%=column.getColumnName() %>" />

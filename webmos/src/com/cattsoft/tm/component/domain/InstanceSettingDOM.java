@@ -10,6 +10,7 @@ import com.cattsoft.pub.exception.AppException;
 import com.cattsoft.pub.exception.SysException;
 import com.cattsoft.pub.util.DateUtil;
 import com.cattsoft.pub.util.MaxId;
+import com.cattsoft.pub.util.StringUtil;
 import com.cattsoft.tm.component.dao.IFuncNodeSDAO;
 import com.cattsoft.sm.vo.SysUserSVO;
 import com.cattsoft.tm.component.dao.IDTableDescSDAO;
@@ -37,15 +38,59 @@ public class InstanceSettingDOM {
 	}
 
 	public void addInstance(QueryInstanceSVO instance,List queryInstanceColumnList,List queryConditionList) throws AppException,SysException{
-		String instanceId=MaxId.getSequenceNextVal(ConstantsHelp.SEQ_QUERY_INSTANCE);
-		instance.setQueryInstanceId(instanceId);
-		
 		IQueryInstanceSDAO instanceDAO= (IQueryInstanceSDAO) DAOFactory.getDAO(IQueryInstanceSDAO.class);
 		IQueryInstanceColumnSDAO columnDAO= (IQueryInstanceColumnSDAO) DAOFactory.getDAO(IQueryInstanceColumnSDAO.class);
 		IQueryConditionSDAO conditionDAO= (IQueryConditionSDAO) DAOFactory.getDAO(IQueryConditionSDAO.class);
 		IFuncNodeSDAO nodeDAO= (IFuncNodeSDAO) DAOFactory.getDAO(IFuncNodeSDAO.class);
 		
-		instanceDAO.add(instance);
+		String instanceId="";
+		if(!StringUtil.isBlank(instance.getQueryInstanceId())) {//不为空则更新
+			instanceId=instance.getQueryInstanceId();
+			instanceDAO.update(instance);	
+			
+			QueryInstanceColumnSVO column=new QueryInstanceColumnSVO();
+			column.setInstanceId(instanceId);
+			List columnList=columnDAO.findByVO(column);
+			if(columnList!=null) {
+				for(int i=0;i<columnList.size();i++) {
+					QueryInstanceColumnSVO c=(QueryInstanceColumnSVO)columnList.get(i);
+					columnDAO.delete(c);
+				}
+			}
+			
+			QueryConditionSVO condition =new QueryConditionSVO();
+			condition.setInstanceId(instanceId);
+			List conditionList=conditionDAO.findByVO(condition);
+			if(conditionList!=null) {
+				for(int i=0;i<conditionList.size();i++) {
+					QueryConditionSVO c=(QueryConditionSVO)conditionList.get(i);
+					conditionDAO.delete(c);
+				}
+			}
+			//nodeDAO.deleteByInstanceId(Long.parseLong(instanceId));
+		}else {
+			instanceId=MaxId.getSequenceNextVal(ConstantsHelp.SEQ_QUERY_INSTANCE);
+			instance.setQueryInstanceId(instanceId);
+			instanceDAO.add(instance);
+			
+			//插入一个菜单
+			String nodeId=MaxId.getSequenceNextVal(ConstantsHelp.SEQ_FUNC_NODE);
+			FuncNodeSVO node=new FuncNodeSVO();
+			node.setFuncNodeId(nodeId);
+			node.setNodeTreeId(instance.getTreeId());
+			node.setFuncNodeCode(nodeId);
+			node.setFuncNodeName(instance.getInstanceName());
+			node.setSubSystemName("BM");
+			node.setSecurityLevel("1");
+			node.setFuncNodeType("M");
+			node.setHtml(ConstantsHelp.INSTANCEURL+instance.getQueryInstanceId());
+			node.setVersion("1.0");
+			node.setSts(ConstantsHelp.ACTIVE);
+			node.setStsDate(DateUtil.getDBDate());
+			node.setInstanceId(instanceId);
+			nodeDAO.add(node);
+		}
+		
 		if(queryInstanceColumnList!=null) {
 			for(int i=0;i<queryInstanceColumnList.size();i++) {
 				QueryInstanceColumnSVO c=(QueryInstanceColumnSVO)queryInstanceColumnList.get(i);
@@ -64,22 +109,7 @@ public class InstanceSettingDOM {
 			}
 		}
 		
-		//插入一个菜单
-		String nodeId=MaxId.getSequenceNextVal(ConstantsHelp.SEQ_FUNC_NODE);
-		FuncNodeSVO node=new FuncNodeSVO();
-		node.setFuncNodeId(nodeId);
-		node.setNodeTreeId(instance.getTreeId());
-		node.setFuncNodeCode(nodeId);
-		node.setFuncNodeName(instance.getInstanceName());
-		node.setSubSystemName("BM");
-		node.setSecurityLevel("1");
-		node.setFuncNodeType("M");
-		node.setHtml(ConstantsHelp.INSTANCEURL+instance.getQueryInstanceId());
-		node.setVersion("1.0");
-		node.setSts(ConstantsHelp.ACTIVE);
-		node.setStsDate(DateUtil.getDBDate());
-		node.setInstanceId(instanceId);
-		nodeDAO.add(node);
+		
 		
 	}
 	
@@ -130,5 +160,25 @@ public class InstanceSettingDOM {
 		svo.setQueryInstanceId(instanceId);
 		return (QueryInstanceSVO)instanceDAO.findByPK(svo);
 	}
+	
+	/**
+	 * 获取某一实例中列的信息
+	 * @param instacneId
+	 * @return
+	 * @throws AppException
+	 * @throws SysException
+	 */
+	public List getQueryConfigColumnList(String instanceId) throws AppException,
+			SysException {
+		IInstanceSettingMDAO instanceDAO= (IInstanceSettingMDAO) DAOFactory.getDAO(IInstanceSettingMDAO.class);
+		return instanceDAO.getQueryConfigColumnList(instanceId);
+	}
+	
+	public QueryInstanceSVO getTableByInstanceId(String instanceId)
+			throws AppException, SysException{
+		IInstanceSettingMDAO instanceDAO= (IInstanceSettingMDAO) DAOFactory.getDAO(IInstanceSettingMDAO.class);
+		return instanceDAO.getTableByInstanceId(instanceId);
+	}
+	
 	
 }

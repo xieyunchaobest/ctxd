@@ -134,7 +134,8 @@ $(function(){
 							 	<td class="ctd"><bean:write name="instance" property="tableName"/></td>
 							 	<td class="ctd"><bean:write name="instance" property="tableDesc"/></td>
 							 	<td class="ctd">
-							 		<a href="../tm/ctxdAction.do?method=queryResult&instanceId=<bean:write name='instance' property='queryInstanceId' />" >Ô¤ÀÀ</a>&nbsp;&nbsp;
+							 		 <a href="../tm/ctxdAction.do?method=queryResult&instanceId=<bean:write name='instance' property='queryInstanceId' />" >Ô¤ÀÀ</a>&nbsp;&nbsp;
+							 		 <a href="../tm/instanceSettingAction.do?method=editInstanceMainInit&instanceId=<bean:write name='instance' property='queryInstanceId' />&typeFlag=<bean:write name='instance' property='instanceType' />" >ÐÞ¸Ä</a>&nbsp;&nbsp;
 							 		 <a href="javascript:void(0)" onclick="deleteConfim(<bean:write name='instance' property='queryInstanceId' />)" >É¾³ý</a>  
 							 	</td>
 							</tr> 
@@ -157,11 +158,10 @@ $(function(){
 			</div>
 		</div>
 	</form>
-	<form action="../tm/instanceSettingAction.do" id="formAddInstance"
+	<form action="../tm/instanceSettingAction.do?method=addInstanceInit" id="formAddInstance"
 		method="post" style="display:none">
 		<span style="display:none"><input type="hidden" value='<%=request.getAttribute("tableName")%>' name="tableName"/></span>
-		<input type="hidden" id="typeFlag" name="typeFlag"/> <input type="hidden"
-			name="method" value="addInstanceInit" />
+		<input type="hidden" id="typeFlag" name="typeFlag"/>
 	</form>
 </body>
 </html>
