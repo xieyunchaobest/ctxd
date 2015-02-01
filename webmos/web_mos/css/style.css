@@ -134,6 +134,12 @@ table { border-collapse: collapse; border-spacing: 0; }
 	width:60px;height:28px
 }
 
+.lbtn{
+	background:url(../images/btn_bg_3.png);	
+	color:white;
+	width:80px;height:28px
+}
+
 
 .logof{ width:750px; height:35px; margin-top:5px; background:url(../images/index_word.png) no-repeat;}
 

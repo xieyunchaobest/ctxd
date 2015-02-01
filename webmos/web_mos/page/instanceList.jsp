@@ -147,11 +147,11 @@ $(function(){
 				</div> 
 				<div style="width:100%;height:50px;">
 					<div style="float:right;width:80px;">
-						<input type="button" value="添加通用查询" style="width:80px;height:28px;" id="btnAddCommonQuery"/>
+						<input type="button" value="添加通用查询" class="lbtn" id="btnAddCommonQuery"/>
 					</div>
 					<div style="float:right;margin-left:30px">
 						<div style="width:50px;float:right;"></div>
-						<input type="button" value="添加汇总查询" style="width:80px;height:28px;" id="btnAddGroupQuery"/>
+						<input type="button" value="添加汇总查询" class="lbtn" id="btnAddGroupQuery"/>
 					</div>
 				</div>
 			</div>
