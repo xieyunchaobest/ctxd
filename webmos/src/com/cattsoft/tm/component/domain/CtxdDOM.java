@@ -8,6 +8,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.dom4j.Document;
+
 import com.cattsoft.pub.SysConstants;
 import com.cattsoft.pub.dao.DAOFactory;
 import com.cattsoft.pub.exception.AppException;
@@ -15,6 +17,7 @@ import com.cattsoft.pub.exception.SysException;
 import com.cattsoft.pub.util.Constant;
 import com.cattsoft.pub.util.DateUtil;
 import com.cattsoft.pub.util.MaxId;
+import com.cattsoft.pub.util.PagInfo;
 import com.cattsoft.pub.util.PagView;
 import com.cattsoft.pub.util.PasswordUtil;
 import com.cattsoft.pub.util.StringUtil;
@@ -22,17 +25,18 @@ import com.cattsoft.sm.component.dao.ISysUserSDAO;
 import com.cattsoft.sm.vo.SysUserSVO;
 import com.cattsoft.tm.component.dao.ICtxdMDAO;
 import com.cattsoft.tm.component.dao.IDColumnDescSDAO;
-import com.cattsoft.tm.component.dao.IDQueryConditionSDAO;
 import com.cattsoft.tm.component.dao.IDTableDescSDAO;
 import com.cattsoft.tm.component.dao.ILoginLogSDAO;
+import com.cattsoft.tm.util.TreeUtil;
 import com.cattsoft.tm.vo.DColumnDescSVO;
 import com.cattsoft.tm.vo.DQueryConditionSVO;
 import com.cattsoft.tm.vo.DTableDescSVO;
+import com.cattsoft.tm.vo.FuncMenu;
 import com.cattsoft.tm.vo.FuncNodeSVO;
 import com.cattsoft.tm.vo.FuncNodeTreeSVO;
 import com.cattsoft.tm.vo.LoginLogSVO;
 import com.cattsoft.tm.vo.QueryInstanceSVO;
-import com.cattsoft.pub.util.PagInfo;
+import com.cattsoft.tm.vo.TreeNodeInfo;
 public class CtxdDOM {
 	public PagView queryResult(String instanceId, List conditionListFromPage,PagInfo pg)
 			throws AppException, SysException {
@@ -119,6 +123,78 @@ public class CtxdDOM {
 			return "S";
 		}
 	}
+	
+	public List getFuncNodeListByUserNew(SysUserSVO user) throws AppException,SysException{
+		ICtxdMDAO zsjfmdao = (ICtxdMDAO) DAOFactory.getDAO(ICtxdMDAO.class);
+		List userAllocList=zsjfmdao.getFuncNodeListByUserNew(user);
+		return userAllocList;
+		
+	}
+	
+	
+	public List getFuncMenuList(SysUserSVO user) throws AppException, SysException {
+		List funcList=getFuncNodeListByUserNew(user);
+		List menuList=convertToFuncMenuList(funcList);
+		if(menuList!=null && menuList.size()>0) {
+			for(int i=0;i<menuList.size();i++) {
+				FuncMenu m=(FuncMenu)menuList.get(i);
+				setSubFuncMenu(m, menuList);
+			}
+		}
+		
+		List resList=new ArrayList();
+		for(int i=0;i<menuList.size();i++) {
+			FuncMenu m=(FuncMenu)menuList.get(i);
+			if(m.getDepth().equals("1")) {
+				resList.add(m);
+			}
+		}
+		return resList;
+	}
+	
+	private List convertToFuncMenuList(List funcNodeList)  throws AppException, SysException {
+		List menuList=new ArrayList();
+		if(funcNodeList!=null) {
+			for(int i=0;i<funcNodeList.size();i++) {
+				TreeNodeInfo n=(TreeNodeInfo)funcNodeList.get(i);
+				FuncMenu m=new FuncMenu();
+				m.setId(n.getId());
+				m.setName(n.getName());
+				m.setParentId(n.getParentId());
+				m.setUrl(n.getHtml());
+				m.setDepth(n.getDepth()+"");
+				menuList.add(m);
+			}
+		}
+		return menuList;
+	}
+	
+	
+	private void setSubFuncMenu(FuncMenu node,List funcList ) throws AppException,SysException {
+		List subList=new ArrayList();
+		if(funcList!=null) {
+			for(int i=0;i<funcList.size();i++) {
+				FuncMenu menu=(FuncMenu)funcList.get(i);
+				String pid=menu.getParentId();
+				if(pid.equals(node.getId())){
+					subList.add(menu);
+				}
+			}
+		}
+		if(subList.size()>0)node.setChildren(subList);
+	}
+	
+	public Document getFuncMenuDoc(SysUserSVO user) throws AppException,SysException{
+		ICtxdMDAO zsjfmdao = (ICtxdMDAO) DAOFactory.getDAO(ICtxdMDAO.class);
+		List userAllocList=zsjfmdao.getFuncNodeListByUserNew(user);
+		TreeNodeInfo root=new TreeNodeInfo();
+		root.setId("0");
+		Document doc = TreeUtil.buildTree(root, userAllocList, "");
+		return doc;
+	}
+	
+	
+	
 	
 	public List getFuncNodeListByUser(SysUserSVO user) throws AppException,SysException {
 		com.cattsoft.tm.component.dao.IFuncNodeTreeSDAO treeSDAO = (com.cattsoft.tm.component.dao.IFuncNodeTreeSDAO) DAOFactory.getDAO(com.cattsoft.tm.component.dao.IFuncNodeTreeSDAO.class);

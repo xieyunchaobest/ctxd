@@ -34,6 +34,7 @@ import com.cattsoft.tm.vo.FuncNodeSVO;
 import com.cattsoft.tm.vo.QueryConditionSVO;
 import com.cattsoft.tm.vo.QueryInstanceColumnSVO;
 import com.cattsoft.tm.vo.QueryInstanceSVO;
+import com.cattsoft.tm.vo.TreeNodeInfo;
 
 public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 
@@ -965,7 +966,52 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 			JdbcUtil.close(rs, ps);
 		}
 		return res;
+	}
 	
+	public List getFuncNodeListByUserNew(SysUserSVO vo) throws AppException,
+	SysException{
+		if (vo == null) {
+			throw new AppException("100001", "缺少DAO操作对象！");
+		}
+		List res = new ArrayList();
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Sql sql = new Sql("select distinct f.func_menu_id,f.func_menu_name,f.parent_id,f.html,f.seq ,f.depth "+
+ " from func_menu f "+
+ " start with f.func_menu_id in "+
+ "           (select sua.func_node_id "+
+ "              from sys_user_alloc sua "+
+ "             where sua.sys_user_id = :sysUserId) "+
+ " connect by prior f.parent_id = f.func_menu_id");
+		try {
+			sql.setString("sysUserId", vo.getSysUserId());
+
+			conn = ConnectionFactory.getConnection();
+			ps = conn.prepareStatement(sql.getSql());
+			ps = sql.fillParams(ps);
+			sql.log(this.getClass());
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				TreeNodeInfo funcNode = new TreeNodeInfo();
+				funcNode.setId(rs.getString("func_menu_id"));
+				funcNode.setName(rs.getString("func_menu_name"));
+				funcNode.setParentId(rs.getString("parent_id"));
+				funcNode.setHtml(rs.getString("html"));
+				funcNode.setSortPosition(rs.getLong("seq"));
+				funcNode.setDepth(Long.parseLong(rs.getString("depth")));
+				res.add(funcNode);
+			}
+		} catch (SQLException se) {
+			throw new SysException("100003", "JDBC操作异常！", se);
+		} finally {
+			JdbcUtil.close(rs, ps);
+		}
+
+		if (0 == res.size())
+			res = null;
+		return res;
 	}
 	
 	

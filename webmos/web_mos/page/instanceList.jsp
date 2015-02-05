@@ -145,16 +145,18 @@ $(function(){
 						</tr>
 					</tbody>
 				</table>
-				</div> 
-				<div style="width:100%;height:50px;">
-					<div style="float:right;width:80px;">
-						<input type="button" value="添加通用查询" class="lbtn" id="btnAddCommonQuery"/>
-					</div>
-					<div style="float:right;margin-left:30px">
-						<div style="width:50px;float:right;"></div>
-						<input type="button" value="添加汇总查询" class="lbtn" id="btnAddGroupQuery"/>
-					</div>
-				</div>
+				<table width="100%"  border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td width="97%"><div align="right">
+                      <div style="width:100%;">                        <div style="float:right;margin-left:40px"><input type="button" value="添加汇总查询" class="lbtn" id="btnAddGroupQuery"/>
+                        </div>
+                      </div>
+                    </div></td>
+                  <td width="5%">&nbsp;</td>
+                  <td width="3%"><input type="button" value="添加通用查询" class="lbtn" id="btnAddCommonQuery"/></td>
+                  <td width="3%">&nbsp;</td>
+                  </tr>
+                </table>
 			</div>
 		</div>
 	</form>

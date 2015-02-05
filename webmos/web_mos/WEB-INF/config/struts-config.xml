@@ -57,6 +57,7 @@
 			<forward name="showColumnComments"   module="/page"  path="/columnComents.jsp" />
 			<forward name="settingQueryInit"   module="/page"  path="/settingQueryInit.jsp" />
 			<forward name="loginout"   redirect="true" module="/page"  path="/login.jsp" />
+			<forward name="tree"    module="/page"    path="/tree.jsp" />
 		</action>
 		
 		<action path="/tm/instanceSettingAction" parameter="method"
@@ -69,6 +70,9 @@
 				<forward name="editInstanceInit"   module="/page"  path="/editInstanceMain.jsp" />
 				<forward name="editInstanceSub"   module="/page"  path="/editInstanceSub.jsp" />
 				<forward name="editInstanceSubGroup"   module="/page"  path="/editInstanceSubGroup.jsp" />
+				
+				
+				
 		</action>
 		
 	</action-mappings>

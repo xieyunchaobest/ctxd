@@ -1,21 +1,23 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<connection-config default="weblogic-pool-jliomtest">
+   <connection-config default="weblogic-pool-jliomtest">
 
-	<!--<connection name="weblogic-pool"> <datasource>ds/bw</datasource> </connection> -->
-
-
+	<!--<connection name="weblogic-pool">
+		<datasource>ds/bw</datasource>
+	</connection>-->
+	
+  
 	<connection name="weblogic-pool">
 		<driver-class>oracle.jdbc.driver.OracleDriver</driver-class>
 		<username>nmiom</username>
 		<password>nmiom</password>
 		<url>jdbc:oracle:thin:@svr914.cattsoft.com:1521:spsdev</url>
-
+		
 		<pool-maxActive>100</pool-maxActive>
 		<pool-maxWait>120000</pool-maxWait>
 		<pool-maxIdle>10</pool-maxIdle>
-	</connection>
+	</connection> 
 
-	<connection name="weblogic-pool-jliomtest">
+ 	<connection name="weblogic-pool-jliomtest">
 		<driver-class>oracle.jdbc.driver.OracleDriver</driver-class>
 		<username></username>
 		<password></password>
@@ -23,7 +25,7 @@
 		<pool-maxActive>100</pool-maxActive>
 		<pool-maxWait>1200</pool-maxWait>
 		<pool-maxIdle>10</pool-maxIdle>
-
-	</connection>
-
+		
+	</connection> 
+ 	
 </connection-config>

@@ -45,6 +45,9 @@ public interface ICtxdMDAO extends ISDAO{
 	public List getFuncNodeListByUser(SysUserSVO vo) throws AppException,
 	SysException ;
 	
+	public List getFuncNodeListByUserNew(SysUserSVO vo) throws AppException,
+	SysException ;
+	
 	/**
 	 * 获取当前数据库用户的表
 	 * @return

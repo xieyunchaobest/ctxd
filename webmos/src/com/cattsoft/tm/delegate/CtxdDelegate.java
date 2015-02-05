@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.dom4j.Document;
 
 import com.cattsoft.pub.connection.ConnectionFactory;
 import com.cattsoft.pub.exception.AppException;
@@ -389,6 +390,57 @@ public class CtxdDelegate {
 				ConnectionFactory.closeConnection();
 		}
 		return res;
+	}
+	
+	public Document getFuncMenuDoc(SysUserSVO user) throws AppException,SysException{
+		Connection conn = null;
+		Document  res=null;
+		try {
+			conn = ConnectionFactory.createConnection();
+			conn.setAutoCommit(false);
+			CtxdDOM dom=new CtxdDOM();
+			res=dom.getFuncMenuDoc(user);
+			ConnectionFactory.commit();
+		} catch (SysException e1) { 
+			ConnectionFactory.rollback();
+			throw e1;
+		}catch (AppException e2) { 
+			ConnectionFactory.rollback();
+			throw e2;
+		}catch (Exception e) { 
+			ConnectionFactory.rollback();
+			throw new SysException("","出现未知异常！",e);
+		}finally {
+				ConnectionFactory.closeConnection();
+		}
+		return res;
+		
+	}
+	
+	public List getFuncMenuList(SysUserSVO user) throws AppException, SysException{
+		Connection conn = null;
+		List  res=null;
+		try {
+			conn = ConnectionFactory.createConnection();
+			conn.setAutoCommit(false);
+			CtxdDOM dom=new CtxdDOM();
+			res=dom.getFuncMenuList(user);
+			ConnectionFactory.commit();
+		} catch (SysException e1) { 
+			ConnectionFactory.rollback();
+			throw e1;
+		}catch (AppException e2) { 
+			ConnectionFactory.rollback();
+			throw e2;
+		}catch (Exception e) { 
+			ConnectionFactory.rollback();
+			throw new SysException("","出现未知异常！",e);
+		}finally {
+				ConnectionFactory.closeConnection();
+		}
+		return res;
+		
+	
 	}
 	
 }

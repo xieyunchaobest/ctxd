@@ -204,8 +204,7 @@ $(function(){
 							</td>
 						</tr>
 					</table>
-				</div>
-				<div id="datadiv" style="width:100%;">
+		<div style="overflow-X:scroll;height:420px;"><div id="datadiv" style="width:100%;">
 				<table id="datatable">
 					<thead>
 						<logic:iterate id="condition" name="queryColumnList">
@@ -242,6 +241,7 @@ $(function(){
 						</tr>
 					</tbody>
 				</table>
+				</div></div>
 				</div>
 				<table style="border:0px">
 					<tr style="border:0px;">

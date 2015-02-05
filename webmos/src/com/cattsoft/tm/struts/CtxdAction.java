@@ -3,6 +3,9 @@
  */
 package com.cattsoft.tm.struts;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
@@ -17,7 +20,12 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
+import org.dom4j.Document;
+import org.dom4j.io.OutputFormat;
+import org.dom4j.io.XMLWriter;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.cattsoft.pub.ConstantsHelp;
 import com.cattsoft.pub.exception.AppException;
 import com.cattsoft.pub.exception.SysException;
@@ -133,8 +141,9 @@ public class CtxdAction extends DispatchAction{
 			return null;
 		}
 		SysUserSVO u=(SysUserSVO)request.getSession().getAttribute("user");
-		List funcNodeList = CtxdDelegate.getDelegate().getFuncNodeListByUser(u);
-		request.setAttribute("treeList", funcNodeList);
+		List funcMenuList = CtxdDelegate.getDelegate().getFuncMenuList(u);
+		String funcJson=JSON.toJSONString(funcMenuList,SerializerFeature.DisableCircularReferenceDetect);
+		request.setAttribute("treeJson", funcJson);
 		return mapping.findForward("main");
 		
 	}
@@ -219,6 +228,34 @@ public class CtxdAction extends DispatchAction{
 //		return mapping.findForward("showColumnComments");
 //	}
 //	
+	
+	
+	
+		public ActionForward getFuncNodeXML(ActionMapping mapping,ActionForm form, HttpServletRequest request,
+				HttpServletResponse response) throws SysException,AppException {
+		 SysUserSVO user=new SysUserSVO();
+		 user.setSysUserId("12");
+		 Document  doc=CtxdDelegate.getDelegate().getFuncMenuDoc(user);
+		
+			response.setContentType("text/plain;charset=UTF-8");
+			response.setHeader("Cache-control", "no-cache");
+			
+			OutputFormat format = OutputFormat.createPrettyPrint();
+			format.setEncoding("UTF-8");
+			try {
+				PrintWriter out = response.getWriter();
+				XMLWriter writer = new XMLWriter(out, format);
+				writer.write(doc);
+				out.flush();
+				out.close();
+			} catch (UnsupportedEncodingException e) {
+				throw new RuntimeException(e);
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+			log.debug("userTree：" + doc.asXML());
+			return null;
+	 }
 	
 	/**
 	 * 
@@ -307,6 +344,107 @@ public class CtxdAction extends DispatchAction{
 		return null;
 	}
 	
-
+	
+	private String getJson() {
+		Map m1=new HashMap();
+		m1.put("name", "节点1");
+		m1.put("open", "true");
+		
+		Map m11=new HashMap();
+		m11.put("name", "节点11");
+		
+		Map m111=new HashMap();
+		m111.put("name", "节点111");
+		Map m112=new HashMap();
+		m112.put("name", "节点112");
+		Map m113=new HashMap();
+		m113.put("name", "节点113");
+		List s3List=new ArrayList();
+		s3List.add(m111);
+		s3List.add(m112);
+		s3List.add(m113);
+		m11.put("children", s3List);
+		
+		
+		Map m12=new HashMap();
+		m12.put("name", "节点11");
+		
+		Map m121=new HashMap();
+		m121.put("name", "节点111");
+		Map m122=new HashMap();
+		m122.put("name", "节点112");
+		Map m123=new HashMap();
+		m123.put("name", "节点113");
+		List s32List=new ArrayList();
+		s32List.add(m121);
+		s32List.add(m122);
+		s32List.add(m123);
+		m12.put("children", s32List);
+		
+		List mlist=new ArrayList();
+		mlist.add(m11);
+		mlist.add(m12);
+		
+		List tList=new ArrayList();
+		m1.put("children", mlist);
+		tList.add(m1);
+		
+		return  com.alibaba.fastjson.JSONObject.toJSONString(m1);
+		
+	}
+	
+	public ActionForward getFuncNodeJson(ActionMapping mapping,ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws SysException,AppException {
+		Map m1=new HashMap();
+		m1.put("name", "节点1");
+		m1.put("open", "true");
+		
+		Map m11=new HashMap();
+		m11.put("name", "节点11");
+		
+		Map m111=new HashMap();
+		m111.put("name", "节点111");
+		Map m112=new HashMap();
+		m112.put("name", "节点112");
+		Map m113=new HashMap();
+		m113.put("name", "节点113");
+		List s3List=new ArrayList();
+		s3List.add(m111);
+		s3List.add(m112);
+		s3List.add(m113);
+		m11.put("children", s3List);
+		
+		
+		Map m12=new HashMap();
+		m12.put("name", "节点11");
+		
+		Map m121=new HashMap();
+		m121.put("name", "节点111");
+		Map m122=new HashMap();
+		m122.put("name", "节点112");
+		Map m123=new HashMap();
+		m123.put("name", "节点113");
+		List s32List=new ArrayList();
+		s32List.add(m121);
+		s32List.add(m122);
+		s32List.add(m123);
+		m12.put("children", s32List);
+		
+		List mlist=new ArrayList();
+		mlist.add(m11);
+		mlist.add(m12);
+		
+		List tList=new ArrayList();
+		m1.put("children", mlist);
+		tList.add(m1);
+		
+		request.setAttribute("treeJson", com.alibaba.fastjson.JSONObject.toJSONString(m1));
+		
+		//ReqUtil.write(response, com.alibaba.fastjson.JSONObject.toJSONString(m1));
+		
+		return  mapping.findForward("tree");
+		
+		
+	}
 	
 }

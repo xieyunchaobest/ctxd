@@ -50,14 +50,7 @@ table { border-collapse: collapse; border-spacing: 0; }
 .subnav{ height:27px; background:url(../images/index-subnav-bg.gif)}
 .subnav .subnavLeft{ width:17px; height:27px; background:url(../images/index-subnav-left.gif)}
 .subnav .subnavRight{ width:17px; height:27px; background:url(../images/index-subnav-right.gif)}
-.menu{ width:168px; height:495px; background:#e6f4fa; color:#075587; margin-left:2px;}
-.menu ul{ width:168px;}
-.menu ul li{ width:168px; background:url(../images/index-menu-bg.gif) no-repeat; text-align:center}
-.menu ul li a{ height:26px; line-height:26px; color:#075587}
-.menu ul li a:hover{ height:26px; line-height:26px; color:#075587; text-decoration:none; margin-left:2px;}
-.menu .subMenuTitle{ background:url(../images/index-menu-title.gif); text-align:center; height:27px; line-height:26px; color:#fff}
-.menu ul li ul{ width:168px;}
-.menu ul li ul li{ background:url(../images/index-submenu-bg.gif);text-align:left;}
+.menu{ width:188px; height:495px; color:#075587; margin-left:2px;}
 
 
 
