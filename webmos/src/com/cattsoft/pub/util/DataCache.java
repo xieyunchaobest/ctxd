@@ -674,6 +674,15 @@ public class DataCache {
 			}
 		}
 	}
+	
+//	private static Map  getDataDicMap(String tableName,String columnName) throws DataCacheException {
+//		
+//		
+//	}
+//	
+	
+	
+	
 
 	/**
 	 * 根据传入的表名，获取STATUS表中该表涉及到的数据集合，一个二级树型列表，COLUMN_NAM对应STS_ID,和STS_WORDS对应的HashMap对象
@@ -988,11 +997,11 @@ public class DataCache {
 	 */
 	public static void initial() throws DataCacheException {
 		// 对配置中所有表对应数据进行缓存
-		initHashMaps(null);
-		initTreeHashMap(null);
-		initStatusHashMap(null);
-		initSysAreaConfigHashMap();
-		initSysConfigHashMap();
+		//initHashMaps(null);
+		//initTreeHashMap(null);
+		//initStatusHashMap(null);
+		//initSysAreaConfigHashMap();
+		//initSysConfigHashMap();
 	}
 
 	/**

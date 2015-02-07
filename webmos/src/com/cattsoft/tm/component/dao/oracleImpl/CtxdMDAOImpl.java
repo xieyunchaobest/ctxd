@@ -53,7 +53,11 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 		for (int i = 0; i < columns.size(); i++) {
 			QueryInstanceColumnSVO column = (QueryInstanceColumnSVO) columns.get(i);
 			String columnName = column.getColumnName();
+			String width=column.getWidth();
+			String bgColor=column.getBgColor();
 			m.put(columnName, rs.getString(columnName));
+			m.put("width", width);
+			m.put("bgColor", bgColor);
 		}
 		return m;
 	}
@@ -105,6 +109,55 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 
 		return pagView;
 	}
+	
+	
+	public List exportResult(String instanceId, List conditionListFromPage) throws AppException, SysException {
+		if (StringUtil.isBlank(instanceId)) {
+			throw new AppException("100001", "缺少DAO操作对象！");
+		}
+		List res = new ArrayList();
+		PagView pagView = null;
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		QueryInstanceSVO instacne=new QueryInstanceSVO();
+		instacne.setQueryInstanceId(instanceId);
+		
+		String queryType=((QueryInstanceSVO)findByPK(instacne)).getInstanceType();
+		Sql sql =null;
+		if(ConstantsHelp.INSTANCE_TYPE_COMMON.equals(queryType)) {
+			sql=new Sql(this.getWholeSql(instanceId, conditionListFromPage));
+		}else {
+			sql=new Sql(this.getWholeSql4Group(instanceId, conditionListFromPage));
+		}
+		
+		List conditions = this
+				.getQueryCondition(instanceId, conditionListFromPage);
+		List columns = this.getColumnList(instanceId);
+		try {
+			fillParameters(conditions, sql);
+
+			conn = ConnectionFactory.getConnection();
+			 ps = conn.prepareStatement(sql.getSql());
+			 ps = sql.fillParams(ps);
+			//pagView = PagUtil.InitPagViewJDBC(conn, sql, pagInfo);
+			//rs = PagUtil.queryOracle(conn, sql, pagInfo);
+			sql.log(this.getClass());
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				Map m = fetchRow(columns, rs);
+				res.add(m);
+			}
+		} catch (SQLException se) {
+			throw new SysException("100003", "JDBC操作异常！", se);
+		} finally {
+			JdbcUtil.close(rs, ps);
+		}
+		//pagView.setViewList(res);
+
+		return res;
+	}
+
 
 	/**
 	 * 填充查询条件
@@ -327,7 +380,7 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 			String isSum=column.getIsSum();
 			String isGroup=column.getIsGroup();
 			if("Y".equals(isSum)) {
-				columnName="sum("+columnName+") as "+columnName;
+				columnName="sum( case when "+columnName+" is null then 0 else "+columnName +" end) as "+columnName;
 			}
 			if(com.cattsoft.tm.struts.Tools.isDateType(dataType)) {
 				columnName=" to_char("+columnName+",'yyyy-mm-dd') as "+columnName;
@@ -867,7 +920,7 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 		Sql sql = new Sql("SELECT  "+
        " T2.QUERY_INSTANCE_COLUMN_ID,"+
        " T2.COLUMN_NAME,"+
-       " T3.COLUMN_DESC ,T3.DATA_TYPE,  T2.IS_SUM,T2.IS_GROUP "+
+       " T3.COLUMN_DESC ,T3.DATA_TYPE,  T2.IS_SUM,T2.IS_GROUP,t2.bg_color,t2.column_width "+
        " FROM QUERY_INSTANCE T1,"+
        " QUERY_INSTANCE_COLUMN T2,"+
        " D_COLUMN_DESC T3 "+
@@ -893,6 +946,8 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 				column.setColumnDesc(rs.getString("COLUMN_DESC"));
 				column.setIsSum(rs.getString("IS_SUM"));
 				column.setIsGroup(rs.getString("IS_GROUP"));
+				column.setBgColor(rs.getString("bg_color"));
+				column.setWidth(rs.getString("column_width"));
 				res.add(column);
 			}
 

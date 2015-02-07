@@ -27,5 +27,6 @@
 	<classpathentry kind="lib" path="web_mos/WEB-INF/lib/wsdl4j-1.5.1.jar"/>
 	<classpathentry kind="lib" path="web_mos/WEB-INF/lib/xml4MOS.jar"/>
 	<classpathentry kind="lib" path="web_mos/WEB-INF/lib/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="web_mos/WEB-INF/lib/poi-3.10.1-20140818.jar"/>
 	<classpathentry kind="output" path="web_mos/WEB-INF/classes"/>
 </classpath>

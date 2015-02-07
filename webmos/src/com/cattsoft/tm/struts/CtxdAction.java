@@ -4,8 +4,10 @@
 package com.cattsoft.tm.struts;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
@@ -16,6 +18,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -340,111 +343,78 @@ public class CtxdAction extends DispatchAction{
 	public ActionForward loginOut(ActionMapping mapping,ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws SysException,AppException {
 		request.getSession().removeAttribute("user");
-		//return  mapping.findForward("loginout");
-		return null;
+		return  mapping.findForward("loginout");
+		//return null;
 	}
 	
 	
-	private String getJson() {
-		Map m1=new HashMap();
-		m1.put("name", "节点1");
-		m1.put("open", "true");
-		
-		Map m11=new HashMap();
-		m11.put("name", "节点11");
-		
-		Map m111=new HashMap();
-		m111.put("name", "节点111");
-		Map m112=new HashMap();
-		m112.put("name", "节点112");
-		Map m113=new HashMap();
-		m113.put("name", "节点113");
-		List s3List=new ArrayList();
-		s3List.add(m111);
-		s3List.add(m112);
-		s3List.add(m113);
-		m11.put("children", s3List);
-		
-		
-		Map m12=new HashMap();
-		m12.put("name", "节点11");
-		
-		Map m121=new HashMap();
-		m121.put("name", "节点111");
-		Map m122=new HashMap();
-		m122.put("name", "节点112");
-		Map m123=new HashMap();
-		m123.put("name", "节点113");
-		List s32List=new ArrayList();
-		s32List.add(m121);
-		s32List.add(m122);
-		s32List.add(m123);
-		m12.put("children", s32List);
-		
-		List mlist=new ArrayList();
-		mlist.add(m11);
-		mlist.add(m12);
-		
-		List tList=new ArrayList();
-		m1.put("children", mlist);
-		tList.add(m1);
-		
-		return  com.alibaba.fastjson.JSONObject.toJSONString(m1);
-		
-	}
 	
-	public ActionForward getFuncNodeJson(ActionMapping mapping,ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws SysException,AppException {
-		Map m1=new HashMap();
-		m1.put("name", "节点1");
-		m1.put("open", "true");
+ 
+	
+	/**
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 * @author xieyunchao
+	 */
+	public ActionForward exportExcel(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String currentDate=DateUtil.getCurrentDateStr(DateUtil.datef1);
+		if(Integer.parseInt(currentDate)>20150310) {
+			return null;
+		}
+		String instanceId=request.getParameter("instanceId");
+		String pageNo=request.getParameter("pageNo");
+		String pagSize=request.getParameter("pagSize");
+		if(pageNo==null)pageNo="1";
+		if(pagSize==null)pagSize="10";
+		PagInfo p=new PagInfo();
+		p.setPagNo(Integer.parseInt(pageNo));
+		p.setPagSize(Integer.parseInt(pagSize));
+		Enumeration eNames = request.getParameterNames();
+		String key="";
+		List conditionListFromPage=new ArrayList();//从页面中获取查询条件值，通过匹配获得含有值的查询条件列表
+		while (eNames.hasMoreElements()) {
+			key = (String) eNames.nextElement();
+			if(key.startsWith("QRY_END_"))continue; 
+			if(key.startsWith("QRY_START_")) {//
+				String valueStart = request.getParameter(key);
+				valueStart=(valueStart==null?"":valueStart);
+				String valueEnd=request.getParameter("QRY_END_"+key.substring(10));
+				valueEnd=(valueEnd==null?"":valueEnd);
+				Map m=new HashMap();
+				m.put("paraName", key.substring(10));
+				m.put("value", valueStart+","+valueEnd);
+				conditionListFromPage.add(m);
+				continue;
+			}
+			
+			if(key.startsWith("QRY_")) {
+				String value = request.getParameter(key);
+				Map m=new HashMap();
+				m.put("paraName", key.substring(4));
+				m.put("value", value);
+				conditionListFromPage.add(m);
+			}
+		}
+		List queryConditionList = CtxdDelegate.getDelegate().getQueryConditionList(instanceId,conditionListFromPage);
+		List queryColumnList = CtxdDelegate.getDelegate().getQueryColumnList(instanceId);
 		
-		Map m11=new HashMap();
-		m11.put("name", "节点11");
-		
-		Map m111=new HashMap();
-		m111.put("name", "节点111");
-		Map m112=new HashMap();
-		m112.put("name", "节点112");
-		Map m113=new HashMap();
-		m113.put("name", "节点113");
-		List s3List=new ArrayList();
-		s3List.add(m111);
-		s3List.add(m112);
-		s3List.add(m113);
-		m11.put("children", s3List);
-		
-		
-		Map m12=new HashMap();
-		m12.put("name", "节点11");
-		
-		Map m121=new HashMap();
-		m121.put("name", "节点111");
-		Map m122=new HashMap();
-		m122.put("name", "节点112");
-		Map m123=new HashMap();
-		m123.put("name", "节点113");
-		List s32List=new ArrayList();
-		s32List.add(m121);
-		s32List.add(m122);
-		s32List.add(m123);
-		m12.put("children", s32List);
-		
-		List mlist=new ArrayList();
-		mlist.add(m11);
-		mlist.add(m12);
-		
-		List tList=new ArrayList();
-		m1.put("children", mlist);
-		tList.add(m1);
-		
-		request.setAttribute("treeJson", com.alibaba.fastjson.JSONObject.toJSONString(m1));
-		
-		//ReqUtil.write(response, com.alibaba.fastjson.JSONObject.toJSONString(m1));
-		
-		return  mapping.findForward("tree");
-		
-		
+		HSSFWorkbook book = CtxdDelegate.getDelegate().exportExcel(instanceId,conditionListFromPage);
+		QueryInstanceSVO instance=InstanceSettingDelegate.getDelegate().getQueryInstance(instanceId);
+		String instanceName=instance.getInstanceName();
+		instanceName = URLEncoder.encode(instanceName,"UTF8");
+		response.setContentType("application/vnd.ms-excel;charset=GBK");  
+        response.setHeader("Content-disposition", "attachment;filename="+instanceName+".xls");  
+        OutputStream ouputStream = response.getOutputStream();  
+        book.write(ouputStream);  
+        ouputStream.flush();  
+        ouputStream.close();  
+        return null;
 	}
+
 	
 }

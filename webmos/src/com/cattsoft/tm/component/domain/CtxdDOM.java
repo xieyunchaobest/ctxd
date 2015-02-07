@@ -3,11 +3,18 @@ package com.cattsoft.tm.component.domain;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.dom4j.Document;
 
 import com.cattsoft.pub.SysConstants;
@@ -27,6 +34,7 @@ import com.cattsoft.tm.component.dao.ICtxdMDAO;
 import com.cattsoft.tm.component.dao.IDColumnDescSDAO;
 import com.cattsoft.tm.component.dao.IDTableDescSDAO;
 import com.cattsoft.tm.component.dao.ILoginLogSDAO;
+import com.cattsoft.tm.component.dao.ISysMDAO;
 import com.cattsoft.tm.util.TreeUtil;
 import com.cattsoft.tm.vo.DColumnDescSVO;
 import com.cattsoft.tm.vo.DQueryConditionSVO;
@@ -35,6 +43,7 @@ import com.cattsoft.tm.vo.FuncMenu;
 import com.cattsoft.tm.vo.FuncNodeSVO;
 import com.cattsoft.tm.vo.FuncNodeTreeSVO;
 import com.cattsoft.tm.vo.LoginLogSVO;
+import com.cattsoft.tm.vo.QueryInstanceColumnSVO;
 import com.cattsoft.tm.vo.QueryInstanceSVO;
 import com.cattsoft.tm.vo.TreeNodeInfo;
 public class CtxdDOM {
@@ -324,5 +333,73 @@ public class CtxdDOM {
 	public QueryInstanceSVO getQueryInstanceSVO(QueryInstanceSVO svo)throws AppException, SysException {
 		ICtxdMDAO mdao= (ICtxdMDAO) DAOFactory.getDAO(ICtxdMDAO.class);
 		return (QueryInstanceSVO)mdao.findByVO(svo).get(0);
+	}
+	
+	
+	public HSSFWorkbook exportExcel(String instanceId,List conditionListFromPage) throws AppException,SysException{
+		List columnList=getColumnList(instanceId);
+		List headerList=new ArrayList();
+		for(int i=0;i<columnList.size();i++) {
+			QueryInstanceColumnSVO c=(QueryInstanceColumnSVO)columnList.get(i);
+			String columnDesc=c.getColumnDesc();
+			headerList.add(columnDesc);
+		}
+		
+		Object obj[]=(Object[]) headerList.toArray();
+		String headArr[]=new String[obj.length];
+		 for (int i = 0; i < obj.length; i++) {
+	            String e = (String) obj[i];
+	            headArr[i]=e;
+	        }
+		
+		List dataList=exportResultList(instanceId,conditionListFromPage);
+		HSSFWorkbook wb = new HSSFWorkbook();  
+	    HSSFSheet sheet = wb.createSheet("²éÑ¯½á¹û");  
+	    HSSFRow row = sheet.createRow((int) 0);  
+	        
+	    HSSFCellStyle style = wb.createCellStyle();  
+	    style.setAlignment(HSSFCellStyle.ALIGN_CENTER); 
+	    
+	    for (int i = 0; i < headArr.length; i++) {  
+            HSSFCell cell = row.createCell(i);  
+            cell.setCellValue(headArr[i]);  
+            cell.setCellStyle(style);  
+            sheet.setColumnWidth((short) i, (short) 12000);
+        }  
+	    
+	    
+	    if(dataList!=null) {
+	    	 for (int i = 0; i < dataList.size(); i++) {  
+	             row = sheet.createRow(i + 1);  
+	             Map m =(Map) dataList.get(i);  
+	             Set<String> keys = m.keySet();
+	             int cn=0;
+	             for (Iterator it = keys.iterator(); it.hasNext();) {
+	            	 String key = (String) it.next();
+	            	 if( (!"width".equals(key))  && !("bgColor".equals(key)) ) {
+	            		 row.createCell(cn++).setCellValue((String)m.get(key));  
+	            	 }
+	            	  
+	             }
+
+	            
+	         }  
+	    }
+	   
+        return wb;  
+		
+	}
+	
+	public List exportResultList(String instanceId, List conditionListFromPage)
+			throws AppException, SysException {
+		ICtxdMDAO ctxddao = (ICtxdMDAO) DAOFactory.getDAO(ICtxdMDAO.class);
+		List res = ctxddao.exportResult(instanceId, conditionListFromPage);
+		return res;
+	}
+	
+	
+	public List getDataDicList(String tableName,String columnName) throws AppException,SysException{
+		ISysMDAO iSysMDAO = (ISysMDAO) DAOFactory.getDAO(ISysMDAO.class);
+		return iSysMDAO.getDataDicList(tableName, columnName);
 	}
 }

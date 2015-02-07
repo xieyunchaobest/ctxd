@@ -73,7 +73,7 @@ public class InstanceSettingMDAOImpl extends DColumnDescSDAOImpl implements
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		Sql sql = new Sql(
-				"select T5.column_desc,t4.column_name, (case when t2.column_name is null then 'N' ELSE 'Y' END) AS IS_SHOW, (case when t3.column_name is null then 'N' ELSE 'Y' END) AS IS_CONDITION, T3.CONDITION_TYPE, T2.SEQ, T1.TABLE_NAME, T5.COLUMN_DESC,  t2.is_group, t2.is_sum from query_instance           t1, query_instance_column    t2, QUERY_CONDITION t3, user_tab_cols            t4, D_COLUMN_DESC            T5  where t4.column_name = t2.column_name(+) and t4.column_name=t3.column_name(+) and t4.column_name=t5.column_name(+) AND T1.TABLE_NAME=T4.TABLE_NAME AND t5.table_name=t1.table_name and t2.instance_id(+)=:instanceId and t3.instance_id(+)=:instanceId and t1.query_instance_id=:instanceId order by t2.seq,t2.column_name");
+				"select T5.column_desc,t4.column_name, (case when t2.column_name is null then 'N' ELSE 'Y' END) AS IS_SHOW, (case when t3.column_name is null then 'N' ELSE 'Y' END) AS IS_CONDITION, T3.CONDITION_TYPE, T2.SEQ, T1.TABLE_NAME, T5.COLUMN_DESC,  t2.is_group, t2.is_sum,t2.column_width,t2.bg_color from query_instance           t1, query_instance_column    t2, QUERY_CONDITION t3, user_tab_cols            t4, D_COLUMN_DESC            T5  where t4.column_name = t2.column_name(+) and t4.column_name=t3.column_name(+) and t4.column_name=t5.column_name(+) AND T1.TABLE_NAME=T4.TABLE_NAME AND t5.table_name=t1.table_name and t2.instance_id(+)=:instanceId and t3.instance_id(+)=:instanceId and t1.query_instance_id=:instanceId order by t2.seq,t2.column_name");
 		try {
 			sql.setString("instanceId", instanceId);
 
@@ -93,6 +93,8 @@ public class InstanceSettingMDAOImpl extends DColumnDescSDAOImpl implements
 				column.setSeq(rs.getString("seq"));
 				column.setIsGroup(rs.getString("is_group"));
 				column.setIsSum(rs.getString("is_sum"));
+				column.setBgColor(rs.getString("bg_color"));
+				column.setWidth(rs.getString("column_width"));
 				res.add(column);
 			}
 

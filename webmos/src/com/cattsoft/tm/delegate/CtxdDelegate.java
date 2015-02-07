@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.dom4j.Document;
 
 import com.cattsoft.pub.connection.ConnectionFactory;
@@ -439,8 +440,57 @@ public class CtxdDelegate {
 				ConnectionFactory.closeConnection();
 		}
 		return res;
-		
+	}
 	
+	
+	public HSSFWorkbook exportExcel(String instanceId,List conditionListFromPage) throws AppException,SysException{
+		Connection conn = null;
+		HSSFWorkbook  res=null;
+		try {
+			conn = ConnectionFactory.createConnection();
+			conn.setAutoCommit(false);
+			CtxdDOM dom=new CtxdDOM();
+			res=dom.exportExcel(instanceId,conditionListFromPage);
+			ConnectionFactory.commit();
+		} catch (SysException e1) { 
+			ConnectionFactory.rollback();
+			throw e1;
+		}catch (AppException e2) { 
+			ConnectionFactory.rollback();
+			throw e2;
+		}catch (Exception e) { 
+			ConnectionFactory.rollback();
+			throw new SysException("","出现未知异常！",e);
+		}finally {
+				ConnectionFactory.closeConnection();
+		}
+		return res;
+	
+	}
+	
+	
+	public List getDataDicList(String tableName,String columnName) throws AppException,SysException{
+		Connection conn = null;
+		List  res=null;
+		try {
+			conn = ConnectionFactory.createConnection();
+			conn.setAutoCommit(false);
+			CtxdDOM dom=new CtxdDOM();
+			res=dom.getDataDicList(tableName,columnName);
+			ConnectionFactory.commit();
+		} catch (SysException e1) { 
+			ConnectionFactory.rollback();
+			throw e1;
+		}catch (AppException e2) { 
+			ConnectionFactory.rollback();
+			throw e2;
+		}catch (Exception e) { 
+			ConnectionFactory.rollback();
+			throw new SysException("","出现未知异常！",e);
+		}finally {
+				ConnectionFactory.closeConnection();
+		}
+		return res;
 	}
 	
 }

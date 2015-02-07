@@ -91,13 +91,21 @@ $(function(){
 	
 	
 		$('#btnQuery').click(function() {
-			showCover();
-			$("#queryForm").submit();
+			//showCover();
+			var postform = document.getElementById("queryForm");
+			postform.action="../tm/ctxdAction.do?method=queryResult";
+			postform.submit();
 		});
 		
 		var menudesc=$('#menudesc', window.parent.document).val();
 		$(".pageTitle").html(menudesc);
 	
+	
+	$('#btnExport').click(function() {
+			var postform = document.getElementById("queryForm");
+			postform.action="../tm/ctxdAction.do?method=exportExcel";
+			postform.submit();
+		});
 	
 })
 </script>
@@ -105,7 +113,7 @@ $(function(){
 </head>
 
 <body>
-	<form id="queryForm" action="../tm/ctxdAction.do?method=queryResult"
+	<form id="queryForm" action="../tm/ctxdAction.do?method=exportExcel"
 		method="post">
 		<span style="display:none"><input type="hidden" name="instanceId" value='<%=request.getAttribute("instanceId")%>'/></span>
 		<div id="contentWrap">
@@ -199,9 +207,14 @@ $(function(){
 									}
 								}
 							%>
-							<td><input type="button" class="sbtn"   id="btnQuery"
+							<td>
+							<input type="button" class="sbtn"   id="btnQuery"
 								value="²é Ñ¯" />
+							<input type="button" class="sbtn"   id="btnExport"
+								value="µ¼ ³ö" />
 							</td>
+							</td>
+							
 						</tr>
 					</table>
 		<div style="overflow-X:scroll;height:420px;"><div id="datadiv" style="width:100%;">
@@ -228,7 +241,9 @@ $(function(){
 										QueryInstanceColumnSVO column = (QueryInstanceColumnSVO) queryColumnList
 												.get(j);
 										String columnName = column.getColumnName();
-										out.print("<td  class='ctd'>" + m.get(columnName)
+										String width=column.getWidth();
+										String bgColor=column.getBgColor();
+										out.print("<td  class='ctd' style='width:"+width+"px;background-color:"+bgColor+";' >" + m.get(columnName)
 												+ "</td>");
 									}
 							%>

@@ -137,7 +137,8 @@ function doChange(obj){
 </script>
 
 <%
-	List columnList=(List)request.getAttribute("columnList");
+	List columnList=(List)request.getAttribute("columnList"); 
+	List bgColorList=(List)request.getAttribute("bgColorList"); 
  %>
 </head>
 
@@ -159,9 +160,12 @@ function doChange(obj){
 							是否显示
 							<input type="checkbox" name="chkselectAll" id="chkselectAll" onclick="selectAll();"/>	
 						</th>
+						<th>背景色</th>
+						<th>宽度</th>
 						<th>查询条件</th>
 						<th>条件类型</th>
 						<th>序号</th>
+						<th>是否排序</th>
 					</thead>
 					<tbody>
 						<%
@@ -171,8 +175,26 @@ function doChange(obj){
 								DColumnDescSVO  column=(DColumnDescSVO)columnList.get(i);
 								out.println("<td class='ctd'>"+column.getColumnDesc()+"</td>");
 								out.println("<td class='ctd'><input type='checkbox' class='ck' id='chkIsShow"+i +"' name='chkIsShow"+i+"' value='Y' /></td>");
-								out.println("<td class='ctd'><input type='checkbox' id='chkIsCondition"+i +  "' name='chkIsCondition"+i+"'  value='Y' onclick='checkCondition(this);'/></td>");
 						%>
+							<!-- 背景色 -->
+							<td class='ctd'>
+								<select id="sltbgColor<%=i%>" name="sltbgColor<%=i%>" class="smallselect">
+								<option value="">请选择</option>
+								<%
+									for(int j=0;j<bgColorList.size();j++){
+										Map m=(Map)bgColorList.get(j);
+										String label=(String)m.get("label");
+										String value=(String)m.get("value");
+										out.println("<option style='background-color:"+label+"'  value='"+label+"'>"+label+"</option>");
+									}
+									%>
+								 </select>
+							</td>
+						<!-- 宽度 -->
+						<td class="ctd">
+							<input type="text" id="width<%=i%>" name="width<%=i%>"  class="smalltext" />
+						</td>
+						<%out.println("<td class='ctd'><input type='checkbox' id='chkIsCondition"+i +  "' name='chkIsCondition"+i+"'  value='Y' onclick='checkCondition(this);'/></td>"); %>
 							<td class='ctd'>
 								<input type="hidden" id="columnName<%=i%>" name="columnName<%=i%>" value="<%=column.getColumnName() %>" />
 								<select id="sltConditionType<%=i%>" name="sltConditionType<%=i%>" class="smallselect" onchange="doChange(this);">
@@ -186,8 +208,10 @@ function doChange(obj){
 							<td class="ctd">
 								<input type="text" id="seq<%=i%>" name="seq<%=i%>"  class="smalltext" value="<%=i%>"/>
 							</td>
+							<td class="ctd">
+								<input type="checkbox" id="isSort<%=i%>" name="isSort<%=i%>"  class="smalltext" value="Y"/>
+							</td>
 						<%		
-								
 								out.println("</tr>");
 							}
 						 %>

@@ -80,6 +80,7 @@ public class InstanceSettingAction extends DispatchAction{
 		String typeFlag=request.getParameter("typeFlag");
 		List tableList=InstanceSettingDelegate.getDelegate().getTables();
 		List instanceTypeList=InstanceSettingDelegate.getDelegate().getInstanceTypeList();
+		
 		request.setAttribute("tableList", tableList);
 		request.setAttribute("instanceTypeList", instanceTypeList);
 		request.setAttribute("typeFlag", typeFlag);
@@ -97,6 +98,8 @@ public class InstanceSettingAction extends DispatchAction{
 		if(!StringUtil.isBlank(tableName)) {
 			columnList=InstanceSettingDelegate.getDelegate().getTableColumns(tableName);
 		}
+		List bgColorList=CtxdDelegate.getDelegate().getDataDicList("QUERY_INSTANCE_COLUMN", "BG_COLOR");
+		request.setAttribute("bgColorList",bgColorList);
 		request.setAttribute("columnList", columnList);
 		if(ConstantsHelp.INSTANCE_TYPE_COMMON.equals(typeFlag)) {
 			return mapping.findForward("instanceColumnList");
@@ -132,19 +135,27 @@ public class InstanceSettingAction extends DispatchAction{
 		List columnList=new ArrayList();
 		List conditionList=new ArrayList();
 		
-		if(ConstantsHelp.INSTANCE_TYPE_COMMON.equals(typeFlag)) {
+		if(ConstantsHelp.INSTANCE_TYPE_COMMON.equals(typeFlag)) {//Õ®”√≤È—Ø
 			for(int i=0;i<Integer.parseInt(columnCount);i++) {
 				String isShow=request.getParameter("chkIsShow"+i);
 				if(ConstantsHelp.YES.equals(isShow)) {
 					QueryInstanceColumnSVO c=new QueryInstanceColumnSVO();
 					String columnName=request.getParameter("columnName"+i);
 					String seq=request.getParameter("seq"+i);
+					String bgColor=request.getParameter("sltbgColor"+i);
+					String width=request.getParameter("width"+i);
+					String isSort=request.getParameter("isSort"+i);
+					
 					c.setColumnName(columnName);
 					c.setCreateTime(d);
 					c.setIsGroup(isGroup);
 					c.setIsSum(isSum);
 					c.setSeq(seq);
 					c.setSts(ConstantsHelp.ACTIVE);
+					c.setWidth(width);
+					c.setBgColor(bgColor);
+					c.setIsSort(isSort);
+					
 					columnList.add(c);
 					
 					String isQueryCondition=request.getParameter("chkIsCondition"+i);
@@ -166,6 +177,9 @@ public class InstanceSettingAction extends DispatchAction{
 				String isGroupG=request.getParameter("chkIsGroup"+i);
 				String columnName=request.getParameter("columnName"+i);
 				String seq=request.getParameter("seq"+i);
+				String bgColor=request.getParameter("sltbgColor"+i);
+				String width=request.getParameter("width"+i);
+				String isSort=request.getParameter("isSort"+i);
 				QueryInstanceColumnSVO c=null;
 				if(ConstantsHelp.YES.equals(isGroupG)) {
 					c=new QueryInstanceColumnSVO();
@@ -175,8 +189,10 @@ public class InstanceSettingAction extends DispatchAction{
 					c.setCreateTime(d);
 					c.setSeq(seq);
 					c.setSts(ConstantsHelp.ACTIVE);
+					c.setIsSort(isSort);
 					columnList.add(c);
 				}
+				
 				
 				if(ConstantsHelp.YES.equals(isSumG)) {
 					c=new QueryInstanceColumnSVO();
@@ -188,6 +204,11 @@ public class InstanceSettingAction extends DispatchAction{
 					c.setSts(ConstantsHelp.ACTIVE);
 					columnList.add(c);
 				}
+				if(c!=null) {
+					c.setWidth(width);
+					c.setBgColor(bgColor);
+				}
+				
 				
 				String isQueryCondition=request.getParameter("chkIsCondition"+i);
 				String queryConditionType=request.getParameter("sltConditionType"+i);
@@ -242,6 +263,8 @@ public class InstanceSettingAction extends DispatchAction{
 		List instanceTypeList=InstanceSettingDelegate.getDelegate().getInstanceTypeList();
 		request.setAttribute("instance", instance); 
 		request.setAttribute("columnList", columnList); 
+		List bgColorList=CtxdDelegate.getDelegate().getDataDicList("QUERY_INSTANCE_COLUMN", "BG_COLOR");
+		request.setAttribute("bgColorList", bgColorList);
 		request.setAttribute("instanceTypeList", instanceTypeList); 
 		if(ConstantsHelp.INSTANCE_TYPE_COMMON.equals(typeFlag)) {
 			return mapping.findForward("editInstanceSub");

@@ -83,4 +83,6 @@ public interface ICtxdMDAO extends ISDAO{
 	 */
 	public List getQueryConditionList(String instanceId) throws AppException,SysException;
 	
+	public List exportResult(String instanceId, List conditionListFromPage) throws AppException, SysException ;
+	
 }
