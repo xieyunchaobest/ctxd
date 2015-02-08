@@ -90,13 +90,13 @@ public class InstanceSettingDelegate {
 		return returnValue;
 	}
 	
-	public void addInstance(QueryInstanceSVO addInstance,List queryInstanceColumnList,List queryConditionList) throws AppException,SysException{
+	public void addInstance(QueryInstanceSVO addInstance,List queryInstanceColumnList,List queryConditionList,List sort) throws AppException,SysException{
 		Connection conn = null;
 		try {
 			conn = ConnectionFactory.createConnection();
 			conn.setAutoCommit(false);
 			InstanceSettingDOM dom=new InstanceSettingDOM();
-			dom.addInstance(addInstance,queryInstanceColumnList,queryConditionList);
+			dom.addInstance(addInstance,queryInstanceColumnList,queryConditionList,sort);
 			ConnectionFactory.commit();
 		}catch (SysException e1) { 
 			ConnectionFactory.rollback();

@@ -63,7 +63,7 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 	}
 
 	public PagView queryResult(String instanceId, List conditionListFromPage,
-			PagInfo pagInfo) throws AppException, SysException {
+			PagInfo pagInfo,Map sortMap) throws AppException, SysException {
 		if (StringUtil.isBlank(instanceId)) {
 			throw new AppException("100001", "缺少DAO操作对象！");
 		}
@@ -78,9 +78,9 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 		String queryType=((QueryInstanceSVO)findByPK(instacne)).getInstanceType();
 		Sql sql =null;
 		if(ConstantsHelp.INSTANCE_TYPE_COMMON.equals(queryType)) {
-			sql=new Sql(this.getWholeSql(instanceId, conditionListFromPage));
+			sql=new Sql(this.getWholeSql(instanceId, conditionListFromPage,sortMap));
 		}else {
-			sql=new Sql(this.getWholeSql4Group(instanceId, conditionListFromPage));
+			sql=new Sql(this.getWholeSql4Group(instanceId, conditionListFromPage,sortMap));
 		}
 		
 		List conditions = this
@@ -111,7 +111,7 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 	}
 	
 	
-	public List exportResult(String instanceId, List conditionListFromPage) throws AppException, SysException {
+	public List exportResult(String instanceId, List conditionListFromPage,Map sortMap) throws AppException, SysException {
 		if (StringUtil.isBlank(instanceId)) {
 			throw new AppException("100001", "缺少DAO操作对象！");
 		}
@@ -126,9 +126,9 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 		String queryType=((QueryInstanceSVO)findByPK(instacne)).getInstanceType();
 		Sql sql =null;
 		if(ConstantsHelp.INSTANCE_TYPE_COMMON.equals(queryType)) {
-			sql=new Sql(this.getWholeSql(instanceId, conditionListFromPage));
+			sql=new Sql(this.getWholeSql(instanceId, conditionListFromPage,sortMap));
 		}else {
-			sql=new Sql(this.getWholeSql4Group(instanceId, conditionListFromPage));
+			sql=new Sql(this.getWholeSql4Group(instanceId, conditionListFromPage,sortMap));
 		}
 		
 		List conditions = this
@@ -247,7 +247,7 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 	 * @throws AppException
 	 * @throws SysException
 	 */
-	private String getWholeSql(String instanceId, List conditionListFromPage)
+	private String getWholeSql(String instanceId, List conditionListFromPage,Map sortMap)
 			throws AppException, SysException {
 		QueryInstanceSVO instance=new QueryInstanceSVO();
 		instance.setQueryInstanceId(instanceId);
@@ -256,13 +256,23 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 		String from = " from ";
 		String where = " where 1=1 ";
 		String atableName = ((QueryInstanceSVO)findByPK(instance)).getTableName();
+		String orderBy="";
+		
+		String sortBy=(String)sortMap.get("sortBy");
+		String sortRule=(String)sortMap.get("sortRule");
+		if(!StringUtil.isBlank(sortBy)) {
+			orderBy=" order by "+sortBy;
+			if(!StringUtil.isBlank(sortRule)) {
+				orderBy=orderBy+" "+sortRule;
+			}
+		}
 
 		List columns =getColumnList(instanceId);
 		String sqlColumn = getSqlColumns(columns);
 
 		List conditions = getQueryCondition(instanceId, conditionListFromPage);
 		String sqlCondition = getConditionSql(conditions);
-		sql = select + sqlColumn + from + atableName + where + sqlCondition;
+		sql = select + sqlColumn + from + atableName + where + sqlCondition +orderBy;
 		return sql;
 	}
 
@@ -275,7 +285,7 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 	 * @throws AppException
 	 * @throws SysException
 	 */
-	private String getWholeSql4Group(String instanceId, List conditionListFromPage)
+	private String getWholeSql4Group(String instanceId, List conditionListFromPage,Map sortMap)
 			throws AppException, SysException {
 		QueryInstanceSVO instance=new QueryInstanceSVO();
 		instance.setQueryInstanceId(instanceId);
@@ -283,6 +293,18 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 		String select = "select ";
 		String from = " from ";
 		String where = " where 1=1 ";
+		String orderBy="";
+		
+		String sortBy=(String)sortMap.get("sortBy");
+		String sortRule=(String)sortMap.get("sortRule");
+		if(!StringUtil.isBlank(sortBy)) {
+			orderBy=" order by "+sortBy;
+			if(!StringUtil.isBlank(sortRule)) {
+				orderBy=orderBy+" "+sortRule;
+			}
+		}
+
+		
 		String atableName = ((QueryInstanceSVO)findByPK(instance)).getTableName();
 
 		List columns =getColumnList(instanceId);
@@ -920,14 +942,19 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 		Sql sql = new Sql("SELECT  "+
        " T2.QUERY_INSTANCE_COLUMN_ID,"+
        " T2.COLUMN_NAME,"+
-       " T3.COLUMN_DESC ,T3.DATA_TYPE,  T2.IS_SUM,T2.IS_GROUP,t2.bg_color,t2.column_width "+
+       " T3.COLUMN_DESC ,T3.DATA_TYPE,  T2.IS_SUM,T2.IS_GROUP,t2.bg_color,t2.column_width ," +
+       " (case when " +
+       " t4.query_instance_id is null then 'N' else 'Y' end "+
+	   " ) AS IS_SORT "+
        " FROM QUERY_INSTANCE T1,"+
        " QUERY_INSTANCE_COLUMN T2,"+
-       " D_COLUMN_DESC T3 "+
+       " D_COLUMN_DESC T3, query_sort t4  "+
        " WHERE T1.QUERY_INSTANCE_ID = T2.INSTANCE_ID "+
        " AND T2.COLUMN_NAME=T3.COLUMN_NAME "+
        " AND T1.TABLE_NAME=T3.TABLE_NAME "+
-       " AND T1.QUERY_INSTANCE_ID = :instacneId "+
+       " AND T1.QUERY_INSTANCE_ID = :instacneId " +
+       " AND  t4.query_instance_id(+)=:instacneId " +
+       " AND t3.COLUMN_NAME=t4.query_column_name(+)"+
        " ORDER BY T2.SEQ, T2.COLUMN_NAME");
 		
 		try {
@@ -948,6 +975,7 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 				column.setIsGroup(rs.getString("IS_GROUP"));
 				column.setBgColor(rs.getString("bg_color"));
 				column.setWidth(rs.getString("column_width"));
+				column.setIsSort(rs.getString("IS_SORT"));
 				res.add(column);
 			}
 
@@ -1068,6 +1096,6 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 			res = null;
 		return res;
 	}
-	
+
 	
 }

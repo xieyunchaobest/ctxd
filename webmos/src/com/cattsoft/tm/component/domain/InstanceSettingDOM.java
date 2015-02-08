@@ -18,12 +18,14 @@ import com.cattsoft.tm.component.dao.IInstanceSettingMDAO;
 import com.cattsoft.tm.component.dao.IQueryConditionSDAO;
 import com.cattsoft.tm.component.dao.IQueryInstanceColumnSDAO;
 import com.cattsoft.tm.component.dao.IQueryInstanceSDAO;
+import com.cattsoft.tm.component.dao.IQuerySortSDAO;
 import com.cattsoft.tm.vo.DTableDescSVO;
 import com.cattsoft.tm.vo.FuncNodeSVO;
 import com.cattsoft.tm.vo.FuncNodeTreeSVO;
 import com.cattsoft.tm.vo.QueryConditionSVO;
 import com.cattsoft.tm.vo.QueryInstanceColumnSVO;
 import com.cattsoft.tm.vo.QueryInstanceSVO;
+import com.cattsoft.tm.vo.QuerySortSVO;
 
 public class InstanceSettingDOM {
 	
@@ -37,11 +39,12 @@ public class InstanceSettingDOM {
 		return tableDAO.findByVO(new DTableDescSVO());
 	}
 
-	public void addInstance(QueryInstanceSVO instance,List queryInstanceColumnList,List queryConditionList) throws AppException,SysException{
+	public void addInstance(QueryInstanceSVO instance,List queryInstanceColumnList,List queryConditionList,List sortList) throws AppException,SysException{
 		IQueryInstanceSDAO instanceDAO= (IQueryInstanceSDAO) DAOFactory.getDAO(IQueryInstanceSDAO.class);
 		IQueryInstanceColumnSDAO columnDAO= (IQueryInstanceColumnSDAO) DAOFactory.getDAO(IQueryInstanceColumnSDAO.class);
 		IQueryConditionSDAO conditionDAO= (IQueryConditionSDAO) DAOFactory.getDAO(IQueryConditionSDAO.class);
 		IFuncNodeSDAO nodeDAO= (IFuncNodeSDAO) DAOFactory.getDAO(IFuncNodeSDAO.class);
+		IQuerySortSDAO sortDAO= (IQuerySortSDAO) DAOFactory.getDAO(IQuerySortSDAO.class);
 		
 		String instanceId="";
 		if(!StringUtil.isBlank(instance.getQueryInstanceId())) {//不为空则更新
@@ -106,6 +109,15 @@ public class InstanceSettingDOM {
 				con.setQueryConditionId(MaxId.getSequenceNextVal(ConstantsHelp.SEQ_QUERY_CONDITION_SEQ));
 				con.setInstanceId(instanceId);
 				conditionDAO.add(con);
+			}
+		}
+		
+		if(sortList!=null) {
+			for(int i=0;i<sortList.size();i++) {
+				QuerySortSVO sort=(QuerySortSVO)sortList.get(i);
+				sort.setQueryInstanceId(instanceId);
+				sort.setQuerySortId(MaxId.getSequenceNextVal(ConstantsHelp.SEQ_QUERY_SORT_SEQ));
+				sortDAO.add(sort);
 			}
 		}
 		

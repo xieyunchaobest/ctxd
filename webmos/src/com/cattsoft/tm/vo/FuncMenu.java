@@ -33,6 +33,9 @@ public class FuncMenu implements Serializable {
 	
 	private String target="right";
 	
+	private String iconOpen;
+	private String iconClose;
+	
 	public String getName() {
 		return name;
 	}
@@ -95,6 +98,22 @@ public class FuncMenu implements Serializable {
 
 	public void setTarget(String target) {
 		this.target = target;
+	}
+
+	public String getIconOpen() {
+		return iconOpen;
+	}
+
+	public void setIconOpen(String iconOpen) {
+		this.iconOpen = iconOpen;
+	}
+
+	public String getIconClose() {
+		return iconClose;
+	}
+
+	public void setIconClose(String iconClose) {
+		this.iconClose = iconClose;
 	}
 	
 	

@@ -47,10 +47,10 @@ import com.cattsoft.tm.vo.QueryInstanceColumnSVO;
 import com.cattsoft.tm.vo.QueryInstanceSVO;
 import com.cattsoft.tm.vo.TreeNodeInfo;
 public class CtxdDOM {
-	public PagView queryResult(String instanceId, List conditionListFromPage,PagInfo pg)
+	public PagView queryResult(String instanceId, List conditionListFromPage,PagInfo pg,Map sortMap)
 			throws AppException, SysException {
 		ICtxdMDAO ctxddao = (ICtxdMDAO) DAOFactory.getDAO(ICtxdMDAO.class);
-		PagView res = ctxddao.queryResult(instanceId, conditionListFromPage,pg);
+		PagView res = ctxddao.queryResult(instanceId, conditionListFromPage,pg, sortMap);
 		return res;
 	}
 
@@ -190,7 +190,11 @@ public class CtxdDOM {
 				}
 			}
 		}
-		if(subList.size()>0)node.setChildren(subList);
+		if(subList.size()>0) {
+			node.setChildren(subList);
+			node.setIconOpen("../images/folderOpen.gif");
+			node.setIconClose("../images/folderClosed.gif");
+		}
 	}
 	
 	public Document getFuncMenuDoc(SysUserSVO user) throws AppException,SysException{
@@ -336,7 +340,7 @@ public class CtxdDOM {
 	}
 	
 	
-	public HSSFWorkbook exportExcel(String instanceId,List conditionListFromPage) throws AppException,SysException{
+	public HSSFWorkbook exportExcel(String instanceId,List conditionListFromPage,Map sortMap) throws AppException,SysException{
 		List columnList=getColumnList(instanceId);
 		List headerList=new ArrayList();
 		for(int i=0;i<columnList.size();i++) {
@@ -352,7 +356,7 @@ public class CtxdDOM {
 	            headArr[i]=e;
 	        }
 		
-		List dataList=exportResultList(instanceId,conditionListFromPage);
+		List dataList=exportResultList(instanceId,conditionListFromPage,sortMap);
 		HSSFWorkbook wb = new HSSFWorkbook();  
 	    HSSFSheet sheet = wb.createSheet("²éÑ¯½á¹û");  
 	    HSSFRow row = sheet.createRow((int) 0);  
@@ -390,10 +394,10 @@ public class CtxdDOM {
 		
 	}
 	
-	public List exportResultList(String instanceId, List conditionListFromPage)
+	public List exportResultList(String instanceId, List conditionListFromPage,Map sortMap)
 			throws AppException, SysException {
 		ICtxdMDAO ctxddao = (ICtxdMDAO) DAOFactory.getDAO(ICtxdMDAO.class);
-		List res = ctxddao.exportResult(instanceId, conditionListFromPage);
+		List res = ctxddao.exportResult(instanceId, conditionListFromPage,sortMap);
 		return res;
 	}
 	

@@ -87,6 +87,9 @@ $(function(){
 	if(queryColList.size()>10){
 		out.println( "$('#datatable').width("+queryColList.size()+"*100)");
 	}
+	String sortBy=(String)request.getAttribute("sortBy");
+	if(sortBy==null)sortBy="";
+	String sortRule=(String)request.getAttribute("sortRule");
 	%>
 	
 	
@@ -108,6 +111,21 @@ $(function(){
 		});
 	
 })
+
+function sort(obj){
+	var sortColumnName=$(obj).attr("id");
+	var sortRule=$(obj).attr("sortRule");
+	if(sortRule=='DESC'){
+		sortRule='ASC';
+	}else{
+		sortRule='DESC';
+	}
+	$("#sortBy").val(sortColumnName);
+	$("#sortRule").val(sortRule);
+	var postform = document.getElementById("queryForm");
+	postform.action="../tm/ctxdAction.do?method=queryResult";
+	postform.submit();
+}
 </script>
 
 </head>
@@ -115,7 +133,11 @@ $(function(){
 <body>
 	<form id="queryForm" action="../tm/ctxdAction.do?method=exportExcel"
 		method="post">
-		<span style="display:none"><input type="hidden" name="instanceId" value='<%=request.getAttribute("instanceId")%>'/></span>
+		<span style="display:none">
+			<input type="hidden" name="instanceId" value='<%=request.getAttribute("instanceId")%>'/>
+			<input type="hidden" id="sortBy" name="sortBy" value='<%=sortBy%>' />
+			<input type="hidden" id="sortRule" name="sortRule" value='<%=sortRule%>' />
+		</span>
 		<div id="contentWrap">
 			<div class="pageTitle"></div>
 			<div class="pageColumn">
@@ -132,10 +154,8 @@ $(function(){
 									String v2="";
 									if("S".equals(conditionType)){
 										String vals=m.getValue();
-										System.out.println("vvvvvvvvvvvv="+vals);
 										if(!StringUtil.isBlank(vals)){
 											String vs[]=vals.split(",");
-											System.out.println("vsvsvsvsvsvsvsvsvs="+vs.length);
 											if(vs.length==1){
 												v1=vs[0];
 											}else if(vs.length==2){
@@ -220,10 +240,40 @@ $(function(){
 		<div style="overflow-X:scroll;height:420px;"><div id="datadiv" style="width:100%;">
 				<table id="datatable">
 					<thead>
-						<logic:iterate id="condition" name="queryColumnList">
-							<th  style="width:100px"><bean:write name="condition"
-									property="columnDesc" /></th>
-						</logic:iterate>
+						<%
+							if(queryColList!=null){
+								for(int i=0;i<queryColList.size();i++){
+									QueryInstanceColumnSVO c=(QueryInstanceColumnSVO)queryColList.get(i);
+									String colDesc=c.getColumnDesc();
+									String isSort=c.getIsSort();
+									String colName=c.getColumnName();
+									out.println("<th style='width:100px' id='"+colName+"' onclick='sort(this);' sortRule='"+sortRule+"' />");
+									out.print(c.getColumnDesc());
+									if("Y".equals(isSort)){
+										if(sortBy.equals(colName)){//如果根据此列排序
+											if("DESC".equals(sortRule)){//如果是降序
+												out.println("<img src='../images/up_now.png' />");
+											}else{
+												out.println("<img src='../images/down_now.png' />");
+											}
+										
+										}else{
+											out.println("<img src='../images/down.jpg' id='"+colName+"' sortRule='DESC'/>");
+										}
+										
+									}
+									out.println("</th>");
+								}
+							}
+						 %>
+						<%-- <logic:iterate id="condition" name="queryColumnList">
+							<th style="width:100px" id="<bean:write name='condition' property='columnName' />">
+								<bean:write name="condition" property="columnDesc" />
+								<logic:equal name="condition" property="isSort" value="Y">
+									<img src="../images/down.jpg" />
+								</logic:equal>
+							</th>
+						</logic:iterate> --%>
 					</thead>
 					<tbody>
 						<%

@@ -2,6 +2,7 @@ package com.cattsoft.tm.delegate;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -52,14 +53,14 @@ public class CtxdDelegate {
 	/**
 	 * 获取查询结果集
 	 */
-	public PagView queryResult(String tableId,List conditionListFromPage,PagInfo pageInfo) throws AppException, SysException {
+	public PagView queryResult(String tableId,List conditionListFromPage,PagInfo pageInfo,Map sortMap) throws AppException, SysException {
 		Connection conn = null;
 		PagView returnValue = null;
 		try {
 			conn = ConnectionFactory.createConnection();
 			conn.setAutoCommit(false);
 			CtxdDOM dom=new CtxdDOM();
-			returnValue =dom.queryResult(tableId,conditionListFromPage,pageInfo);
+			returnValue =dom.queryResult(tableId,conditionListFromPage,pageInfo,sortMap);
 			ConnectionFactory.commit();
 		}catch (SysException e1) { 
 			ConnectionFactory.rollback();
@@ -443,14 +444,14 @@ public class CtxdDelegate {
 	}
 	
 	
-	public HSSFWorkbook exportExcel(String instanceId,List conditionListFromPage) throws AppException,SysException{
+	public HSSFWorkbook exportExcel(String instanceId,List conditionListFromPage,Map sortMap) throws AppException,SysException{
 		Connection conn = null;
 		HSSFWorkbook  res=null;
 		try {
 			conn = ConnectionFactory.createConnection();
 			conn.setAutoCommit(false);
 			CtxdDOM dom=new CtxdDOM();
-			res=dom.exportExcel(instanceId,conditionListFromPage);
+			res=dom.exportExcel(instanceId,conditionListFromPage,sortMap);
 			ConnectionFactory.commit();
 		} catch (SysException e1) { 
 			ConnectionFactory.rollback();

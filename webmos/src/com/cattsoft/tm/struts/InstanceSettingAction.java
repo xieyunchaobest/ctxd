@@ -28,6 +28,7 @@ import com.cattsoft.tm.delegate.InstanceSettingDelegate;
 import com.cattsoft.tm.vo.QueryConditionSVO;
 import com.cattsoft.tm.vo.QueryInstanceColumnSVO;
 import com.cattsoft.tm.vo.QueryInstanceSVO;
+import com.cattsoft.tm.vo.QuerySortSVO;
 import com.sun.tools.corba.se.idl.toJavaPortable.Helper;
 
 /**
@@ -134,6 +135,7 @@ public class InstanceSettingAction extends DispatchAction{
 		String isGroup=ConstantsHelp.NO;
 		List columnList=new ArrayList();
 		List conditionList=new ArrayList();
+		List sortList=new ArrayList();
 		
 		if(ConstantsHelp.INSTANCE_TYPE_COMMON.equals(typeFlag)) {//Õ®”√≤È—Ø
 			for(int i=0;i<Integer.parseInt(columnCount);i++) {
@@ -168,7 +170,18 @@ public class InstanceSettingAction extends DispatchAction{
 						condition.setCreateTime(d);
 						conditionList.add(condition);
 					}
+					//≈≈–Ú
+					if(ConstantsHelp.YES.equals(isSort)) {
+						QuerySortSVO sort=new QuerySortSVO();
+						sort.setQueryColumnName(columnName);
+						sort.setSts(ConstantsHelp.ACTIVE);
+						sort.setStsDate(d);
+						
+						sortList.add(sort);
+					}
 				}
+				
+				
 			}
 		}else {
 			for(int i=0;i<Integer.parseInt(columnCount);i++) {
@@ -224,7 +237,7 @@ public class InstanceSettingAction extends DispatchAction{
 			}
 		}
 		
-		InstanceSettingDelegate.getDelegate().addInstance(instance, columnList, conditionList);
+		InstanceSettingDelegate.getDelegate().addInstance(instance, columnList, conditionList,sortList);
 		return getQueryInstanceList(mapping,form,request,response);
 	}
 

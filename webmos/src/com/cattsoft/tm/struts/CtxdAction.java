@@ -80,6 +80,12 @@ public class CtxdAction extends DispatchAction{
 			return null;
 		}
 		String instanceId=request.getParameter("instanceId");
+		String sortBy=request.getParameter("sortBy");//ÅÅÐò×Ö¶Î
+		String sortRule=request.getParameter("sortRule");
+		Map sortMap=new HashMap();
+		sortMap.put("sortBy", sortBy);
+		sortMap.put("sortRule",sortRule);
+		
 		String pageNo=request.getParameter("pageNo");
 		String pagSize=request.getParameter("pagSize");
 		if(pageNo==null)pageNo="1";
@@ -116,7 +122,7 @@ public class CtxdAction extends DispatchAction{
 		List queryConditionList = CtxdDelegate.getDelegate().getQueryConditionList(instanceId,conditionListFromPage);
 		List queryColumnList = CtxdDelegate.getDelegate().getQueryColumnList(instanceId);
 		
-		PagView resList = CtxdDelegate.getDelegate().queryResult(instanceId,conditionListFromPage,p);
+		PagView resList = CtxdDelegate.getDelegate().queryResult(instanceId,conditionListFromPage,p,sortMap);
 		QueryInstanceSVO instance=InstanceSettingDelegate.getDelegate().getQueryInstance(instanceId);
 		DTableDescSVO tableVO=CtxdDelegate.getDelegate().getTableVO(instance.getTableName());
 		request.setAttribute("resList", resList);
@@ -125,6 +131,8 @@ public class CtxdAction extends DispatchAction{
 		request.setAttribute("instanceId", instanceId);
 		//request.setAttribute("instance", instance);
 		request.setAttribute("tableVO", tableVO);
+		request.setAttribute("sortBy", sortBy);
+		request.setAttribute("sortRule", sortRule);
 		return mapping.findForward("queryPages");
 	}
 
@@ -369,6 +377,11 @@ public class CtxdAction extends DispatchAction{
 		String instanceId=request.getParameter("instanceId");
 		String pageNo=request.getParameter("pageNo");
 		String pagSize=request.getParameter("pagSize");
+		String sortBy=request.getParameter("sortBy");//ÅÅÐò×Ö¶Î
+		String sortRule=request.getParameter("sortRule");
+		Map sortMap=new HashMap();
+		sortMap.put("sortBy", sortBy);
+		sortMap.put("sortRule",sortRule);
 		if(pageNo==null)pageNo="1";
 		if(pagSize==null)pagSize="10";
 		PagInfo p=new PagInfo();
@@ -403,7 +416,7 @@ public class CtxdAction extends DispatchAction{
 		List queryConditionList = CtxdDelegate.getDelegate().getQueryConditionList(instanceId,conditionListFromPage);
 		List queryColumnList = CtxdDelegate.getDelegate().getQueryColumnList(instanceId);
 		
-		HSSFWorkbook book = CtxdDelegate.getDelegate().exportExcel(instanceId,conditionListFromPage);
+		HSSFWorkbook book = CtxdDelegate.getDelegate().exportExcel(instanceId,conditionListFromPage,sortMap);
 		QueryInstanceSVO instance=InstanceSettingDelegate.getDelegate().getQueryInstance(instanceId);
 		String instanceName=instance.getInstanceName();
 		instanceName = URLEncoder.encode(instanceName,"UTF8");
