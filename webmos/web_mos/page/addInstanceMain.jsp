@@ -1,5 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@page import="com.cattsoft.tm.vo.FuncNodeTreeSVO"%>
+<%@page import="com.cattsoft.tm.vo.FuncMenuSVO"%>
 <%@page import="com.cattsoft.tm.vo.DTableDescSVO"%>
 <%@page import="com.cattsoft.pub.util.PagView"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -256,8 +257,8 @@ body {
 								 	<%
 										if(instanceTypeList!=null){
 											for(int i=0;i<instanceTypeList.size();i++){
-												FuncNodeTreeSVO tree=(FuncNodeTreeSVO)instanceTypeList.get(i);
-												out.println("<option value='" +tree.getNodeTreeId()+"'>"+tree.getNodeTreeName()+"</option>");
+												FuncMenuSVO menu=(FuncMenuSVO)instanceTypeList.get(i);
+												out.println("<option value='" +menu.getFuncMenuId()+"' >"+menu.getFuncMenuName()+"</option>");
 											}
 										}								 	
 								 	 %>

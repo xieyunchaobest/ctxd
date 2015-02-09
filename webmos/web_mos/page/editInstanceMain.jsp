@@ -1,5 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@page import="com.cattsoft.tm.vo.QueryInstanceSVO"%>
+<%@page import="com.cattsoft.tm.vo.FuncMenuSVO"%>
 <%@page import="com.cattsoft.tm.vo.FuncNodeTreeSVO"%>
 <%@page import="com.cattsoft.tm.vo.DTableDescSVO"%>
 <%@page import="com.cattsoft.pub.util.PagView"%>
@@ -258,12 +259,12 @@ body {
 								 	<%
 										if(instanceTypeList!=null){
 											for(int i=0;i<instanceTypeList.size();i++){
-												FuncNodeTreeSVO tree=(FuncNodeTreeSVO)instanceTypeList.get(i);
-												String atreeId=tree.getNodeTreeId();
+												FuncMenuSVO tree=(FuncMenuSVO)instanceTypeList.get(i);
+												String atreeId=tree.getFuncMenuId();
 												if(atreeId.equals(treeId)){
-													out.println("<option selected  value='" +tree.getNodeTreeId()+"'>"+tree.getNodeTreeName()+"</option>");
+													out.println("<option selected  value='" +atreeId+"'>"+tree.getFuncMenuName()+"</option>");
 												}else{
-													out.println("<option value='" +tree.getNodeTreeId()+"'>"+tree.getNodeTreeName()+"</option>");
+													out.println("<option value='" +atreeId+"'>"+tree.getFuncMenuName()+"</option>");
 												}
 												
 											}

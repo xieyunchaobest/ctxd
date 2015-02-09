@@ -247,14 +247,14 @@ function sort(obj){
 									String colDesc=c.getColumnDesc();
 									String isSort=c.getIsSort();
 									String colName=c.getColumnName();
-									out.println("<th style='width:100px' id='"+colName+"' onclick='sort(this);' sortRule='"+sortRule+"' />");
+									out.println("<th style='width:100px;cursor:pointer;' id='"+colName+"' onclick='sort(this);' sortRule='"+sortRule+"' />");
 									out.print(c.getColumnDesc());
 									if("Y".equals(isSort)){
 										if(sortBy.equals(colName)){//如果根据此列排序
 											if("DESC".equals(sortRule)){//如果是降序
-												out.println("<img src='../images/up_now.png' />");
+												out.println("<img src='../images/up_now.jpg' />");
 											}else{
-												out.println("<img src='../images/down_now.png' />");
+												out.println("<img src='../images/down_now.jpg' />");
 											}
 										
 										}else{

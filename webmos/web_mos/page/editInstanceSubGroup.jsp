@@ -179,6 +179,8 @@ function doChange(obj){
 								String seq=column.getSeq()==null?"":column.getSeq();
 								String bgColor=column.getBgColor()==null?"":column.getBgColor();;
 								String width=column.getWidth()==null?"":column.getWidth();
+								String isSort=column.getIsSort();
+								String isSortCheck="Y".equals(isSort)?"checked":"";
 								out.println("<td class='ctd'>"+column.getColumnDesc()+"</td>");
 						%>
 						<!-- ±³¾°É« -->
@@ -220,7 +222,7 @@ function doChange(obj){
 								<input type="text" id="seq<%=i%>" name="seq<%=i%>"  class="smalltext" value="<%=seq%>"/>
 							</td>
 							<td class="ctd">
-								<input type="checkbox" id="isSort<%=i%>" name="isSort<%=i%>"  class="smalltext" value="Y"/>
+								<input type="checkbox" id="isSort<%=i%>" name="isSort<%=i%>"  class="smalltext" value="Y" <%=isSortCheck %> />
 							</td>
 						<%		
 								out.println("</tr>");

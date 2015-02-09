@@ -192,8 +192,8 @@ public class CtxdDOM {
 		}
 		if(subList.size()>0) {
 			node.setChildren(subList);
-			node.setIconOpen("../images/folderOpen.gif");
-			node.setIconClose("../images/folderClosed.gif");
+			node.setIconOpen("../images/folderOpen.png");
+			node.setIconClose("../images/folderClosed.png");
 		}
 	}
 	

@@ -14,12 +14,14 @@ import com.cattsoft.pub.util.StringUtil;
 import com.cattsoft.tm.component.dao.IFuncNodeSDAO;
 import com.cattsoft.sm.vo.SysUserSVO;
 import com.cattsoft.tm.component.dao.IDTableDescSDAO;
+import com.cattsoft.tm.component.dao.IFuncMenuSDAO;
 import com.cattsoft.tm.component.dao.IInstanceSettingMDAO;
 import com.cattsoft.tm.component.dao.IQueryConditionSDAO;
 import com.cattsoft.tm.component.dao.IQueryInstanceColumnSDAO;
 import com.cattsoft.tm.component.dao.IQueryInstanceSDAO;
 import com.cattsoft.tm.component.dao.IQuerySortSDAO;
 import com.cattsoft.tm.vo.DTableDescSVO;
+import com.cattsoft.tm.vo.FuncMenuSVO;
 import com.cattsoft.tm.vo.FuncNodeSVO;
 import com.cattsoft.tm.vo.FuncNodeTreeSVO;
 import com.cattsoft.tm.vo.QueryConditionSVO;
@@ -45,6 +47,7 @@ public class InstanceSettingDOM {
 		IQueryConditionSDAO conditionDAO= (IQueryConditionSDAO) DAOFactory.getDAO(IQueryConditionSDAO.class);
 		IFuncNodeSDAO nodeDAO= (IFuncNodeSDAO) DAOFactory.getDAO(IFuncNodeSDAO.class);
 		IQuerySortSDAO sortDAO= (IQuerySortSDAO) DAOFactory.getDAO(IQuerySortSDAO.class);
+		IFuncMenuSDAO menuDAO= (IFuncMenuSDAO) DAOFactory.getDAO(IFuncMenuSDAO.class);
 		
 		String instanceId="";
 		if(!StringUtil.isBlank(instance.getQueryInstanceId())) {//不为空则更新
@@ -70,28 +73,55 @@ public class InstanceSettingDOM {
 					conditionDAO.delete(c);
 				}
 			}
+			
+			QuerySortSVO sort=new QuerySortSVO();
+			sort.setQueryInstanceId(instanceId);
+			List sortLst=sortDAO.findByVO(sort);
+			if(sortLst!=null) {
+				for(int i=0;i<sortLst.size();i++) {
+					QuerySortSVO c=(QuerySortSVO)sortLst.get(i);
+					sortDAO.delete(c);
+				}
+			}
 			//nodeDAO.deleteByInstanceId(Long.parseLong(instanceId));
 		}else {
 			instanceId=MaxId.getSequenceNextVal(ConstantsHelp.SEQ_QUERY_INSTANCE);
 			instance.setQueryInstanceId(instanceId);
 			instanceDAO.add(instance);
 			
-			//插入一个菜单
-			String nodeId=MaxId.getSequenceNextVal(ConstantsHelp.SEQ_FUNC_NODE);
-			FuncNodeSVO node=new FuncNodeSVO();
-			node.setFuncNodeId(nodeId);
-			node.setNodeTreeId(instance.getTreeId());
-			node.setFuncNodeCode(nodeId);
-			node.setFuncNodeName(instance.getInstanceName());
-			node.setSubSystemName("BM");
-			node.setSecurityLevel("1");
-			node.setFuncNodeType("M");
-			node.setHtml(ConstantsHelp.INSTANCEURL+instance.getQueryInstanceId());
-			node.setVersion("1.0");
-			node.setSts(ConstantsHelp.ACTIVE);
-			node.setStsDate(DateUtil.getDBDate());
-			node.setInstanceId(instanceId);
-			nodeDAO.add(node);
+			FuncMenuSVO fm=new FuncMenuSVO();
+			fm.setFuncMenuId(instance.getTreeId());
+			FuncMenuSVO funm=(FuncMenuSVO)menuDAO.findByPK(fm);
+			
+			FuncMenuSVO funcMenu=new FuncMenuSVO();
+			funcMenu.setFuncMenuId(MaxId.getSequenceNextVal(ConstantsHelp.FUNC_MENU_SEQ));
+			funcMenu.setDepth( (Integer.parseInt(funm.getDepth())+1)+"" );
+			funcMenu.setFuncMenuName(instance.getInstanceName());
+			funcMenu.setHtml(ConstantsHelp.INSTANCEURL+instance.getQueryInstanceId());
+			funcMenu.setInstanceId(instanceId);
+			funcMenu.setParentId(instance.getTreeId());
+			funcMenu.setSts(ConstantsHelp.ACTIVE);
+			funcMenu.setStsDate(DateUtil.getDBDate());
+			menuDAO.add(funcMenu);
+			
+			
+//			//插入一个菜单
+//			String nodeId=MaxId.getSequenceNextVal(ConstantsHelp.SEQ_FUNC_NODE);
+//			FuncNodeSVO node=new FuncNodeSVO();
+//			node.setFuncNodeId(nodeId);
+//			node.setNodeTreeId(instance.getTreeId());
+//			node.setFuncNodeCode(nodeId);
+//			node.setFuncNodeName(instance.getInstanceName());
+//			node.setSubSystemName("BM");
+//			node.setSecurityLevel("1");
+//			node.setFuncNodeType("M");
+//			node.setHtml(ConstantsHelp.INSTANCEURL+instance.getQueryInstanceId());
+//			node.setVersion("1.0");
+//			node.setSts(ConstantsHelp.ACTIVE);
+//			node.setStsDate(DateUtil.getDBDate());
+//			node.setInstanceId(instanceId);
+//			nodeDAO.add(node);
+			
 		}
 		
 		if(queryInstanceColumnList!=null) {
@@ -121,15 +151,20 @@ public class InstanceSettingDOM {
 			}
 		}
 		
-		
+		menuDAO.deleteByInstanceId(instanceId);
 		
 	}
 	
 	public List getInstanceTypeList() throws AppException,SysException {
-		com.cattsoft.tm.component.dao.IFuncNodeTreeSDAO treeSDAO = (com.cattsoft.tm.component.dao.IFuncNodeTreeSDAO) DAOFactory.getDAO(com.cattsoft.tm.component.dao.IFuncNodeTreeSDAO.class);
-		FuncNodeTreeSVO atree=new FuncNodeTreeSVO();
-		atree.setSts(ConstantsHelp.ACTIVE);
-		return treeSDAO.findByVO(atree);
+		//com.cattsoft.tm.component.dao.IFuncNodeTreeSDAO treeSDAO = (com.cattsoft.tm.component.dao.IFuncNodeTreeSDAO) DAOFactory.getDAO(com.cattsoft.tm.component.dao.IFuncNodeTreeSDAO.class);
+		//FuncNodeTreeSVO atree=new FuncNodeTreeSVO();
+		//atree.setSts(ConstantsHelp.ACTIVE);
+		//return treeSDAO.findByVO(atree);
+		IFuncMenuSDAO menuDAO= (IFuncMenuSDAO) DAOFactory.getDAO(IFuncMenuSDAO.class);
+		FuncMenuSVO menu=new FuncMenuSVO();
+		menu.setSts(ConstantsHelp.ACTIVE);
+		return menuDAO.findByVO(menu);
+		
 	}
 	
 	

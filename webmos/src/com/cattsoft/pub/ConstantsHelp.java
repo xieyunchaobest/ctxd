@@ -23,6 +23,7 @@ public class ConstantsHelp {
 	public static final String SEQ_QUERY_CONDITION_SEQ="QUERY_CONDITION";
 	public static final String SEQ_FUNC_NODE="FUNC_NODE";
 	public static final String SEQ_QUERY_SORT_SEQ="SEQ_QUERY_SORT";
+	public static final String FUNC_MENU_SEQ="FUNC_MENU";
 	
 	
 	public static final String INSTANCEURL="../tm/ctxdAction.do?method=queryResult&instanceId=";

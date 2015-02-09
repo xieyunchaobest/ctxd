@@ -179,6 +179,8 @@ function doChange(obj){
 								String seq=column.getSeq()==null?"":column.getSeq();
 								String bgColor=column.getBgColor()==null?"":column.getBgColor();;
 								String width=column.getWidth()==null?"":column.getWidth();
+								String isSort=column.getIsSort();
+								String isSortCheck="Y".equals(isSort)?"checked":"";
 								out.println("<td class='ctd'>"+column.getColumnDesc()+"</td>");
 								out.println("<td class='ctd'><input type='checkbox' "+ isShowChecked+ " class='ck' id='chkIsShow"+i +"' name='chkIsShow"+i+"' value='Y' /></td>");
 						%>
@@ -192,7 +194,6 @@ function doChange(obj){
 										String label=(String)m.get("label");
 										String value=(String)m.get("value");
 										String selected=bgColor.equals(label)?"selected":"";
-										System.out.println("selectedselected="+selected);
 										out.println("<option "+ selected+ " style='background-color:"+label+"'  value='"+label+"'>"+label+"</option>");
 									}
 									%>
@@ -219,7 +220,7 @@ function doChange(obj){
 								<input type="text" id="seq<%=i%>" name="seq<%=i%>"  class="smalltext" value="<%=seq%>" />
 							</td>
 							<td class="ctd">
-								<input type="checkbox" id="isSort<%=i%>" name="isSort<%=i%>"  class="smalltext" value="Y"/>
+								<input type="checkbox" id="isSort<%=i%>" name="isSort<%=i%>"  class="smalltext" value="Y" <%=isSortCheck %> />
 							</td>
 						<%		
 								out.println("</tr>");
