@@ -402,7 +402,7 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 			String isSum=column.getIsSum();
 			String isGroup=column.getIsGroup();
 			if("Y".equals(isSum)) {
-				columnName="sum( case when "+columnName+" is null then 0 else "+columnName +" end) as "+columnName;
+				columnName="sum( case when "+columnName+" is null then 0 else "+columnName +"+0 end) as "+columnName;
 			}
 			if(com.cattsoft.tm.struts.Tools.isDateType(dataType)) {
 				columnName=" to_char("+columnName+",'yyyy-mm-dd') as "+columnName;

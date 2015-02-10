@@ -202,7 +202,7 @@ public class InstanceSettingAction extends DispatchAction{
 					c.setCreateTime(d);
 					c.setSeq(seq);
 					c.setSts(ConstantsHelp.ACTIVE);
-					c.setIsSort(isSort);
+					//c.setIsSort(isSort);
 					columnList.add(c);
 				}
 				
@@ -232,6 +232,14 @@ public class InstanceSettingAction extends DispatchAction{
 					condition.setSts(ConstantsHelp.ACTIVE);
 					condition.setCreateTime(d);
 					conditionList.add(condition);
+				}
+				
+				if(ConstantsHelp.YES.equals(isSort)) {
+					QuerySortSVO st=new QuerySortSVO();
+					st.setQueryColumnName(columnName);
+					st.setSts(ConstantsHelp.ACTIVE);
+					st.setStsDate(d);
+					sortList.add(st);
 				}
 				
 			}

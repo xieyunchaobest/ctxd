@@ -151,7 +151,7 @@ public class InstanceSettingDOM {
 			}
 		}
 		
-		menuDAO.deleteByInstanceId(instanceId);
+		
 		
 	}
 	
@@ -172,7 +172,9 @@ public class InstanceSettingDOM {
 		IQueryInstanceSDAO instanceDAO= (IQueryInstanceSDAO) DAOFactory.getDAO(IQueryInstanceSDAO.class);
 		IQueryInstanceColumnSDAO columnDAO= (IQueryInstanceColumnSDAO) DAOFactory.getDAO(IQueryInstanceColumnSDAO.class);
 		IQueryConditionSDAO conditionDAO= (IQueryConditionSDAO) DAOFactory.getDAO(IQueryConditionSDAO.class);
-		IFuncNodeSDAO nodeDAO= (IFuncNodeSDAO) DAOFactory.getDAO(IFuncNodeSDAO.class);
+		//IFuncNodeSDAO nodeDAO= (IFuncNodeSDAO) DAOFactory.getDAO(IFuncNodeSDAO.class);
+		IFuncMenuSDAO menuDAO= (IFuncMenuSDAO) DAOFactory.getDAO(IFuncMenuSDAO.class);
+		IQuerySortSDAO sortDAO= (IQuerySortSDAO) DAOFactory.getDAO(IQuerySortSDAO.class);
 		
 		QueryInstanceSVO instance=new QueryInstanceSVO();
 		instance.setQueryInstanceId(instanceId);
@@ -197,8 +199,20 @@ public class InstanceSettingDOM {
 				conditionDAO.delete(c);
 			}
 		}
+		menuDAO.deleteByInstanceId(instanceId);
 		
-		nodeDAO.deleteByInstanceId(Long.parseLong(instanceId));
+		QuerySortSVO sort=new QuerySortSVO();
+		sort.setQueryInstanceId(instanceId);
+		List sortList=sortDAO.findByVO(sort);
+		if(sortList!=null) {
+			for(int i=0;i<sortList.size();i++) {
+				QuerySortSVO s=(QuerySortSVO)sortList.get(i);
+				sortDAO.delete(s);
+			}
+			
+		}
+		
+		menuDAO.deleteByInstanceId(instanceId);
 	}
 	
 	public QueryInstanceSVO getQueryInstance(String instanceId) throws AppException,SysException {

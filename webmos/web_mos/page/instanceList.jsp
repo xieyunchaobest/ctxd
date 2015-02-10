@@ -145,9 +145,9 @@ $(function(){
 						</tr>
 					</tbody>
 				</table>
-				<table width="100%"  border="0" cellspacing="0" cellpadding="0">
-                  <tr>
-                    <td width="97%"><div align="right">
+				<table width="100%"  border="0" style="border:0px" cellspacing="0" cellpadding="0">
+                  <tr border="0" style="border:0px">
+                    <td border="0" width="97%"><div align="right">
                       <div style="width:100%;">                        <div style="float:right;margin-left:40px"><input type="button" value="Ìí¼Ó»ã×Ü²éÑ¯" class="lbtn" id="btnAddGroupQuery"/>
                         </div>
                       </div>
