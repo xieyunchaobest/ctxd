@@ -33,7 +33,12 @@ table { border-collapse: collapse; border-spacing: 0; }
 	font-size:0px;
 	clear:both;
 	}
-.fleft{ float:left}
+.fleft{
+	float:left;
+	background-image: url(../images/index-menu-bg2.gif);
+	width: 188px;
+	left: 0px;
+}
 .fright{ float:right}
 #wrap{ width:100%;}
 #header{ height:78px; background:url(../images/index-header-bg.gif) repeat-x;}
