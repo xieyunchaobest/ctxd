@@ -5,28 +5,27 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.cattsoft.pub.ConstantsHelp;
+import com.cattsoft.pub.SysConstants;
 import com.cattsoft.pub.connection.ConnectionFactory;
 import com.cattsoft.pub.dao.DAOFactory;
 import com.cattsoft.pub.dao.Sql;
 import com.cattsoft.pub.exception.AppException;
 import com.cattsoft.pub.exception.SysException;
-import com.cattsoft.pub.util.Constant;
 import com.cattsoft.pub.util.JdbcUtil;
 import com.cattsoft.pub.util.PagInfo;
 import com.cattsoft.pub.util.PagUtil;
 import com.cattsoft.pub.util.PagView;
 import com.cattsoft.pub.util.StringUtil;
-import com.cattsoft.pub.vo.GenericVO;
 import com.cattsoft.sm.vo.SysUserSVO;
 import com.cattsoft.tm.component.dao.ICtxdMDAO;
-import com.cattsoft.tm.component.dao.IDColumnDescSDAO;
 import com.cattsoft.tm.component.dao.IDTableDescSDAO;
+import com.cattsoft.tm.component.dao.IQueryInstanceSDAO;
+import com.cattsoft.tm.component.dao.ISysDataPrivSDAO;
 import com.cattsoft.tm.struts.Tools;
 import com.cattsoft.tm.vo.DColumnDescSVO;
 import com.cattsoft.tm.vo.DTableDescSVO;
@@ -34,6 +33,7 @@ import com.cattsoft.tm.vo.FuncNodeSVO;
 import com.cattsoft.tm.vo.QueryConditionSVO;
 import com.cattsoft.tm.vo.QueryInstanceColumnSVO;
 import com.cattsoft.tm.vo.QueryInstanceSVO;
+import com.cattsoft.tm.vo.SysDataPrivSVO;
 import com.cattsoft.tm.vo.TreeNodeInfo;
 
 public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
@@ -50,11 +50,21 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 	private Map fetchRow(List columns, ResultSet rs) throws AppException,
 			SysException, SQLException {
 		Map m = new LinkedHashMap();
+		
 		for (int i = 0; i < columns.size(); i++) {
 			QueryInstanceColumnSVO column = (QueryInstanceColumnSVO) columns.get(i);
+			
 			String columnName = column.getColumnName();
 			String width=column.getWidth();
 			String bgColor=column.getBgColor();
+			String isDataPrivColumn=column.getIsDataPriv();
+			//处理数据权限
+			String instanceType=column.getInstanceType();
+			if(ConstantsHelp.INSTANCE_TYPE_STATISTIC.equals(instanceType)) {
+				if(ConstantsHelp.YES.equals(isDataPrivColumn)) {
+					continue;
+				}
+			}
 			m.put(columnName, rs.getString(columnName));
 			m.put("width", width);
 			m.put("bgColor", bgColor);
@@ -63,7 +73,7 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 	}
 
 	public PagView queryResult(String instanceId, List conditionListFromPage,
-			PagInfo pagInfo,Map sortMap) throws AppException, SysException {
+			PagInfo pagInfo,Map sortMap,String userId) throws AppException, SysException {
 		if (StringUtil.isBlank(instanceId)) {
 			throw new AppException("100001", "缺少DAO操作对象！");
 		}
@@ -78,7 +88,7 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 		String queryType=((QueryInstanceSVO)findByPK(instacne)).getInstanceType();
 		Sql sql =null;
 		if(ConstantsHelp.INSTANCE_TYPE_COMMON.equals(queryType)) {
-			sql=new Sql(this.getWholeSql(instanceId, conditionListFromPage,sortMap));
+			sql=new Sql(this.getWholeSql(instanceId, conditionListFromPage,sortMap,userId));
 		}else {
 			sql=new Sql(this.getWholeSql4Group(instanceId, conditionListFromPage,sortMap));
 		}
@@ -111,7 +121,7 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 	}
 	
 	
-	public List exportResult(String instanceId, List conditionListFromPage,Map sortMap) throws AppException, SysException {
+	public List exportResult(String instanceId, List conditionListFromPage,Map sortMap,String userId) throws AppException, SysException {
 		if (StringUtil.isBlank(instanceId)) {
 			throw new AppException("100001", "缺少DAO操作对象！");
 		}
@@ -126,7 +136,7 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 		String queryType=((QueryInstanceSVO)findByPK(instacne)).getInstanceType();
 		Sql sql =null;
 		if(ConstantsHelp.INSTANCE_TYPE_COMMON.equals(queryType)) {
-			sql=new Sql(this.getWholeSql(instanceId, conditionListFromPage,sortMap));
+			sql=new Sql(this.getWholeSql(instanceId, conditionListFromPage,sortMap,userId));
 		}else {
 			sql=new Sql(this.getWholeSql4Group(instanceId, conditionListFromPage,sortMap));
 		}
@@ -247,7 +257,7 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 	 * @throws AppException
 	 * @throws SysException
 	 */
-	private String getWholeSql(String instanceId, List conditionListFromPage,Map sortMap)
+	private String getWholeSql(String instanceId, List conditionListFromPage,Map sortMap,String userId)
 			throws AppException, SysException {
 		QueryInstanceSVO instance=new QueryInstanceSVO();
 		instance.setQueryInstanceId(instanceId);
@@ -255,7 +265,8 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 		String select = "select ";
 		String from = " from ";
 		String where = " where 1=1 ";
-		String atableName = ((QueryInstanceSVO)findByPK(instance)).getTableName();
+		instance=(QueryInstanceSVO)findByPK(instance);
+		String atableName = instance.getTableName();
 		String orderBy="";
 		
 		String sortBy=(String)sortMap.get("sortBy");
@@ -272,8 +283,41 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 
 		List conditions = getQueryCondition(instanceId, conditionListFromPage);
 		String sqlCondition = getConditionSql(conditions);
-		sql = select + sqlColumn + from + atableName + where + sqlCondition +orderBy;
+		sql = select + sqlColumn + from + atableName + where + sqlCondition +getDataPrivSql(userId,instance,columns)+orderBy;
 		return sql;
+	}
+	
+	//如果有数据权限，拼接数据权限
+	public String getDataPrivSql(String userId,QueryInstanceSVO instance,List columns) throws AppException,SysException{
+		boolean hasDataPriv=false;
+		String res="";
+		String columName="";
+	if(columns!=null) {
+		for(int i=0;i<columns.size();i++) {
+			QueryInstanceColumnSVO col=(QueryInstanceColumnSVO)columns.get(i);
+			columName=col.getColumnName();
+			String isDataPriv=col.getIsDataPriv();
+			if(ConstantsHelp.YES.equals(isDataPriv)) {
+				hasDataPriv=true;
+				break;
+			}
+		}
+	}
+	if(hasDataPriv) {
+		String dataPrivId=instance.getDataPriv();
+		 ISysDataPrivSDAO sysdataPrivDao = (ISysDataPrivSDAO) DAOFactory.getDAO(ISysDataPrivSDAO.class);
+		 SysDataPrivSVO dataVo=new SysDataPrivSVO();
+		 dataVo.setSysDataPrivId(dataPrivId); 
+		 if(!StringUtil.isBlank(dataPrivId)) {
+			 SysDataPrivSVO vo=(SysDataPrivSVO)sysdataPrivDao.findByPK(dataVo);
+			 String express=vo.getExpress();
+			 res=express.replaceAll(":userId", "'"+userId+"'");
+			 res=" and "+columName +" in ("+res +")";
+		 }
+		
+	}
+	 return res;
+	 
 	}
 
 	
@@ -401,13 +445,17 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 			String dataType=column.getDataType();
 			String isSum=column.getIsSum();
 			String isGroup=column.getIsGroup();
-			if("Y".equals(isSum)) {
-				columnName="sum( case when "+columnName+" is null then 0 else "+columnName +"+0 end) as "+columnName;
+			if(("Y".equals(isSum) ) || (ConstantsHelp.YES.equals(isGroup))) {
+				if("Y".equals(isSum)) {
+					columnName="sum( case when "+columnName+" is null then 0 else "+columnName +"+0 end) as "+columnName;
+				}
+				if(ConstantsHelp.YES.equals(isGroup)) {
+					if(com.cattsoft.tm.struts.Tools.isDateType(dataType)) {
+						columnName=" to_char("+columnName+",'yyyy-mm-dd') as "+columnName;
+					}
+				}
+				queryColum = queryColum + columnName + ",";
 			}
-			if(com.cattsoft.tm.struts.Tools.isDateType(dataType)) {
-				columnName=" to_char("+columnName+",'yyyy-mm-dd') as "+columnName;
-			}
-			queryColum = queryColum + columnName + ",";
 		}
 		queryColum = queryColum.substring(0, queryColum.length() - 1);
 		return queryColum;
@@ -939,9 +987,9 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Sql sql = new Sql("SELECT  "+
+		Sql sql = new Sql("SELECT t2.INSTANCE_ID, t1.INSTANCE_TYPE,"+
        " T2.QUERY_INSTANCE_COLUMN_ID,"+
-       " T2.COLUMN_NAME,"+
+       " T2.COLUMN_NAME,t2.IS_DATA_PRIV,"+
        " T3.COLUMN_DESC ,T3.DATA_TYPE,  T2.IS_SUM,T2.IS_GROUP,t2.bg_color,t2.column_width ," +
        " (case when " +
        " t4.query_instance_id is null then 'N' else 'Y' end "+
@@ -976,6 +1024,9 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 				column.setBgColor(rs.getString("bg_color"));
 				column.setWidth(rs.getString("column_width"));
 				column.setIsSort(rs.getString("IS_SORT"));
+				column.setIsDataPriv(rs.getString("IS_DATA_PRIV"));
+				column.setInstanceType(rs.getString("INSTANCE_TYPE"));
+				column.setInstanceId(rs.getString("INSTANCE_ID"));
 				res.add(column);
 			}
 
@@ -1096,6 +1147,8 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 			res = null;
 		return res;
 	}
+
+ 
 
 	
 }

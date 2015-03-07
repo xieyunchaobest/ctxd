@@ -132,6 +132,17 @@ function doChange(obj){
 		document.getElementById("chkIsCondition"+n).checked=false;
 	}
 }
+
+function changeIsShow(obj){
+	$("[id^='dataPriv']").each(function(i){  
+		if($(this).prop('checked')==true){
+			if($(obj).attr("id")!=$(this).attr("id")){
+				$(this).prop('checked',false);
+			}
+		}
+	});
+}
+
 </script>
 
 <%
@@ -162,6 +173,7 @@ function doChange(obj){
 						<th>条件类型</th>
 						<th>序号</th>
 						<th>是否排序</th>
+						<th>数据权限列</th>
 					</thead>
 					<tbody>
 						<%
@@ -209,6 +221,9 @@ function doChange(obj){
 							</td>
 							<td class="ctd">
 								<input type="checkbox" id="isSort<%=i%>" name="isSort<%=i%>"  class="smalltext" value="Y"/>
+							</td>
+							<td class="ctd">
+								<input type="checkbox" id="dataPriv<%=i%>" name="dataPriv<%=i%>"  class="smalltext" value="Y" onclick="changeIsShow(this)"/>
 							</td>
 						<%		
 								

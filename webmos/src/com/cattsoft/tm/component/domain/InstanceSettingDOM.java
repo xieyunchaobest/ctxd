@@ -2,8 +2,6 @@ package com.cattsoft.tm.component.domain;
 
 import java.util.List;
 
-import org.apache.struts.action.ActionForward;
-
 import com.cattsoft.pub.ConstantsHelp;
 import com.cattsoft.pub.dao.DAOFactory;
 import com.cattsoft.pub.exception.AppException;
@@ -11,23 +9,22 @@ import com.cattsoft.pub.exception.SysException;
 import com.cattsoft.pub.util.DateUtil;
 import com.cattsoft.pub.util.MaxId;
 import com.cattsoft.pub.util.StringUtil;
-import com.cattsoft.tm.component.dao.IFuncNodeSDAO;
-import com.cattsoft.sm.vo.SysUserSVO;
 import com.cattsoft.tm.component.dao.IDTableDescSDAO;
 import com.cattsoft.tm.component.dao.IFuncMenuSDAO;
+import com.cattsoft.tm.component.dao.IFuncNodeSDAO;
 import com.cattsoft.tm.component.dao.IInstanceSettingMDAO;
 import com.cattsoft.tm.component.dao.IQueryConditionSDAO;
 import com.cattsoft.tm.component.dao.IQueryInstanceColumnSDAO;
 import com.cattsoft.tm.component.dao.IQueryInstanceSDAO;
 import com.cattsoft.tm.component.dao.IQuerySortSDAO;
+import com.cattsoft.tm.component.dao.ISysDataPrivSDAO;
 import com.cattsoft.tm.vo.DTableDescSVO;
 import com.cattsoft.tm.vo.FuncMenuSVO;
-import com.cattsoft.tm.vo.FuncNodeSVO;
-import com.cattsoft.tm.vo.FuncNodeTreeSVO;
 import com.cattsoft.tm.vo.QueryConditionSVO;
 import com.cattsoft.tm.vo.QueryInstanceColumnSVO;
 import com.cattsoft.tm.vo.QueryInstanceSVO;
 import com.cattsoft.tm.vo.QuerySortSVO;
+import com.cattsoft.tm.vo.SysDataPrivSVO;
 
 public class InstanceSettingDOM {
 	
@@ -241,5 +238,9 @@ public class InstanceSettingDOM {
 		return instanceDAO.getTableByInstanceId(instanceId);
 	}
 	
-	
+	public List getSysPrivList() throws AppException,
+	SysException {
+		ISysDataPrivSDAO dao=(ISysDataPrivSDAO)DAOFactory.getDAO(ISysDataPrivSDAO.class);
+		return dao.findByVO(new SysDataPrivSVO());
+	}
 }

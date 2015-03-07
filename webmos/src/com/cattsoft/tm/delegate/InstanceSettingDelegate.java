@@ -242,4 +242,31 @@ public class InstanceSettingDelegate {
 	return res;
 	
 	}
+	
+	public List getSysPrivList() throws AppException,
+	SysException{
+		Connection conn = null;
+		List res=null;
+		try {
+			conn = ConnectionFactory.createConnection();
+			conn.setAutoCommit(false);
+			InstanceSettingDOM dom=new InstanceSettingDOM();
+			res=dom.getSysPrivList();
+			ConnectionFactory.commit();
+		}catch (SysException e1) { 
+			ConnectionFactory.rollback();
+			throw e1;
+		}catch (AppException e2) { 
+			ConnectionFactory.rollback();
+			throw e2;
+		}catch (Exception e) { 
+			ConnectionFactory.rollback();
+			throw new SysException("","出现未知异常！",e);
+		}finally {
+				ConnectionFactory.closeConnection();
+		}
+	return res;
+	
+	
+	}
 }

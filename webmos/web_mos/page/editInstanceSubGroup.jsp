@@ -162,6 +162,7 @@ function doChange(obj){
 						<th>条件类型</th>
 						<th>序号</th>
 						<th>是否排序</th>
+						<th>数据权限列</th>
 					</thead>
 					<tbody>
 						<%
@@ -173,6 +174,7 @@ function doChange(obj){
 								String isSum=column.getIsSum();
 								String isCondition=column.getIsCondition();
 								String conditiontype=column.getConditionType();
+								String isDataPriv=column.getIsDataPriv();
 								String isGroupChecked="Y".equals(isGroup)?"checked":"";
 								String isSumChecked="Y".equals(isSum)?"checked":"";
 								String isConditionChecked="Y".equals(isCondition)?"checked":"";
@@ -181,6 +183,7 @@ function doChange(obj){
 								String width=column.getWidth()==null?"":column.getWidth();
 								String isSort=column.getIsSort();
 								String isSortCheck="Y".equals(isSort)?"checked":"";
+								String isDataPrivChecked="Y".equals(isDataPriv)?"checked":"";
 								out.println("<td class='ctd'>"+column.getColumnDesc()+"</td>");
 						%>
 						<!-- 背景色 -->
@@ -223,6 +226,9 @@ function doChange(obj){
 							</td>
 							<td class="ctd">
 								<input type="checkbox" id="isSort<%=i%>" name="isSort<%=i%>"  class="smalltext" value="Y" <%=isSortCheck %> />
+							</td>
+							<td class="ctd">
+								<input type="checkbox" id="dataPriv<%=i%>" name="dataPriv<%=i%>"  class="smalltext" value="Y" <%=isDataPrivChecked %> onclick="changeIsShow(this)"/>
 							</td>
 						<%		
 								out.println("</tr>");

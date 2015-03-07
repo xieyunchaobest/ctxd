@@ -17,6 +17,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.dom4j.Document;
 
+import com.cattsoft.pub.ConstantsHelp;
 import com.cattsoft.pub.SysConstants;
 import com.cattsoft.pub.dao.DAOFactory;
 import com.cattsoft.pub.exception.AppException;
@@ -34,6 +35,7 @@ import com.cattsoft.tm.component.dao.ICtxdMDAO;
 import com.cattsoft.tm.component.dao.IDColumnDescSDAO;
 import com.cattsoft.tm.component.dao.IDTableDescSDAO;
 import com.cattsoft.tm.component.dao.ILoginLogSDAO;
+import com.cattsoft.tm.component.dao.IQueryInstanceSDAO;
 import com.cattsoft.tm.component.dao.ISysMDAO;
 import com.cattsoft.tm.util.TreeUtil;
 import com.cattsoft.tm.vo.DColumnDescSVO;
@@ -47,10 +49,10 @@ import com.cattsoft.tm.vo.QueryInstanceColumnSVO;
 import com.cattsoft.tm.vo.QueryInstanceSVO;
 import com.cattsoft.tm.vo.TreeNodeInfo;
 public class CtxdDOM {
-	public PagView queryResult(String instanceId, List conditionListFromPage,PagInfo pg,Map sortMap)
+	public PagView queryResult(String instanceId, List conditionListFromPage,PagInfo pg,Map sortMap,String userId)
 			throws AppException, SysException {
 		ICtxdMDAO ctxddao = (ICtxdMDAO) DAOFactory.getDAO(ICtxdMDAO.class);
-		PagView res = ctxddao.queryResult(instanceId, conditionListFromPage,pg, sortMap);
+		PagView res = ctxddao.queryResult(instanceId, conditionListFromPage,pg, sortMap,userId);
 		return res;
 	}
 
@@ -74,7 +76,20 @@ public class CtxdDOM {
 	public List getQueryColumnList(String instanceId) throws AppException,
 			SysException {
 		ICtxdMDAO ctxddao = (ICtxdMDAO) DAOFactory.getDAO(ICtxdMDAO.class);
+		IQueryInstanceSDAO instanceDAO= (IQueryInstanceSDAO) DAOFactory.getDAO(IQueryInstanceSDAO.class);
 		List conditionList = ctxddao.getColumnList(instanceId);
+		//提出含有数据权限的列
+		QueryInstanceSVO vo=new QueryInstanceSVO();
+		vo.setQueryInstanceId(instanceId);
+		vo=(QueryInstanceSVO)(instanceDAO.findByPK(vo)) ;
+		if(vo.getInstanceType().equals(ConstantsHelp.INSTANCE_TYPE_STATISTIC)) {
+			for(int i=0;i<conditionList.size();i++) {
+				QueryInstanceColumnSVO c=(QueryInstanceColumnSVO)conditionList.get(i);
+				if(ConstantsHelp.YES.equals(c.getIsDataPriv())) {
+					conditionList.remove(i);
+				}
+			}
+		}
 		return conditionList;
 	}
 
@@ -340,12 +355,15 @@ public class CtxdDOM {
 	}
 	
 	
-	public HSSFWorkbook exportExcel(String instanceId,List conditionListFromPage,Map sortMap) throws AppException,SysException{
+	public HSSFWorkbook exportExcel(String instanceId,List conditionListFromPage,Map sortMap,String userId) throws AppException,SysException{
 		List columnList=getColumnList(instanceId);
 		List headerList=new ArrayList();
 		for(int i=0;i<columnList.size();i++) {
 			QueryInstanceColumnSVO c=(QueryInstanceColumnSVO)columnList.get(i);
 			String columnDesc=c.getColumnDesc();
+			if(ConstantsHelp.YES.equals(c.getIsDataPriv())) {
+				continue;
+			}
 			headerList.add(columnDesc);
 		}
 		
@@ -356,7 +374,7 @@ public class CtxdDOM {
 	            headArr[i]=e;
 	        }
 		
-		List dataList=exportResultList(instanceId,conditionListFromPage,sortMap);
+		List dataList=exportResultList(instanceId,conditionListFromPage,sortMap,userId);
 		HSSFWorkbook wb = new HSSFWorkbook();  
 	    HSSFSheet sheet = wb.createSheet("查询结果");  
 	    HSSFRow row = sheet.createRow((int) 0);  
@@ -394,10 +412,10 @@ public class CtxdDOM {
 		
 	}
 	
-	public List exportResultList(String instanceId, List conditionListFromPage,Map sortMap)
+	public List exportResultList(String instanceId, List conditionListFromPage,Map sortMap,String userId)
 			throws AppException, SysException {
 		ICtxdMDAO ctxddao = (ICtxdMDAO) DAOFactory.getDAO(ICtxdMDAO.class);
-		List res = ctxddao.exportResult(instanceId, conditionListFromPage,sortMap);
+		List res = ctxddao.exportResult(instanceId, conditionListFromPage,sortMap, userId);
 		return res;
 	}
 	

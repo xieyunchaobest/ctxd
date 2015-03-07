@@ -78,7 +78,7 @@ public class InstanceSettingMDAOImpl extends DColumnDescSDAOImpl implements
 				"T3.CONDITION_TYPE, T2.SEQ, T1.TABLE_NAME, " +
 				"T5.COLUMN_DESC,  t2.is_group, t2.is_sum," +
 				"t2.column_width,t2.bg_color ," +
-				" (case when t6.query_sort_id is null then 'N' ELSE 'Y' END ) AS IS_SORT " +
+				" (case when t6.query_sort_id is null then 'N' ELSE 'Y' END ) AS IS_SORT,t2.IS_DATA_PRIV " +
 				"from query_instance           t1, query_instance_column    t2," +
 				" QUERY_CONDITION t3, user_tab_cols            t4, " +
 				"D_COLUMN_DESC            T5  ," +
@@ -116,6 +116,7 @@ public class InstanceSettingMDAOImpl extends DColumnDescSDAOImpl implements
 				column.setBgColor(rs.getString("bg_color"));
 				column.setWidth(rs.getString("column_width"));
 				column.setIsSort(rs.getString("IS_SORT"));
+				column.setIsDataPriv(rs.getString("IS_DATA_PRIV"));
 				res.add(column);
 			}
 

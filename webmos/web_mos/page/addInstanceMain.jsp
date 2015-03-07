@@ -1,4 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%@page import="com.cattsoft.tm.vo.SysDataPrivSVO"%>
 <%@page import="com.cattsoft.tm.vo.FuncNodeTreeSVO"%>
 <%@page import="com.cattsoft.tm.vo.FuncMenuSVO"%>
 <%@page import="com.cattsoft.tm.vo.DTableDescSVO"%>
@@ -215,7 +216,7 @@ body {
 		List tableList=(List)request.getAttribute("tableList");
 		List instanceTypeList=(List)request.getAttribute("instanceTypeList");
 		String typeFlag=(String)request.getAttribute("typeFlag");
-		
+		List dataPrivList=(List)request.getAttribute("dataPrivList");
 	 %>
 </head>
 
@@ -259,6 +260,20 @@ body {
 											for(int i=0;i<instanceTypeList.size();i++){
 												FuncMenuSVO menu=(FuncMenuSVO)instanceTypeList.get(i);
 												out.println("<option value='" +menu.getFuncMenuId()+"' >"+menu.getFuncMenuName()+"</option>");
+											}
+										}								 	
+								 	 %>
+								 </select>
+							</td>
+							<td style="float:left;line-height:50px">
+								<label for="dataPriv" style="margin-left:50px">数据权限：</label>
+								 <select class='shortselect' id="dataPriv" name="dataPriv">
+								 	<option value="">请选择</option>
+								 	<%
+										if(dataPrivList!=null){
+											for(int i=0;i<dataPrivList.size();i++){
+												SysDataPrivSVO priv=(SysDataPrivSVO)dataPrivList.get(i);
+												out.println("<option value='" +priv.getSysDataPrivId()+"' >"+priv.getSysDataPrivName()+"</option>");
 											}
 										}								 	
 								 	 %>

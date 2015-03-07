@@ -121,8 +121,9 @@ public class CtxdAction extends DispatchAction{
 		}
 		List queryConditionList = CtxdDelegate.getDelegate().getQueryConditionList(instanceId,conditionListFromPage);
 		List queryColumnList = CtxdDelegate.getDelegate().getQueryColumnList(instanceId);
+		SysUserSVO u=(SysUserSVO)request.getSession().getAttribute("user");
 		
-		PagView resList = CtxdDelegate.getDelegate().queryResult(instanceId,conditionListFromPage,p,sortMap);
+		PagView resList = CtxdDelegate.getDelegate().queryResult(instanceId,conditionListFromPage,p,sortMap,u.getSysUserId());
 		QueryInstanceSVO instance=InstanceSettingDelegate.getDelegate().getQueryInstance(instanceId);
 		DTableDescSVO tableVO=CtxdDelegate.getDelegate().getTableVO(instance.getTableName());
 		request.setAttribute("resList", resList);
@@ -415,8 +416,8 @@ public class CtxdAction extends DispatchAction{
 		}
 		List queryConditionList = CtxdDelegate.getDelegate().getQueryConditionList(instanceId,conditionListFromPage);
 		List queryColumnList = CtxdDelegate.getDelegate().getQueryColumnList(instanceId);
-		
-		HSSFWorkbook book = CtxdDelegate.getDelegate().exportExcel(instanceId,conditionListFromPage,sortMap);
+		SysUserSVO u=(SysUserSVO)request.getSession().getAttribute("user");
+		HSSFWorkbook book = CtxdDelegate.getDelegate().exportExcel(instanceId,conditionListFromPage,sortMap,u.getSysUserId());
 		QueryInstanceSVO instance=InstanceSettingDelegate.getDelegate().getQueryInstance(instanceId);
 		String instanceName=instance.getInstanceName();
 		instanceName = URLEncoder.encode(instanceName,"UTF8");

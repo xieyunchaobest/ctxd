@@ -164,6 +164,7 @@ function doChange(obj){
 						<th>条件类型</th>
 						<th>序号</th>
 						<th>是否排序</th>
+						<th>数据权限列</th>
 					</thead>
 					<tbody>
 						<%
@@ -180,7 +181,9 @@ function doChange(obj){
 								String bgColor=column.getBgColor()==null?"":column.getBgColor();;
 								String width=column.getWidth()==null?"":column.getWidth();
 								String isSort=column.getIsSort();
+								String isDataPriv=column.getIsDataPriv();
 								String isSortCheck="Y".equals(isSort)?"checked":"";
+								String isDataPrivChecked="Y".equals(isDataPriv)?"checked":"";
 								out.println("<td class='ctd'>"+column.getColumnDesc()+"</td>");
 								out.println("<td class='ctd'><input type='checkbox' "+ isShowChecked+ " class='ck' id='chkIsShow"+i +"' name='chkIsShow"+i+"' value='Y' /></td>");
 						%>
@@ -221,6 +224,9 @@ function doChange(obj){
 							</td>
 							<td class="ctd">
 								<input type="checkbox" id="isSort<%=i%>" name="isSort<%=i%>"  class="smalltext" value="Y" <%=isSortCheck %> />
+							</td>
+							<td class="ctd">
+								<input type="checkbox" id="dataPriv<%=i%>" name="dataPriv<%=i%>"  class="smalltext" value="Y" <%=isDataPrivChecked %> onclick="changeIsShow(this)"/>
 							</td>
 						<%		
 								out.println("</tr>");

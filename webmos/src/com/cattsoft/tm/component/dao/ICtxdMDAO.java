@@ -14,7 +14,7 @@ import com.cattsoft.tm.vo.QueryInstanceSVO;
 
 public interface ICtxdMDAO extends ISDAO{
 	
-	PagView queryResult(String tableId,List conditionListFromPage,PagInfo pg,Map sortMap) throws AppException,SysException;
+	PagView queryResult(String tableId,List conditionListFromPage,PagInfo pg,Map sortMap,String userId) throws AppException,SysException;
 	
 	/**
 	 * 获取查询条件列表
@@ -84,6 +84,6 @@ public interface ICtxdMDAO extends ISDAO{
 	 */
 	public List getQueryConditionList(String instanceId) throws AppException,SysException;
 	
-	public List exportResult(String instanceId, List conditionListFromPage,Map sortMap) throws AppException, SysException ;
+	public List exportResult(String instanceId, List conditionListFromPage,Map sortMap,String userId) throws AppException, SysException ;
 	
 }

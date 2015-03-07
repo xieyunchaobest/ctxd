@@ -81,9 +81,10 @@ public class InstanceSettingAction extends DispatchAction{
 		String typeFlag=request.getParameter("typeFlag");
 		List tableList=InstanceSettingDelegate.getDelegate().getTables();
 		List instanceTypeList=InstanceSettingDelegate.getDelegate().getInstanceTypeList();
-		
+		List dataPrivList=InstanceSettingDelegate.getDelegate().getSysPrivList();
 		request.setAttribute("tableList", tableList);
 		request.setAttribute("instanceTypeList", instanceTypeList);
+		request.setAttribute("dataPrivList", dataPrivList);
 		request.setAttribute("typeFlag", typeFlag);
 		return mapping.findForward("addInstanceInit");
 
@@ -119,6 +120,7 @@ public class InstanceSettingAction extends DispatchAction{
 		String treeId=request.getParameter("treeId");
 		String  typeFlag=request.getParameter("typeFlag"); 
 		String instanceId=request.getParameter("instanceId");
+		String dataPriv=request.getParameter("dataPriv");
 		
 		Date d=new Date();
 		
@@ -130,6 +132,7 @@ public class InstanceSettingAction extends DispatchAction{
 		instance.setCreateTime(d);
 		instance.setSts(ConstantsHelp.ACTIVE);
 		instance.setTreeId(treeId);
+		instance.setDataPriv(dataPriv);
 		
 		String isSum=ConstantsHelp.NO;
 		String isGroup=ConstantsHelp.NO;
@@ -147,6 +150,7 @@ public class InstanceSettingAction extends DispatchAction{
 					String bgColor=request.getParameter("sltbgColor"+i);
 					String width=request.getParameter("width"+i);
 					String isSort=request.getParameter("isSort"+i);
+					String dataPrivColumn=request.getParameter("dataPriv"+i);
 					
 					c.setColumnName(columnName);
 					c.setCreateTime(d);
@@ -157,6 +161,7 @@ public class InstanceSettingAction extends DispatchAction{
 					c.setWidth(width);
 					c.setBgColor(bgColor);
 					c.setIsSort(isSort);
+					c.setIsDataPriv(dataPrivColumn);
 					
 					columnList.add(c);
 					
@@ -193,6 +198,7 @@ public class InstanceSettingAction extends DispatchAction{
 				String bgColor=request.getParameter("sltbgColor"+i);
 				String width=request.getParameter("width"+i);
 				String isSort=request.getParameter("isSort"+i);
+				String dataPrivColumn=request.getParameter("dataPriv"+i);
 				QueryInstanceColumnSVO c=null;
 				if(ConstantsHelp.YES.equals(isGroupG)) {
 					c=new QueryInstanceColumnSVO();
@@ -203,6 +209,18 @@ public class InstanceSettingAction extends DispatchAction{
 					c.setSeq(seq);
 					c.setSts(ConstantsHelp.ACTIVE);
 					//c.setIsSort(isSort);
+					columnList.add(c);
+				}
+				
+				if(!StringUtil.isBlank(dataPrivColumn)) {
+					c=new QueryInstanceColumnSVO();
+					c.setColumnName(columnName);
+					c.setIsGroup(ConstantsHelp.NO);
+					c.setIsSum(ConstantsHelp.NO);
+					c.setCreateTime(d);
+					c.setSeq(seq);
+					c.setSts(ConstantsHelp.ACTIVE);
+					c.setIsDataPriv(ConstantsHelp.YES);
 					columnList.add(c);
 				}
 				
@@ -266,10 +284,12 @@ public class InstanceSettingAction extends DispatchAction{
 		QueryInstanceSVO instance=InstanceSettingDelegate.getDelegate().getQueryInstance(instanceId);
 		List instanceTypeList=InstanceSettingDelegate.getDelegate().getInstanceTypeList();
 		QueryInstanceSVO inst=InstanceSettingDelegate.getDelegate().getTableByInstanceId(instanceId);
+		List dataPrivList=InstanceSettingDelegate.getDelegate().getSysPrivList();
 		request.setAttribute("instance", instance);   
 		request.setAttribute("instanceTypeList", instanceTypeList); 
 		request.setAttribute("typeFlag", typeFlag);
 		request.setAttribute("inst", inst);
+		request.setAttribute("dataPrivList", dataPrivList);
 		
 		return mapping.findForward("editInstanceInit");
 	}
