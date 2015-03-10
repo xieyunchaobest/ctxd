@@ -1117,7 +1117,7 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
  "           (select sua.func_node_id "+
  "              from sys_user_alloc sua "+
  "             where sua.sys_user_id = :sysUserId) "+
- " connect by prior f.parent_id = f.func_menu_id");
+ " connect by prior f.parent_id = f.func_menu_id order by seq");
 		try {
 			sql.setString("sysUserId", vo.getSysUserId());
 
