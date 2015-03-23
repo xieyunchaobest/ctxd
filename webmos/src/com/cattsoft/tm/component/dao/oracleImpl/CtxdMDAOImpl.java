@@ -65,7 +65,8 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 					continue;
 				}
 			}
-			m.put(columnName, rs.getString(columnName));
+			String res=StringUtil.isBlank(rs.getString(columnName))?"":rs.getString(columnName);
+			m.put(columnName, res);
 			m.put("width", width);
 			m.put("bgColor", bgColor);
 		}

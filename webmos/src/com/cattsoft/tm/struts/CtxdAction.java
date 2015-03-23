@@ -76,7 +76,7 @@ public class CtxdAction extends DispatchAction{
 	public ActionForward queryResult(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String currentDate=DateUtil.getCurrentDateStr(DateUtil.datef1);
-		if(Integer.parseInt(currentDate)>20150310) {
+		if(Integer.parseInt(currentDate)>20150610) {
 			return null;
 		}
 		String instanceId=request.getParameter("instanceId");
@@ -89,7 +89,7 @@ public class CtxdAction extends DispatchAction{
 		String pageNo=request.getParameter("pageNo");
 		String pagSize=request.getParameter("pagSize");
 		if(pageNo==null)pageNo="1";
-		if(pagSize==null)pagSize="10";
+		if(pagSize==null)pagSize="20";
 		PagInfo p=new PagInfo();
 		p.setPagNo(Integer.parseInt(pageNo));
 		p.setPagSize(Integer.parseInt(pagSize));
@@ -149,7 +149,7 @@ public class CtxdAction extends DispatchAction{
 	public ActionForward showMain(ActionMapping mapping,ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws AppException,SysException {
 		String currentDate=DateUtil.getCurrentDateStr(DateUtil.datef1);
-		if(Integer.parseInt(currentDate)>20150310) {
+		if(Integer.parseInt(currentDate)>20150610) {
 			return null;
 		}
 		SysUserSVO u=(SysUserSVO)request.getSession().getAttribute("user");
@@ -173,7 +173,7 @@ public class CtxdAction extends DispatchAction{
 	public ActionForward login(ActionMapping mapping,ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws SysException,AppException {
 		String currentDate=DateUtil.getCurrentDateStr(DateUtil.datef1);
-		if(Integer.parseInt(currentDate)>20150510) {
+		if(Integer.parseInt(currentDate)>20150610) {
 			return null;
 		}
 		String frompage=request.getParameter("frompage");
@@ -372,7 +372,7 @@ public class CtxdAction extends DispatchAction{
 	public ActionForward exportExcel(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String currentDate=DateUtil.getCurrentDateStr(DateUtil.datef1);
-		if(Integer.parseInt(currentDate)>20150310) {
+		if(Integer.parseInt(currentDate)>20150610) {
 			return null;
 		}
 		String instanceId=request.getParameter("instanceId");

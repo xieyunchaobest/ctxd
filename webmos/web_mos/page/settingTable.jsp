@@ -213,10 +213,10 @@ body {
 				</div>
 				<div id="columndiv" class="columns"
 					style="margin-left:20px;text-align:center;">
-					<span style="width:65px;">表名:</span><input type="text" id="txttableDesc" class="shottext" 
+					<span style="width:65px;">表名:</span><input type="text" id="txttableDesc" class="shottext" maxlength="32"
 						name="cnTableName" style="margin:10px 0px 10px 35px;width:300px" /><br>
 						<div style="float:left;width:65px">统计规则:</div>
-					<textarea id="txtstatRule" type="text" name="staticRule"
+					<textarea id="txtstatRule" type="text" name="staticRule" maxlength="64"
 						class="staticRule"></textarea>
 					<div style="width:100px;margin:0 auto;">
 						<input type="button" value="确定"

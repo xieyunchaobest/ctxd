@@ -237,7 +237,7 @@ function sort(obj){
 							
 						</tr>
 					</table>
-		<div style="overflow-X:scroll;height:420px;"><div id="datadiv" style="width:100%;">
+		<div style="overflow-X:scroll;overflow-Y:hidden;"><div id="datadiv" style="width:100%;">
 				<table id="datatable">
 					<thead>
 						<%

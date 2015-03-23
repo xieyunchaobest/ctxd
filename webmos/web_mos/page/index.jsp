@@ -119,7 +119,7 @@ $(function(){
     </table>
     </table><div class="subnav">
     	<div class="subnavLeft fleft"></div>
-        <div class="fleft"></div>
+        <!-- <div class="fleft"></div> -->
         <div class="subnavRight fright"></div>
     </div>
     <div id="content">

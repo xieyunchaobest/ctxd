@@ -77,7 +77,7 @@ public class StringUtil {
 			return true;
 		if ("".equals(str.trim()))
 			return true;
-
+		if("null".equals(str)) return true;
 		return false;
 	}
 
