@@ -12,7 +12,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=GBK" />
 <%String path=request.getContextPath(); %>
-<title>经营数据支撑系统</title>
+<title>呼分经营数据支撑系统</title>
 <link href="<%=path%>/css/style.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="<%=path%>/css/zTreeStyle.css" type="text/css">
 <script type="text/javascript" src="<%=path%>/js/jquery-1.11.2.min.js"></script>
@@ -89,6 +89,7 @@ $(function(){
 </script>
 
 
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -112,7 +113,7 @@ $(function(){
 <table width="100%"  border="0" cellpadding="0" cellspacing="0" background="../images/index-header-bg.gif">
       <tr>
         <td width="21%"><div class="logo fleft"> </div></td>
-        <td width="61%"><div align="center"><img src="../images/index_word.png" width="301" height="35" /></div></td>
+        <td width="61%"><div align="center"><img src="../images/index_word.png" width="578" height="49" /></div></td>
         <td width="17%">&nbsp;</td>
         <td width="1%" valign="top"><a class="logout fright" href="../tm/ctxdAction.do?method=loginOut"> </a></td>
       </tr>
@@ -124,7 +125,7 @@ $(function(){
     </div>
     <div id="content">
     <div class="space"></div>
-    <div class="menu fleft">
+    <div class="menu fleft" style="height: 607px;overflow-y:scroll;overflow-x:hidden">
     		<ul id="funcmenu" class="ztree"></ul>
     </div>
     <div class="sidebar fleft"><div class="btn"></div></div>

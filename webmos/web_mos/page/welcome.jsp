@@ -86,7 +86,7 @@ margin: 0;padding: 0;
 	<div class="pageTitle"></div>
 	<table>
 		<tr class="ctr">
-			<td class="ctd"><font size="6">欢迎进入经营数据支撑系统！</font></td>
+			<td class="ctd"><font size="6">欢迎进入呼分经营数据支撑系统！</font></td>
 		</tr>
 		<tr class="ctr">
 			<td class="ctd" style="float:left;height:60px;overflow:hidden;text-align:left">

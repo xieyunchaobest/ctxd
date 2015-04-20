@@ -1,0 +1,27 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from IMos2RmsService WSDL service -->
+
+  <service name="IMos2RmsPort" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://mos.rms.cattsoft.com/"/>
+      <parameter name="wsdlServiceElement" value="IMos2RmsService"/>
+      <parameter name="schemaUnqualified" value="http://mos.rms.cattsoft.com/"/>
+      <parameter name="wsdlServicePort" value="IMos2RmsPort"/>
+      <parameter name="className" value="com.cattsoft.im.service.webservice.client.IMos2RmsServiceSoapBindingSkeleton"/>
+      <parameter name="wsdlPortType" value="IMos2Rms"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <parameter name="allowedMethods" value="*"/>
+      <parameter name="scope" value="Session"/>
+
+  </service>
+</deployment>

@@ -629,7 +629,7 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 		QueryInstanceSVO instance=new QueryInstanceSVO();
 		instance.setQueryInstanceId(instanceId);
 		Sql sql = new Sql("select distinct " + columnName + " from "
-				+ ((QueryInstanceSVO)findByPK(instance)).getTableName());
+				+ ((QueryInstanceSVO)findByPK(instance)).getTableName() +" order by "+columnName + " asc ");
 		try {
 
 			conn = ConnectionFactory.getConnection();
@@ -719,7 +719,7 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
 		ResultSet rs = null;
 		Sql sql = new Sql("select t1.table_name,t2.table_desc,t2.table_id,t2.statistics_comments "+
   " from v_user_tables t1,d_table_desc  t2 "+
-  " where t1.table_name=t2.table_name(+)  ");
+  " where t1.table_name=t2.table_name(+)  order by t1.table_name");
 		try {
 			conn = ConnectionFactory.getConnection();
 			ps = conn.prepareStatement(sql.getSql());
@@ -1070,7 +1070,7 @@ public class CtxdMDAOImpl extends QueryInstanceSDAOImpl  implements ICtxdMDAO {
  "WHERE T1.QUERY_INSTANCE_ID = T2.INSTANCE_ID AND "+
   "     T3.TABLE_NAME=T1.TABLE_NAME AND "+
   "     T2.COLUMN_NAME=T3.COLUMN_NAME"+
-  " AND T1.QUERY_INSTANCE_ID = :instanceId");
+  " AND T1.QUERY_INSTANCE_ID = :instanceId ");
 		
 		try {
 			conn = ConnectionFactory.getConnection();

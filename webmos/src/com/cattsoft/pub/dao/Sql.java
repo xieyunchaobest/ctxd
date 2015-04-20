@@ -212,6 +212,9 @@ public class Sql extends AbstractSql {
 			String[] ary = sqlStr.substring(index + 1).split(PARAM_SIGN);
 			for (int i = 0; i < ary.length; i++) {
 				String[] temp = ary[i].split("\\W");
+				if(temp==null || temp.length==0) {
+					System.out.println(temp);
+				}
 				paramsOrder.add(temp[0]);
 			}
 		}

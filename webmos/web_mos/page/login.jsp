@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=GBK" />
-<title>欢迎登录经营数据支撑系统</title>
+<title>欢迎登录呼分经营数据支撑系统</title>
 <link href="../css/login.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="../js/jquery-1.11.2.min.js"></script>
 <script type="text/javascript" src="../js/public.js"></script>
