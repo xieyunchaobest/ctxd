@@ -291,7 +291,7 @@ public class CtxdDOM {
 		return mdao.getColumnDescList(tableName);
 	}
 	
-	public void saveTableConfig(DTableDescSVO table,List columns,List queryConditionList) throws AppException, SysException{
+	public  synchronized void saveTableConfig(DTableDescSVO table,List columns,List queryConditionList) throws AppException, SysException{
 		IDTableDescSDAO tableDAO= (IDTableDescSDAO) DAOFactory.getDAO(IDTableDescSDAO.class);
 		IDColumnDescSDAO columnDAO= (IDColumnDescSDAO) DAOFactory.getDAO(IDColumnDescSDAO.class);
 		
