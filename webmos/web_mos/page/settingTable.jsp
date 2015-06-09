@@ -193,7 +193,7 @@ body {
 						name="dbTableList" size=6 id="dbTableList"
 						style="height:400px;width:98%" multiple onclick="reloadPage()">
 						<logic:iterate id="dbtable" name="dbTableList">
-							<option
+							<option title="<bean:write name='dbtable'  property='tableName' />"
 								value="<bean:write name='dbtable'  property='tableName' />">
 								<bean:write name='dbtable' property='tableName' />
 							</option>

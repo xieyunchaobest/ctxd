@@ -76,7 +76,7 @@ public class CtxdAction extends DispatchAction{
 	public ActionForward queryResult(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String currentDate=DateUtil.getCurrentDateStr(DateUtil.datef1);
-		if(Integer.parseInt(currentDate)>20150610) {
+		if(Integer.parseInt(currentDate)>20150910) {
 			return null;
 		}
 		String instanceId=request.getParameter("instanceId");
@@ -149,7 +149,7 @@ public class CtxdAction extends DispatchAction{
 	public ActionForward showMain(ActionMapping mapping,ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws AppException,SysException {
 		String currentDate=DateUtil.getCurrentDateStr(DateUtil.datef1);
-		if(Integer.parseInt(currentDate)>20150610) {
+		if(Integer.parseInt(currentDate)>20150910) {
 			return null;
 		}
 		SysUserSVO u=(SysUserSVO)request.getSession().getAttribute("user");
@@ -173,7 +173,7 @@ public class CtxdAction extends DispatchAction{
 	public ActionForward login(ActionMapping mapping,ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws SysException,AppException {
 		String currentDate=DateUtil.getCurrentDateStr(DateUtil.datef1);
-		if(Integer.parseInt(currentDate)>20150610) {
+		if(Integer.parseInt(currentDate)>20150910) {
 			return null;
 		}
 		String frompage=request.getParameter("frompage");
@@ -372,7 +372,7 @@ public class CtxdAction extends DispatchAction{
 	public ActionForward exportExcel(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String currentDate=DateUtil.getCurrentDateStr(DateUtil.datef1);
-		if(Integer.parseInt(currentDate)>20150610) {
+		if(Integer.parseInt(currentDate)>20150910) {
 			return null;
 		}
 		String instanceId=request.getParameter("instanceId");

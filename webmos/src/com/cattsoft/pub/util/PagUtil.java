@@ -346,7 +346,7 @@ public class PagUtil {
 			String sysRowLimit = SysConfigData.getSysConfigCurValue(
 					SysConstants.SYS_ROW_LIMIT, null, null, null, null, null);
 			if (sysRowLimit == null || sysRowLimit.length() == 0) {
-				sysRowLimit = "100000";
+				sysRowLimit = "1000000000";
 			}
 			rowLimit = Integer.parseInt(sysRowLimit);
 			if (count > rowLimit) {
