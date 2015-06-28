@@ -129,7 +129,7 @@ $(function(){
     		<ul id="funcmenu" class="ztree"></ul>
     </div>
     <div class="sidebar fleft"><div class="btn"></div></div>
-    <div class="page" id="pageContent">
+    <div class="page" id="pageContent" style="overflow:hidden">
      <iframe width="100%" scrolling="auto" height="100%" frameborder="false" marginwidth="0px" scrolling="no" 
     	allowtransparency="true" style="border: medium none;overflow:auto;" src="../page/welcome.jsp" id="rightMain" name="right"></iframe>
     </div>
