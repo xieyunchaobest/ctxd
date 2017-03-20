@@ -21,7 +21,7 @@
 		<driver-class>oracle.jdbc.driver.OracleDriver</driver-class>
 		<username></username>
 		<password></password>
-		<url>jdbc:oracle:thin:@60.31.254.52:1521:zsjfdb</url>
+		<url>jdbc:oracle:thin:@ : </url>
 		<pool-maxActive>100</pool-maxActive>
 		<pool-maxWait>1200</pool-maxWait>
 		<pool-maxIdle>10</pool-maxIdle>

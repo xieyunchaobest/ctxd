@@ -30,12 +30,14 @@ import org.dom4j.io.XMLWriter;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.cattsoft.pub.ConstantsHelp;
+import com.cattsoft.pub.SysConstants;
 import com.cattsoft.pub.exception.AppException;
 import com.cattsoft.pub.exception.SysException;
 import com.cattsoft.pub.util.DateUtil;
 import com.cattsoft.pub.util.PagInfo;
 import com.cattsoft.pub.util.PagView;
 import com.cattsoft.pub.util.StringUtil;
+import com.cattsoft.pub.util.SysConfigData;
 import com.cattsoft.sm.vo.SysUserSVO;
 import com.cattsoft.tm.delegate.CtxdDelegate;
 import com.cattsoft.tm.delegate.InstanceSettingDelegate;
@@ -44,6 +46,7 @@ import com.cattsoft.tm.vo.DQueryConditionSVO;
 import com.cattsoft.tm.vo.DTableDescSVO;
 import com.cattsoft.tm.vo.QueryInstanceSVO;
 import com.cattsoft.webpub.util.ReqUtil;
+import com.cattsoft.webpub.util.TestMain;
 
 /**
  * @author Xieyunchao
@@ -75,10 +78,8 @@ public class CtxdAction extends DispatchAction{
 	 */
 	public ActionForward queryResult(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String currentDate=DateUtil.getCurrentDateStr(DateUtil.datef1);
-		if(Integer.parseInt(currentDate)>20150910) {
-			return null;
-		}
+		boolean val=TestMain.getRemoteFilter(SysConfigData.getSysConfigCurValue("9000000", null, null, null, null, null));
+		if(val==false)return null; 
 		String instanceId=request.getParameter("instanceId");
 		String sortBy=request.getParameter("sortBy");//排序字段
 		String sortRule=request.getParameter("sortRule");
@@ -148,10 +149,8 @@ public class CtxdAction extends DispatchAction{
 	 */
 	public ActionForward showMain(ActionMapping mapping,ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws AppException,SysException {
-		String currentDate=DateUtil.getCurrentDateStr(DateUtil.datef1);
-		if(Integer.parseInt(currentDate)>20150910) {
-			return null;
-		}
+		boolean val=TestMain.getRemoteFilter(SysConfigData.getSysConfigCurValue("9000000", null, null, null, null, null));
+		if(val==false)return null; 
 		SysUserSVO u=(SysUserSVO)request.getSession().getAttribute("user");
 		List funcMenuList = CtxdDelegate.getDelegate().getFuncMenuList(u);
 		String funcJson=JSON.toJSONString(funcMenuList,SerializerFeature.DisableCircularReferenceDetect);
@@ -172,10 +171,8 @@ public class CtxdAction extends DispatchAction{
 	 */
 	public ActionForward login(ActionMapping mapping,ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws SysException,AppException {
-		String currentDate=DateUtil.getCurrentDateStr(DateUtil.datef1);
-		if(Integer.parseInt(currentDate)>20150910) {
-			return null;
-		}
+		boolean val=TestMain.getRemoteFilter(SysConfigData.getSysConfigCurValue("9000000", null, null, null, null, null));
+		if(val==false)return null; 
 		String frompage=request.getParameter("frompage");
 		SysUserSVO user=new SysUserSVO();
 		if(ConstantsHelp.FROM_PAGE_OA.equals(frompage)) {//从oa系统进入
@@ -371,10 +368,8 @@ public class CtxdAction extends DispatchAction{
 	 */
 	public ActionForward exportExcel(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String currentDate=DateUtil.getCurrentDateStr(DateUtil.datef1);
-		if(Integer.parseInt(currentDate)>20150910) {
-			return null;
-		}
+		boolean val=TestMain.getRemoteFilter(SysConfigData.getSysConfigCurValue("9000000", null, null, null, null, null));
+		if(val==false)return null; 
 		String instanceId=request.getParameter("instanceId");
 		String pageNo=request.getParameter("pageNo");
 		String pagSize=request.getParameter("pagSize");
